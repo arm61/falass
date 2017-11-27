@@ -4,7 +4,7 @@ from multiprocessing import Pool
 from falass import dataformat
 
 class Files(object):
-    def __init__(self, pdbfile, lgtsfile = None, datfile = None, resolution = 5., ierror = 5.):
+    def __init__(self, pdbfile, lgtsfile = None, datfile = None, resolution = 5., ierror = 5., flip=False):
         """
         A class of the reading in of pdb files
         :param filename: str
@@ -24,6 +24,7 @@ class Files(object):
         self.expdata = []
         self.ierror = ierror
         self.resolution = resolution
+        self.flip = flip
 
     def setFile(self, pdbfile = None, lgtsfile = None, datfile = None):
         if pdbfile:
@@ -45,7 +46,11 @@ class Files(object):
                 string = string_new
                 print("[{} {} % ]".format('#' * int(string / 10), int(string/10)*10))
             if line[0:6] == "ATOM  ":
-                atoms_each_timestep.append(dataformat.atompositions(line[12:16].strip(), float(line[46:54])))
+                if self.flip:
+                    a = np.sqrt(np.square(self.cell[self.number_of_timesteps - 1][2] - float(line[46:54])))
+                    atoms_each_timestep.append(dataformat.atompositions(line[12:16].strip(), a))
+                else:
+                    atoms_each_timestep.append(dataformat.atompositions(line[12:16].strip(), float(line[46:54])))
             if "TITLE  " in line:
                 if self.number_of_timesteps == 0:
                     self.number_of_timesteps += 1
@@ -86,7 +91,8 @@ class Files(object):
                         imag_scat_len = input('\nPlease define a imaginary scattering length for '
                                               'this atom type: '.format(self.atoms[i][j].atom))
                         self.scat_lens.append(dataformat.scatlens(self.atoms[i][j].atom, float(real_scat_len),
-                                                                  float(imag_scat_len)))
+                                                                 float(imag_scat_len)))
+            print("[{} {} %]".format('#' * int(100 / 10), int(100)))
         else:
             print('There was no lgt file defined, falass will help you define one and save it for future use.')
             for i in range(0, len(self.atoms)):
@@ -104,6 +110,7 @@ class Files(object):
             path, extension = os.path.splittext(output_name)
             if extension != '.lgt':
                 lgtsfile_name = path + '.lgt'
+            print("[{} {} %]".format('#' * int(100 / 10), int(100)))
         lgtsf = open(lgtsfile_name, 'w')
         for i in range(0, len(self.scat_lens)):
             lgtsf.write('{} {} {}\n'.format(self.scat_lens[i].atom, self.scat_lens[i].real * 1e5,
@@ -135,6 +142,7 @@ class Files(object):
                         self.expdata.append(
                             dataformat.datastruct(float(line_list[0]), float(line_list[1]), float(line_list[2]),
                                                   float(line_list[3])))
+            print("[{} {} %]".format('#' * int(100 / 10), int(100)))
         else:
             print('No DAT file has been given, therefore no comparison will be conducted. '
                   'Alternatively the DAT file can be added using the setFile function.')

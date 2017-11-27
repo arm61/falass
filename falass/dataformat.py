@@ -15,3 +15,9 @@ class atompositions(object):
     def __init__(self, atom, position):
         self.atom = atom
         self.zpos = position
+
+class sldpro(object):
+    def __init__(self, thick, real, imag):
+        self.thick = thick
+        self.real = real
+        self.imag = imag

@@ -25,13 +25,13 @@ class Job(object):
             first_times = float(input(
                 "Please define the first timestep to be analysed, the first in the pdb file was {} ps: ".format(
                     self.files.times[0])))
-            while check_array(self.files.times, first_times) != True:
+            while check_array(self.files.times, first_times) is not True:
                 first_times = float(input("TIMESTEP NOT FOUND. Please define the first timestep to be analysed, "
                                     "the first in the pdb file was {} ps: ".format(self.files.times[0])))
             last_times = float(input(
                 "Please define the last timestep to be analysed, the last in the pdb file was {} ps: ".format(
                     self.files.times[-1])))
-            while check_array(self.files.times, last_times) != True:
+            while check_array(self.files.times, last_times) is not True:
                 last_times = float(input("TIMESTEP NOT FOUND. Please define the last timestep to be analysed, "
                                    "the last in the pdb file was {} ps: ".format(self.files.times[-1])))
             interval_times = float(input("Please define time interval for analysis, the smallest interval in the pdb "
