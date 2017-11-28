@@ -1,12 +1,12 @@
-# versioning 
+from distutils.core import setup
+from setuptools import find_packages
+
+# versioning
 MAJOR = 0
 MINOR = 0 
 MICRO = 1
 ISRELEASED = False
 VERSION = '%d.%d.%d' % (MAJOR, MINOR, MICRO)
-
-from distutils.core import setup
-from setuptools import find_packages
 
 PACKAGES = find_packages()
 
@@ -22,4 +22,7 @@ setup(
     url='https://github.com/arm61/falass',
     packages=PACKAGES,
     platforms=['Windows', 'Linux', 'Solaris', 'Mac OS-X', 'Unix'],
+    install_requires=[
+        'numpy', 'matplotlib', 'scipy'
+    ]
 )

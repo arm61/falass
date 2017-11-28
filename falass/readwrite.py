@@ -91,9 +91,9 @@ class Files(object):
             if line[0:6] == "ATOM  ":
                 if self.flip:
                     a = np.sqrt(np.square(self.cell[self.number_of_timesteps - 1][2] - float(line[46:54])))
-                    atoms_each_timestep.append(dataformat.atompositions(line[12:16].strip(), a))
+                    atoms_each_timestep.append(dataformat.AtomPositions(line[12:16].strip(), a))
                 else:
-                    atoms_each_timestep.append(dataformat.atompositions(line[12:16].strip(), float(line[46:54])))
+                    atoms_each_timestep.append(dataformat.AtomPositions(line[12:16].strip(), float(line[46:54])))
             if "TITLE  " in line:
                 if self.number_of_timesteps == 0:
                     self.number_of_timesteps += 1
@@ -128,7 +128,7 @@ class Files(object):
                 line_list = line.split()
                 duplicate = check_duplicates(self.scat_lens, line_list[0])
                 if not duplicate:
-                    self.scat_lens.append(dataformat.scatlens(line_list[0], float(line_list[1]), float(line_list[2])))
+                    self.scat_lens.append(dataformat.ScatLens(line_list[0], float(line_list[1]), float(line_list[2])))
             for i in range(0, len(self.atoms)):
                 for j in range(0, len(self.atoms[i])):
                     duplicate = check_duplicates(self.scat_lens, self.atoms[i][j].atom)
@@ -138,7 +138,7 @@ class Files(object):
                                               'this atom type: '.format(self.atoms[i][j].atom))
                         imag_scat_len = input('\nPlease define a imaginary scattering length for '
                                               'this atom type: '.format(self.atoms[i][j].atom))
-                        self.scat_lens.append(dataformat.scatlens(self.atoms[i][j].atom, float(real_scat_len),
+                        self.scat_lens.append(dataformat.ScatLens(self.atoms[i][j].atom, float(real_scat_len),
                                                                   float(imag_scat_len)))
             print("[{} {} %]".format('#' * int(100 / 10), int(100)))
         else:
@@ -152,7 +152,7 @@ class Files(object):
                                               'this atom type: '.format(self.atoms[i][j].atom))
                         imag_scat_len = input('\nPlease define a imaginary scattering length for '
                                               'this atom type: '.format(self.atoms[i][j].atom))
-                        self.scat_lens.append(dataformat.scatlens(self.atoms[i][j].atom, float(real_scat_len),
+                        self.scat_lens.append(dataformat.ScatLens(self.atoms[i][j].atom, float(real_scat_len),
                                                                   float(imag_scat_len)))
             lgtfile_name = input("What should the lgt file be named? ")
             path, extension = os.path.splitext(lgtfile_name)
@@ -183,16 +183,16 @@ class Files(object):
                 if line[0] != '#':
                     line_list = line.split()
                     if len(line_list) == 2:
-                        self.expdata.append(dataformat.datastruct(float(line_list[0]), float(line_list[1]),
+                        self.expdata.append(dataformat.QData(float(line_list[0]), float(line_list[1]),
                                                                   float(line_list[1]) * (self.ierror / 100),
                                                                   float(line_list[0]) * (self.resolution / 100)))
                     if len(line_list) == 3:
-                        self.expdata.append(dataformat.datastruct(float(line_list[0]), float(line_list[1]),
+                        self.expdata.append(dataformat.QData(float(line_list[0]), float(line_list[1]),
                                                                   float(line_list[2]),
                                                                   float(line_list[0]) * (self.resolution / 100)))
                     if len(line_list) == 4:
                         self.expdata.append(
-                            dataformat.datastruct(float(line_list[0]), float(line_list[1]), float(line_list[2]),
+                            dataformat.QData(float(line_list[0]), float(line_list[1]), float(line_list[2]),
                                                   float(line_list[3])))
             print("[{} {} %]".format('#' * int(100 / 10), int(100)))
         else:
@@ -212,14 +212,14 @@ class Files(object):
         """
         q_values = np.linspace(start, end, number)
         for i in range(0, len(q_values)):
-            self.expdata.append(dataformat.datastruct(q_values[i], None, None, q_values[i] * (self.resolution / 100)))
+            self.expdata.append(dataformat.QData(q_values[i], None, None, q_values[i] * (self.resolution / 100)))
 
 
 
 def check_duplicates(array, check):
     """
     Checks if an atom type has already been added to an array.
-    :param array: array-type of scatlens
+    :param array: array-type of ScatLens
         the array to check
     :param check: str
         the atom type to try and find

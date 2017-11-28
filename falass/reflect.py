@@ -3,15 +3,29 @@ from falass import dataformat
 import matplotlib.pyplot as plt
 from scipy.interpolate import InterpolatedUnivariateSpline
 
+
 class Reflect(object):
     def __init__(self, sld_profile, exp_data, job):
+        """
+        A class for the calculation of reflectometry from the sld profile defined in the falass.sld.SLD class
+        :param sld_profile: array_like falass.dataformat.SLDPro
+            An array describing the scattering length density of the simulation cell under study
+        :param exp_data: array_like falass.dataformat.QData
+            An array giving the experimental data from the datfile
+        :param job: falass.job.Job
+            A class describing the falass job at hand
+        """
         self.sld_profile = sld_profile
         self.exp_data = exp_data
         self.job = job
         self.averagereflect = []
         self.reflect = []
 
-    def calcRef(self):
+    def calc_ref(self):
+        """
+        The calculation of the reflectometry profiles based on the sld profiles calculated from each of the timesteps
+        under study
+        """
         if len(self.exp_data) > 0:
             self.reflect = []
             prog = 0
@@ -19,23 +33,27 @@ class Reflect(object):
             print("[ 0 % ]")
             for i in range(0, len(self.sld_profile)):
                 k += 1
-                prog_new = np.floor((k) / (len(self.sld_profile)) * 100)
+                prog_new = np.floor(k / (len(self.sld_profile)) * 100)
                 if prog_new > prog + 9:
                     prog = prog_new
                     print("[{} {} % ]".format('#' * int(prog / 10), int(prog / 10) * 10))
                 refl = convolution(self.exp_data, self.sld_profile[i], self.job.layer_thickness)
                 a = []
                 for j in range(0, len(self.exp_data)):
-                    a.append(dataformat.datastruct(self.exp_data[j].q, refl[j], 0, self.exp_data[j].dq))
+                    a.append(dataformat.QData(self.exp_data[j].q, refl[j], 0, self.exp_data[j].dq))
                 self.reflect.append(a)
         else:
             raise ValueError('No q vectors have been defined -- either read a .dat file or get q vectors.')
 
-    def averageRef(self):
+    def average_ref(self):
+        """
+        The averaging of the reflectometry profiles as calculated by the calc_ref() function
+        :return:
+        """
         if len(self.exp_data) > 0:
             self.averagereflect = []
             for i in range(0, len(self.reflect[0])):
-                self.averagereflect.append(dataformat.datastruct(self.exp_data[i].q, 0, 0, self.exp_data[i].dq))
+                self.averagereflect.append(dataformat.QData(self.exp_data[i].q, 0, 0, self.exp_data[i].dq))
             for i in range(0, len(self.reflect[0])):
                 for j in range(0, len(self.reflect)):
                     self.averagereflect[i].i += self.reflect[j][i].i
@@ -46,7 +64,12 @@ class Reflect(object):
         else:
             raise ValueError('No q vectors have been defined -- either read a .dat file or get q vectors.')
 
-    def plotaverageRef(self, rq4 = True):
+    def plot_ref(self, rq4=True):
+        """
+        The plotting of the calculated reflectometry data without comparison to experimental data
+        :param rq4: bool
+            should the data be transformed to rq4 space
+        """
         if len(self.exp_data) > 0:
             x = []
             y = []
@@ -57,12 +80,13 @@ class Reflect(object):
                 for i in range(0, len(self.exp_data)):
                     x.append(self.averagereflect[i].q)
                     y.append(np.log10(self.averagereflect[i].i * self.averagereflect[i].q ** 4))
-                    dy.append((self.averagereflect[i].di * self.averagereflect[i].q ** 4) / (self.averagereflect[i].i * np.log(10)))
+                    dy.append((self.averagereflect[i].di * self.averagereflect[i].q ** 4) /
+                              (self.averagereflect[i].i * np.log(10)))
             else:
                 for i in range(0, len(self.exp_data)):
                     x.append(self.averagereflect[i].q)
                     y.append(np.log10(self.averagereflect[i].i))
-                    dy.append((self.averagereflect[i].di) / (self.averagereflect[i].i * np.log(10)))
+                    dy.append(self.averagereflect[i].di / (self.averagereflect[i].i * np.log(10)))
             x = np.asarray(x)
             y = np.asarray(y)
             dy = np.asarray(dy)
@@ -74,9 +98,18 @@ class Reflect(object):
             raise ValueError('No q vectors have been defined -- either read a .dat file or get q vectors.')
 
 
-
-
 def convolution(exp_data, sld_profile, lt):
+    """
+    the convolution of the reflectometry data by a gaussian of constant width (a percentage of the q-vector)
+    :param exp_data: falass.dataformat.QData
+        the experimental data from the datfile
+    :param sld_profile: falass.dataformat.SLDPro
+        the SLD profile calculated from the simulation trajectory
+    :param lt: float
+        the thickness of the layers
+    :return: array_like
+        the smeared reflectometry profile
+    """
     fwhm = 2 * np.sqrt(2 * np.log(2))
 
     res = exp_data[0].dq / exp_data[0].q
@@ -88,7 +121,7 @@ def convolution(exp_data, sld_profile, lt):
     ggpoint = (gnum - 1) / 2
 
     def gauss(x, s):
-        return 1. / s / np.sqrt(2 * np.pi) * np.exp(-0.5 * x ** 2 /s /s)
+        return 1. / s / np.sqrt(2 * np.pi) * np.exp(-0.5 * x ** 2 / s / s)
 
     q = []
     for i in range(0, len(exp_data)):
@@ -108,7 +141,7 @@ def convolution(exp_data, sld_profile, lt):
     gaussy = gauss(gaussx, res / fwhm)
 
     rvals = reflectivity(xlin, sld_profile, lt)
-    smeared_rvals = np.convolve(rvals, gaussy, mode = 'same')
+    smeared_rvals = np.convolve(rvals, gaussy, mode='same')
     interpol = InterpolatedUnivariateSpline(xlin, smeared_rvals)
 
     smeared_output = interpol(q)
@@ -117,6 +150,17 @@ def convolution(exp_data, sld_profile, lt):
 
 
 def reflectivity(exp_data, sld_profile, lt):
+    """
+    The calculation of the reflectometry using the Abeles optical matrix method.
+    :param exp_data: falass.dataformat.QData
+        the experimental data from the datfile
+    :param sld_profile: falass.dataformat.SLDPro
+        the SLD profile calculated from the simulation trajectory
+    :param lt: float
+        the thickness of the layers
+    :return: array_like
+        the reflectometry profile
+    """
     layers = np.zeros((len(sld_profile), 4))
     for i in range(0, len(sld_profile)):
         layers[i][0] = lt
@@ -166,5 +210,5 @@ def reflectivity(exp_data, sld_profile, lt):
 
         k = k_next
 
-    reflectivity = (mrtot01 * np.conj(mrtot01)) / (mrtot00 * np.conj(mrtot00))
-    return np.real(np.reshape(reflectivity, exp_data.shape))
+    ref = (mrtot01 * np.conj(mrtot01)) / (mrtot00 * np.conj(mrtot00))
+    return np.real(np.reshape(ref, exp_data.shape))
