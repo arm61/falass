@@ -12,58 +12,66 @@ class Reflect(object):
         self.reflect = []
 
     def calcRef(self):
-        self.reflect = []
-        prog = 0
-        k = 0
-        print("[ 0 % ]")
-        for i in range(0, len(self.sld_profile)):
-            k += 1
-            prog_new = np.floor((k) / (len(self.sld_profile)) * 100)
-            if prog_new > prog + 9:
-                prog = prog_new
-                print("[{} {} % ]".format('#' * int(prog / 10), int(prog / 10) * 10))
-            refl = convolution(self.exp_data, self.sld_profile[i], self.job.layer_thickness)
-            a = []
-            for j in range(0, len(self.exp_data)):
-                a.append(dataformat.datastruct(self.exp_data[j].q, refl[j], 0, self.exp_data[j].dq))
-            self.reflect.append(a)
-
+        if len(self.exp_data) > 0:
+            self.reflect = []
+            prog = 0
+            k = 0
+            print("[ 0 % ]")
+            for i in range(0, len(self.sld_profile)):
+                k += 1
+                prog_new = np.floor((k) / (len(self.sld_profile)) * 100)
+                if prog_new > prog + 9:
+                    prog = prog_new
+                    print("[{} {} % ]".format('#' * int(prog / 10), int(prog / 10) * 10))
+                refl = convolution(self.exp_data, self.sld_profile[i], self.job.layer_thickness)
+                a = []
+                for j in range(0, len(self.exp_data)):
+                    a.append(dataformat.datastruct(self.exp_data[j].q, refl[j], 0, self.exp_data[j].dq))
+                self.reflect.append(a)
+        else:
+            raise ValueError('No q vectors have been defined -- either read a .dat file or get q vectors.')
 
     def averageRef(self):
-        self.averagereflect = []
-        for i in range(0, len(self.reflect[0])):
-            self.averagereflect.append(dataformat.datastruct(self.exp_data[i].q, 0, 0, self.exp_data[i].dq))
-        for i in range(0, len(self.reflect[0])):
-            for j in range(0, len(self.reflect)):
-                self.averagereflect[i].i += self.reflect[j][i].i
-            self.averagereflect[i].i /= len(self.job.times)
-            for j in range(0, len(self.reflect)):
-                self.averagereflect[i].di += np.square(self.reflect[j][i].i - self.averagereflect[i].i)
-            self.averagereflect[i].di = np.sqrt(1. / (len(self.job.times) - 1) * self.averagereflect[i].di)
+        if len(self.exp_data) > 0:
+            self.averagereflect = []
+            for i in range(0, len(self.reflect[0])):
+                self.averagereflect.append(dataformat.datastruct(self.exp_data[i].q, 0, 0, self.exp_data[i].dq))
+            for i in range(0, len(self.reflect[0])):
+                for j in range(0, len(self.reflect)):
+                    self.averagereflect[i].i += self.reflect[j][i].i
+                self.averagereflect[i].i /= len(self.job.times)
+                for j in range(0, len(self.reflect)):
+                    self.averagereflect[i].di += np.square(self.reflect[j][i].i - self.averagereflect[i].i)
+                self.averagereflect[i].di = np.sqrt(1. / (len(self.job.times) - 1) * self.averagereflect[i].di)
+        else:
+            raise ValueError('No q vectors have been defined -- either read a .dat file or get q vectors.')
 
     def plotaverageRef(self, rq4 = True):
-        x = []
-        y = []
-        dy = []
-        plt.rc('text', usetex=True)
-        plt.rc('font', family='serif')
-        if rq4:
-            for i in range(0, len(self.exp_data)):
-                x.append(self.averagereflect[i].q)
-                y.append(np.log10(self.averagereflect[i].i * self.averagereflect[i].q ** 4))
-                dy.append((self.averagereflect[i].di * self.averagereflect[i].q ** 4) / (self.averagereflect[i].i * np.log(10)))
+        if len(self.exp_data) > 0:
+            x = []
+            y = []
+            dy = []
+            plt.rc('text', usetex=True)
+            plt.rc('font', family='serif')
+            if rq4:
+                for i in range(0, len(self.exp_data)):
+                    x.append(self.averagereflect[i].q)
+                    y.append(np.log10(self.averagereflect[i].i * self.averagereflect[i].q ** 4))
+                    dy.append((self.averagereflect[i].di * self.averagereflect[i].q ** 4) / (self.averagereflect[i].i * np.log(10)))
+            else:
+                for i in range(0, len(self.exp_data)):
+                    x.append(self.averagereflect[i].q)
+                    y.append(np.log10(self.averagereflect[i].i))
+                    dy.append((self.averagereflect[i].di) / (self.averagereflect[i].i * np.log(10)))
+            x = np.asarray(x)
+            y = np.asarray(y)
+            dy = np.asarray(dy)
+            plt.errorbar(x, y, yerr=dy)
+            plt.xlabel('$q$ (\AA)')
+            plt.ylabel('log($Rq^4$) (\AA$^4$)')
+            plt.show()
         else:
-            for i in range(0, len(self.exp_data)):
-                x.append(self.averagereflect[i].q)
-                y.append(np.log10(self.averagereflect[i].i))
-                dy.append((self.averagereflect[i].di) / (self.averagereflect[i].i * np.log(10)))
-        x = np.asarray(x)
-        y = np.asarray(y)
-        dy = np.asarray(dy)
-        plt.errorbar(x, y, yerr=dy)
-        plt.xlabel('$q$ (\AA)')
-        plt.ylabel('log($Rq^4$) (\AA$^4$)')
-        plt.show()
+            raise ValueError('No q vectors have been defined -- either read a .dat file or get q vectors.')
 
 
 

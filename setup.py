@@ -6,6 +6,9 @@ ISRELEASED = False
 VERSION = '%d.%d.%d' % (MAJOR, MINOR, MICRO)
 
 from distutils.core import setup
+from setuptools import find_packages
+
+PACKAGES = find_packages()
 
 # falass setup
 setup(
@@ -16,4 +19,7 @@ setup(
     author_email='arm61@bath.ac.uk',
     long_description=open('README.txt').read(),
     license='MIT',
+    url='https://github.com/arm61/falass',
+    packages=PACKAGES,
+    platforms=['Windows', 'Linux', 'Solaris', 'Mac OS-X', 'Unix'],
 )
