@@ -94,7 +94,7 @@ class SLD(object):
             x.append(buildx)
         plt.bar(np.asarray(x) - self.job.layer_thickness/2., np.asarray(y)*1e6, width = self.job.layer_thickness,
                 yerr=np.asarray(dy)*1e6, color = 'w', edgecolor = 'k')
-        plt.ylabel('SLD (1E10$^{-6}$ \AA$^{-2}$)')
+        plt.ylabel('SLD (10$^{-6}$ \AA$^{-2}$)')
         plt.xlabel('$z$ (\AA)')
         plt.xlim([0, np.amax(x)])
         plt.ylim([np.amin(np.asarray(y)*1e6), np.amax(np.asarray(y)*1e6)+1])

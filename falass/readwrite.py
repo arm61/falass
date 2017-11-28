@@ -62,7 +62,7 @@ class Files(object):
                     self.times.append(float(line.split()[-1]))
             if "CRYST1  " in line:
                 self.cell.append([float(line[6:15]), float(line[15:24]), float(line[24:33])])
-        print("[{} {} %]".format('#' * int(100 / 10), int(100)))
+        print("[{} {} % ]".format('#' * int(100 / 10), int(100)))
 
     def readLGT(self):
         lgtsfile_name = None

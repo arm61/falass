@@ -13,7 +13,15 @@ class Reflect(object):
 
     def calcRef(self):
         self.reflect = []
+        prog = 0
+        k = 0
+        print("[ 0 % ]")
         for i in range(0, len(self.sld_profile)):
+            k += 1
+            prog_new = np.floor((k) / (len(self.sld_profile)) * 100)
+            if prog_new > prog + 9:
+                prog = prog_new
+                print("[{} {} % ]".format('#' * int(prog / 10), int(prog / 10) * 10))
             refl = convolution(self.exp_data, self.sld_profile[i], self.job.layer_thickness)
             a = []
             for j in range(0, len(self.exp_data)):
@@ -33,24 +41,31 @@ class Reflect(object):
                 self.averagereflect[i].di += np.square(self.reflect[j][i].i - self.averagereflect[i].i)
             self.averagereflect[i].di = np.sqrt(1. / (len(self.job.times) - 1) * self.averagereflect[i].di)
 
-    def plotaverageRef(self):
+    def plotaverageRef(self, rq4 = True):
         x = []
         y = []
         dy = []
         plt.rc('text', usetex=True)
         plt.rc('font', family='serif')
-        for i in range(0, len(self.exp_data)):
-            x.append(self.averagereflect[i].q)
-            y.append(self.averagereflect[i].i)
-            dy.append(self.averagereflect[i].di)
+        if rq4:
+            for i in range(0, len(self.exp_data)):
+                x.append(self.averagereflect[i].q)
+                y.append(np.log10(self.averagereflect[i].i * self.averagereflect[i].q ** 4))
+                dy.append((self.averagereflect[i].di * self.averagereflect[i].q ** 4) / (self.averagereflect[i].i * np.log(10)))
+        else:
+            for i in range(0, len(self.exp_data)):
+                x.append(self.averagereflect[i].q)
+                y.append(np.log10(self.averagereflect[i].i))
+                dy.append((self.averagereflect[i].di) / (self.averagereflect[i].i * np.log(10)))
         x = np.asarray(x)
         y = np.asarray(y)
         dy = np.asarray(dy)
-        plt.errorbar(x, y * x ** 4, yerr=dy * x ** 4)
+        plt.errorbar(x, y, yerr=dy)
         plt.xlabel('$q$ (\AA)')
-        plt.ylabel('$Rq^4$ (\AA$^4$)')
-        plt.yscale('log')
+        plt.ylabel('log($Rq^4$) (\AA$^4$)')
         plt.show()
+
+
 
 
 def convolution(exp_data, sld_profile, lt):
@@ -94,51 +109,54 @@ def convolution(exp_data, sld_profile, lt):
 
 
 def reflectivity(exp_data, sld_profile, lt):
-    bn = np.zeros((2, 2), dtype='complex')
-    M = np.zeros((2, 2), dtype='complex')
-    bm = np.zeros((2, 2), dtype='complex')
-    refl = []
-    for a in range(0, len(exp_data)):
-        kz = exp_data[a] / 2 + 0j
-        kn = kz
-        bn[0][0] = 1 + 0j
-        bn[0][1] = 0 + 0j
-        bn[1][0] = 0 + 0j
-        bn[1][1] = 1 + 0j
-        for it in range(0, len(sld_profile) - 1):
-            kn1_init_layer = sld_profile[it].real + sld_profile[it].imag * 1.j
-            kn1_init_super = sld_profile[0].real + sld_profile[0].imag * 1.j
-            kn1_init_4pi = 4. * np.pi + 0.j
-            for_exp = -2. + 0.j
-            rough = 0. + 0.j
-            sld_diff = np.subtract(kn1_init_layer, kn1_init_super)
-            four_pi_sld_diff = np.multiply(kn1_init_4pi, sld_diff)
-            kz_squared = np.multiply(kz, kz)
-            kn1_squared = np.subtract(kz_squared, four_pi_sld_diff)
-            kn1 = np.sqrt(kn1_squared)
-            rough_squared = np.multiply(rough, rough)
-            kn1_by_rough = np.multiply(kn1, rough_squared)
-            kn_by_kn1_by_rough = np.multiply(kn, kn1_by_rough)
-            rough_for_exp = np.multiply(for_exp, kn_by_kn1_by_rough)
-            whole_rough = np.exp(rough_for_exp)
-            numerator = np.subtract(kn, kn1)
-            denominator = np.add(kn, kn1)
-            fraction = np.divide(numerator, denominator)
-            f = np.multiply(fraction, whole_rough)
-            bin_w = lt + 0j
-            if it > 0:
-                betan = np.multiply(kn, bin_w)
-            else:
-                betan = 0 + 0j
-            im = 0 + 1j
-            negim = 0 - 1j
-            M[0][0] = np.exp(np.multiply(im, betan))
-            M[0][1] = np.multiply(f, M[0][0])
-            M[1][1] = np.exp(np.multiply(negim, betan))
-            M[1][0] = np.multiply(f, M[1][1])
-            bm = np.dot(bn, M)
-            bn = bm
-            kn = kn1
-        r = np.abs(bn[1][0]) / np.abs(bn[0][0])
-        refl.append(r)
-    return refl
+    layers = np.zeros((len(sld_profile), 4))
+    for i in range(0, len(sld_profile)):
+        layers[i][0] = lt
+        layers[i][1] = sld_profile[i].real
+        layers[i][2] = sld_profile[i].imag
+        layers[i][3] = 0
+    qvals = np.asfarray(exp_data).ravel()
+    nlayers = len(sld_profile) - 2
+    npnts = qvals.size
+
+    kn = np.zeros((npnts, nlayers + 2), np.complex128)
+
+    sld = np.zeros(nlayers + 2, np.complex128)
+    sld[:] += ((layers[:, 1].real - layers[0, 1]) + 1j * (layers[:, 2] - layers[0, 2]))
+
+    kn[:] = np.sqrt(qvals[:, np.newaxis] ** 2. / 4. - 4 * np.pi * sld)
+
+    mrtot00 = 1
+    mrtot11 = 1
+    mrtot10 = 0
+    mrtot01 = 0
+    k = kn[:, 0]
+
+    for idx in range(1, nlayers + 2):
+        k_next = kn[:, idx]
+        rj = (k - k_next) / (k + k_next)
+        rj *= np.exp(k * k_next)
+
+        # work out characteristic matrix of layer
+        mi00 = np.exp(k * 1j * np.fabs(layers[idx - 1, 0])) if idx - 1 else 1
+        mi11 = np.exp(k * -1j * np.fabs(layers[idx - 1, 0])) if idx - 1 else 1
+
+        mi10 = rj * mi00
+        mi01 = rj * mi11
+
+        # matrix multiply mrtot by characteristic matrix
+        p0 = mrtot00 * mi00 + mrtot10 * mi01
+        p1 = mrtot00 * mi10 + mrtot10 * mi11
+        mrtot00 = p0
+        mrtot10 = p1
+
+        p0 = mrtot01 * mi00 + mrtot11 * mi01
+        p1 = mrtot01 * mi10 + mrtot11 * mi11
+
+        mrtot01 = p0
+        mrtot11 = p1
+
+        k = k_next
+
+    reflectivity = (mrtot01 * np.conj(mrtot01)) / (mrtot00 * np.conj(mrtot00))
+    return np.real(np.reshape(reflectivity, exp_data.shape))

@@ -2,8 +2,8 @@ class datastruct(object):
     def __init__(self, q, i, di, dq):
         self.q = q
         self.i = i
-        self.di = i
-        self.dq = i
+        self.di = di
+        self.dq = dq
 
 class scatlens(object):
     def __init__(self, atom, real, imag):
