@@ -1,0 +1,50 @@
+REMARK    TEST CASE FOR FALASS
+TITLE     falass test t=   0.00000
+REMARK    THIS IS A SIMULATION BOX
+CRYST1    1.000    1.000    4.000  90.00  90.00  90.00 P 1           1
+MODEL        1
+ATOM      1  C1  DSPCA   1      00.500  00.500  01.000  1.00  0.00           C
+ATOM      2  C2  DSPCA   1      00.500  00.500  02.000  1.00  0.00           C
+ATOM      3  C3  DSPCA   1      00.500  00.500  03.000  1.00  0.00           C
+TER
+ENDMDL
+REMARK    TEST CASE FOR FALASS
+TITLE     falass test t= 10000.00000
+REMARK    THIS IS A SIMULATION BOX
+CRYST1    2.000    1.000    4.000  90.00  90.00  90.00 P 1           1
+MODEL        2
+ATOM      1  C1  DSPCA   1      00.500  00.500  03.000  1.00  0.00           C
+ATOM      2  C2  DSPCA   1      00.500  00.500  01.000  1.00  0.00           C
+ATOM      3  C3  DSPCA   1      00.500  00.500  02.000  1.00  0.00           C
+TER
+ENDMDL
+REMARK    TEST CASE FOR FALASS
+TITLE     falass test t= 20000.00000
+REMARK    THIS IS A SIMULATION BOX
+CRYST1    3.000    1.000    4.000  90.00  90.00  90.00 P 1           1
+MODEL        3
+ATOM      1  C1  DSPCA   1      00.500  00.500  02.000  1.00  0.00           C
+ATOM      2  C2  DSPCA   1      00.500  00.500  03.000  1.00  0.00           C
+ATOM      3  C3  DSPCA   1      00.500  00.500  01.000  1.00  0.00           C
+TER
+ENDMDL
+REMARK    TEST CASE FOR FALASS
+TITLE     falass test t= 30000.00000
+REMARK    THIS IS A SIMULATION BOX
+CRYST1    4.000    1.000    4.000  90.00  90.00  90.00 P 1           1
+MODEL        4
+ATOM      1  C1  DSPCA   1      00.500  00.500  01.000  1.00  0.00           C
+ATOM      2  C2  DSPCA   1      00.500  00.500  02.000  1.00  0.00           C
+ATOM      3  C3  DSPCA   1      00.500  00.500  03.000  1.00  0.00           C
+TER
+ENDMDL
+REMARK    TEST CASE FOR FALASS
+TITLE     falass test t= 40000.00000
+REMARK    THIS IS A SIMULATION BOX
+CRYST1    5.000    1.000    4.000  90.00  90.00  90.00 P 1           1
+MODEL        5
+ATOM      1  C1  DSPCA   1      00.500  00.500  03.000  1.00  0.00           C
+ATOM      2  C2  DSPCA   1      00.500  00.500  01.000  1.00  0.00           C
+ATOM      3  C3  DSPCA   1      00.500  00.500  02.000  1.00  0.00           C
+TER
+ENDMDL
