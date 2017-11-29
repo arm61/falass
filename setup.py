@@ -4,8 +4,8 @@ from setuptools import find_packages
 # versioning
 MAJOR = 0
 MINOR = 0 
-MAINT = 1
-ISRELEASED = False
+MAINT = 2
+ISRELEASED = True 
 VERSION = '%d.%d.%d' % (MAJOR, MINOR, MAINT)
 
 PACKAGES = find_packages()
