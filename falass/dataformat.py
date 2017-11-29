@@ -1,5 +1,6 @@
-class QData(object):
-    """
+class QData():
+    """Reflectometry data.
+
     A class to hold the qdata information consisting of four floats associated with the q-vector, the intensity of the
     reflectometry, the uncertainty in the intensity and the uncertainty in the q-vector/resolution of the q-vector.
     """
@@ -10,8 +11,9 @@ class QData(object):
         self.dq = dq
 
 
-class ScatLens(object):
-    """
+class ScatLens():
+    """Scattering lengths.
+
     A class to hold the scattering lengths of the different atom types consisting of a str atom type name, and two
     floats associated with the real and imaginary scattering lengths of that atom type.
     """
@@ -21,8 +23,9 @@ class ScatLens(object):
         self.imag = imag * 1e-5
 
 
-class AtomPositions(object):
-    """
+class AtomPositions():
+    """z-Dimension positions.
+
     A class to hold the atom positions in the z-dimension, consisting of the str atom type name and a float giving the
     position in the z-dimension.
     """
@@ -31,8 +34,9 @@ class AtomPositions(object):
         self.zpos = position
 
 
-class SLDPro(object):
-    """
+class SLDPro():
+    """Layer information for SLD profile.
+
     A class to hold the layer description of the sld profile consisting of three floats associated with the thickness,
     real scattering length density and imaginary scattering length density.
     """

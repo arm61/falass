@@ -4,19 +4,23 @@ from scipy.optimize import curve_fit
 from falass import dataformat
 
 
-class Compare(object):
+class Compare():
+    """Comparison and fitting.
+
+    For the comparison and fitting of calculated and experimental reflectometry.
+
+    Parameters
+    ----------
+    exp_data: array_like falass.dataformat.QData
+        The experimental reflectometry data read from the datfile.
+    sim_data: array_like falass.dataformat.QData
+        The calculated reflectometry data from the simulation.
+    scale: float
+        The amount by which the calculated reflectometry should be scaled.
+    background: float
+        The height of the uniform background to be added to the calculated reflectometry.
+    """
     def __init__(self, exp_data, sim_data, scale, background):
-        """
-        For the comparison and fitting of calculated and experimental reflectometry.
-        :param exp_data: array_like falass.dataformat.QData
-            The experimental reflectometry data read from the datfile
-        :param sim_data: array_like falass.dataformat.QData
-            The calculated reflectometry data from the simulation
-        :param scale: float
-            The amount by which the calculated reflectometry should be scaled
-        :param background: float
-            The height of the uniform background to be added to the calculated reflectometry
-        """
         self.exp_data = exp_data
         self.sim_data = sim_data
         self.scale = scale
@@ -24,25 +28,32 @@ class Compare(object):
         self.sim_data_fitted = []
 
     def change_scale(self, scale):
-        """
-        Lets the scale factor be changed
-        :param scale: float
-            The amount by which the calculated reflectometry should be scaled
-        :return:
+        """Edit scale.
+
+        Lets the scale factor be changed.
+
+        Parameters
+        ----------
+        scale: float
+            The amount by which the calculated reflectometry should be scaled.
         """
         self.scale = scale
 
     def change_background(self, background):
-        """
-        Lets the background factor be changed
-        :param background: float
-            The height of the uniform background to be added to the calculated reflectometry
-        :return:
+        """Edit background.
+
+        Lets the background factor be changed.
+
+        Parameters
+        ----------
+        background: float
+            The height of the uniform background to be added to the calculated reflectometry.
         """
         self.background = background
 
     def fit(self):
-        """
+        """Fit scale and background.
+
         Perform the fitting of the scale and background for the calculated data to the experimental data.
         Currently only a logarithmically transformed fitted can be conducted.
         """
@@ -64,13 +75,16 @@ class Compare(object):
             raise ValueError('No q vectors have been defined -- either read a .dat file or get q vectors.')
 
     def plot_compare(self, rq4=True, fitted=True):
-        """
-        Plotting the comparision between the calculated and experimental reflectometry
-        :param rq4: bool
-            Should the data be plotted in rq4 space
-        :param fitted: bool
-            should the fitted reflectometry data be used
-        :return:
+        """Plot a comparison.
+
+        Plotting the comparision between the calculated and experimental reflectometry.
+
+        Parameters
+        ----------
+        rq4: bool
+            Should the data be plotted in rq4 space.
+        fitted: bool
+            Should the fitted reflectometry data be used.
         """
         x = []
         y = []
@@ -123,7 +137,8 @@ class Compare(object):
         plt.show()
 
     def return_fitted(self):
-        """
+        """Return fitted.
+
         Return the fitted calculated reflectometry data for use.
         """
         self.sim_data_fitted = []
@@ -134,15 +149,23 @@ class Compare(object):
 
 
 def scale_and_background(sim_data, scale, background):
-    """
-    Apply a scale factor and uniform background to the calculated reflectometry data
-    :param sim_data: array_like float
-        the data to be scaled and have a background added
-    :param scale: float
-        the amount by which the data should be scaled
-    :param background: float
-        the size of the uniform background to be added
-    :return: the scaled and background added reflectometry in log space.
+    """Apply scale and background.
+
+    Apply a scale factor and uniform background to the calculated reflectometry data.
+
+    Parameters
+    ----------
+    sim_data: array_like float
+        The data to be scaled and have a background added.
+    scale: float
+        The amount by which the data should be scaled.
+    background: float
+        The size of the uniform background to be added.
+
+    Returns
+    -------
+    array_like float
+        The scaled and background added reflectometry in log space.
     """
     sim_data = np.log(sim_data * scale + background)
     return sim_data

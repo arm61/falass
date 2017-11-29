@@ -1,0 +1,841 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>falass package &mdash; falass 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="falass 0.0.1 documentation" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> falass
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">falass package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-falass.compare">falass.compare module</a></li>
+<li><a class="reference internal" href="#module-falass.dataformat">falass.dataformat module</a></li>
+<li><a class="reference internal" href="#module-falass.job">falass.job module</a></li>
+<li><a class="reference internal" href="#module-falass.readwrite">falass.readwrite module</a></li>
+<li><a class="reference internal" href="#module-falass.reflect">falass.reflect module</a></li>
+<li><a class="reference internal" href="#module-falass.sld">falass.sld module</a></li>
+<li><a class="reference internal" href="#module-falass">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">falass</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>falass package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/falass.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="falass-package">
+<h1>falass package<a class="headerlink" href="#falass-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-falass.compare">
+<span id="falass-compare-module"></span><h2>falass.compare module<a class="headerlink" href="#module-falass.compare" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="falass.compare.Compare">
+<em class="property">class </em><code class="descclassname">falass.compare.</code><code class="descname">Compare</code><span class="sig-paren">(</span><em>exp_data</em>, <em>sim_data</em>, <em>scale</em>, <em>background</em><span class="sig-paren">)</span><a class="headerlink" href="#falass.compare.Compare" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Comparison and fitting.</p>
+<p>For the comparison and fitting of calculated and experimental reflectometry.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>exp_data</strong> (<em>array_like falass.dataformat.QData</em>) – The experimental reflectometry data read from the datfile.</li>
+<li><strong>sim_data</strong> (<em>array_like falass.dataformat.QData</em>) – The calculated reflectometry data from the simulation.</li>
+<li><strong>scale</strong> (<em>float</em>) – The amount by which the calculated reflectometry should be scaled.</li>
+<li><strong>background</strong> (<em>float</em>) – The height of the uniform background to be added to the calculated reflectometry.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="falass.compare.Compare.change_background">
+<code class="descname">change_background</code><span class="sig-paren">(</span><em>background</em><span class="sig-paren">)</span><a class="headerlink" href="#falass.compare.Compare.change_background" title="Permalink to this definition">¶</a></dt>
+<dd><p>Edit background.</p>
+<p>Lets the background factor be changed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>background</strong> (<em>float</em>) – The height of the uniform background to be added to the calculated reflectometry.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="falass.compare.Compare.change_scale">
+<code class="descname">change_scale</code><span class="sig-paren">(</span><em>scale</em><span class="sig-paren">)</span><a class="headerlink" href="#falass.compare.Compare.change_scale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Edit scale.</p>
+<p>Lets the scale factor be changed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>scale</strong> (<em>float</em>) – The amount by which the calculated reflectometry should be scaled.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="falass.compare.Compare.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#falass.compare.Compare.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit scale and background.</p>
+<p>Perform the fitting of the scale and background for the calculated data to the experimental data.
+Currently only a logarithmically transformed fitted can be conducted.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="falass.compare.Compare.plot_compare">
+<code class="descname">plot_compare</code><span class="sig-paren">(</span><em>rq4=True</em>, <em>fitted=True</em><span class="sig-paren">)</span><a class="headerlink" href="#falass.compare.Compare.plot_compare" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot a comparison.</p>
+<p>Plotting the comparision between the calculated and experimental reflectometry.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>rq4</strong> (<em>bool</em>) – Should the data be plotted in rq4 space.</li>
+<li><strong>fitted</strong> (<em>bool</em>) – Should the fitted reflectometry data be used.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="falass.compare.Compare.return_fitted">
+<code class="descname">return_fitted</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#falass.compare.Compare.return_fitted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return fitted.</p>
+<p>Return the fitted calculated reflectometry data for use.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="falass.compare.scale_and_background">
+<code class="descclassname">falass.compare.</code><code class="descname">scale_and_background</code><span class="sig-paren">(</span><em>sim_data</em>, <em>scale</em>, <em>background</em><span class="sig-paren">)</span><a class="headerlink" href="#falass.compare.scale_and_background" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply scale and background.</p>
+<p>Apply a scale factor and uniform background to the calculated reflectometry data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>sim_data</strong> (<em>array_like float</em>) – The data to be scaled and have a background added.</li>
+<li><strong>scale</strong> (<em>float</em>) – The amount by which the data should be scaled.</li>
+<li><strong>background</strong> (<em>float</em>) – The size of the uniform background to be added.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The scaled and background added reflectometry in log space.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">array_like float</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-falass.dataformat">
+<span id="falass-dataformat-module"></span><h2>falass.dataformat module<a class="headerlink" href="#module-falass.dataformat" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="falass.dataformat.AtomPositions">
+<em class="property">class </em><code class="descclassname">falass.dataformat.</code><code class="descname">AtomPositions</code><span class="sig-paren">(</span><em>atom</em>, <em>position</em><span class="sig-paren">)</span><a class="headerlink" href="#falass.dataformat.AtomPositions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>z-Dimension positions.</p>
+<p>A class to hold the atom positions in the z-dimension, consisting of the str atom type name and a float giving the
+position in the z-dimension.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="falass.dataformat.QData">
+<em class="property">class </em><code class="descclassname">falass.dataformat.</code><code class="descname">QData</code><span class="sig-paren">(</span><em>q</em>, <em>i</em>, <em>di</em>, <em>dq</em><span class="sig-paren">)</span><a class="headerlink" href="#falass.dataformat.QData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Reflectometry data.</p>
+<p>A class to hold the qdata information consisting of four floats associated with the q-vector, the intensity of the
+reflectometry, the uncertainty in the intensity and the uncertainty in the q-vector/resolution of the q-vector.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="falass.dataformat.SLDPro">
+<em class="property">class </em><code class="descclassname">falass.dataformat.</code><code class="descname">SLDPro</code><span class="sig-paren">(</span><em>thick</em>, <em>real</em>, <em>imag</em><span class="sig-paren">)</span><a class="headerlink" href="#falass.dataformat.SLDPro" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Layer information for SLD profile.</p>
+<p>A class to hold the layer description of the sld profile consisting of three floats associated with the thickness,
+real scattering length density and imaginary scattering length density.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="falass.dataformat.ScatLens">
+<em class="property">class </em><code class="descclassname">falass.dataformat.</code><code class="descname">ScatLens</code><span class="sig-paren">(</span><em>atom</em>, <em>real</em>, <em>imag</em><span class="sig-paren">)</span><a class="headerlink" href="#falass.dataformat.ScatLens" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Scattering lengths.</p>
+<p>A class to hold the scattering lengths of the different atom types consisting of a str atom type name, and two
+floats associated with the real and imaginary scattering lengths of that atom type.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-falass.job">
+<span id="falass-job-module"></span><h2>falass.job module<a class="headerlink" href="#module-falass.job" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="falass.job.Job">
+<em class="property">class </em><code class="descclassname">falass.job.</code><code class="descname">Job</code><span class="sig-paren">(</span><em>files</em>, <em>layer_thickness</em>, <em>cut_off_size</em><span class="sig-paren">)</span><a class="headerlink" href="#falass.job.Job" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The catch all.</p>
+<p>This class is used for setting up the falass job – and is generally a catch all for inputs that do not fit into
+other parts.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>files</strong> (<a class="reference internal" href="#falass.readwrite.Files" title="falass.readwrite.Files"><em>falass.readwrite.Files</em></a>) – A Files class item.</li>
+<li><strong>layer_thickness</strong> (<em>float</em>) – The thickness of the layers that the simulation cell should be sliced into.</li>
+<li><strong>cut_off_size</strong> (<em>float</em>) – The size of the simulation cell that should be ignored from the bottom – this is to allow for the use
+of a vacuum gap at the bottom of the cell.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="falass.job.Job.set_lgts">
+<code class="descname">set_lgts</code><span class="sig-paren">(</span><em>files</em><span class="sig-paren">)</span><a class="headerlink" href="#falass.job.Job.set_lgts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign scattering lengths.</p>
+<p>Assigned the scattering lengths from the lgtfile to the different atom types. If no lgtfile is defined falass
+will help the user to build one by working through the atom types in the pdb file and requesting input of the
+real and imaginary scattering lengths. This will also occur if a atom type if found in the pdbfile but not in
+the given lgts file. falass will write the lgtfile to disk if atom types do not feature in the given lgtfile or
+one is written from scratch.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>files</strong> (<a class="reference internal" href="#falass.readwrite.Files" title="falass.readwrite.Files"><em>falass.readwrite.Files</em></a>) – A Files class item.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="falass.job.Job.set_run">
+<code class="descname">set_run</code><span class="sig-paren">(</span><em>files=None</em>, <em>layer_thickness=None</em>, <em>cut_off_size=None</em><span class="sig-paren">)</span><a class="headerlink" href="#falass.job.Job.set_run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Edit job inputs.</p>
+<p>This allows parts of the class to be assigned after the initial assignment or changed</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>files</strong> (<a class="reference internal" href="#falass.readwrite.Files" title="falass.readwrite.Files"><em>falass.readwrite.Files</em></a>) – A Files class item.</li>
+<li><strong>layer_thickness</strong> (<em>float</em>) – The thickness of the layers that the simulation cell should be sliced into.</li>
+<li><strong>cut_off_size</strong> (<em>float</em>) – The size of the simulation cell that should be ignored from the bottom – this is to allow for the use
+of a vacuum gap at the bottom of the cell.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="falass.job.Job.set_times">
+<code class="descname">set_times</code><span class="sig-paren">(</span><em>times=None</em><span class="sig-paren">)</span><a class="headerlink" href="#falass.job.Job.set_times" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign times to analyse.</p>
+<p>The assignment of the simulation timesteps that should be analysed. if none are given all will be analysed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>times</strong> (<em>array_like float</em>) – The timesteps that should be analysed, in the unit of time that present in the pdbfile.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="falass.job.check_array">
+<code class="descclassname">falass.job.</code><code class="descname">check_array</code><span class="sig-paren">(</span><em>array</em>, <em>check</em><span class="sig-paren">)</span><a class="headerlink" href="#falass.job.check_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if item is in array.</p>
+<p>Checks if an item has already been added to an array.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>array</strong> (<em>array-type</em>) – The array to check.</li>
+<li><strong>check</strong> (<em>str</em>) – The item to try and find.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">true if the item is already present in the scatlen type array, false if not.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-falass.readwrite">
+<span id="falass-readwrite-module"></span><h2>falass.readwrite module<a class="headerlink" href="#module-falass.readwrite" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="falass.readwrite.Files">
+<em class="property">class </em><code class="descclassname">falass.readwrite.</code><code class="descname">Files</code><span class="sig-paren">(</span><em>pdbfile</em>, <em>lgtfile=None</em>, <em>datfile=None</em>, <em>resolution=5.0</em>, <em>ierror=5.0</em>, <em>flip=False</em><span class="sig-paren">)</span><a class="headerlink" href="#falass.readwrite.Files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>File parsing.</p>
+<p>Definition of the files to be used in the analysis; such as the .pdb file, .lgt file (is one exists), .dat file
+(is one exists). Also defined at this time are the resolution (this is ignored if the .dat file has 4 columns)
+and the percentage error in the intensity (this is also ignored if the .dat file has &gt;2 columns), and whether
+the simulation cell should be flipped in the xy-plane.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pdbfile</strong> (<em>str</em>) – Path and name of the .pdb file to be analysed.</li>
+<li><strong>lgtfile</strong> (<em>str</em><em>, </em><em>optional</em>) – Path and name of the .lgt file (which contains the scattering lengths of each of the atom types in the
+pdbfile). If a lgtfile is not defined falass will help in the creation of one.
+Currently the .lgt file style that is supported is a 3 column space separated txt file where the columns are
+atom_type, real_scattering_length, and imaginary_scattering_length respectively.</li>
+<li><strong>datfile</strong> (<em>str</em><em>, </em><em>optional</em>) – Path and name of the .dat file (from which the analysis q vectors are drawn and also for subsequent
+comparison between theory and experiment). If a datfile is not defined falass will allow the user to
+define a range of q vectors to calculate the reflectometry over.
+Currently the .dat file style that is supported is a 2, 3, and 4 column space separated txt files where the
+columns are q, i, di, and dq respectively.</li>
+<li><strong>resolution</strong> (<em>float</em><em>, </em><em>optional</em>) – Percentage of the q vector for the width of the resolution Gaussian function to be used in the data
+smearing, if a 4 column datfile is given this is ignored.</li>
+<li><strong>ierror</strong> (<em>float</em><em>, </em><em>optional</em>) – Percentage error of the intensity to be assumed, if a &gt;2 column datfile is used this is ignored.</li>
+<li><strong>flip</strong> (<em>bool</em><em>, </em><em>optional</em>) – False if the system should be read as is, true is the simulation cell should be rotated through the
+xy-plane – note that falass treats the first side that the neutron or X-ray interacts with as that at z=0.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="falass.readwrite.Files.get_qs">
+<code class="descname">get_qs</code><span class="sig-paren">(</span><em>start=0.005</em>, <em>end=0.5</em>, <em>number=50</em><span class="sig-paren">)</span><a class="headerlink" href="#falass.readwrite.Files.get_qs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make custom q-vectors.</p>
+<p>If no datfile exists this function should be used to generate a linear-spaced range of q-vector for the
+calculation of the reflectometry over.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>start</strong> (<em>float</em><em>, </em><em>optional</em>) – The first q-vector for which the reflectometry should be calculated.</li>
+<li><strong>end</strong> (<em>float</em><em>, </em><em>optional</em>) – The last q-vector for which the reflectometry should be calculated.</li>
+<li><strong>number</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of q-vectors.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="falass.readwrite.Files.read_dat">
+<code class="descname">read_dat</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#falass.readwrite.Files.read_dat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses .dat.</p>
+<p>Parses the .dat file, supporting 2, 3, and 4 column files consisting of q, i, di, and dq with comments in lines
+where the first character is a ‘#’. If there is no .dat file the get_qs() function should be used to generate
+q vectors to allow for the calculation of the reflectometry profile.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="falass.readwrite.Files.read_lgt">
+<code class="descname">read_lgt</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#falass.readwrite.Files.read_lgt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses .lgt.</p>
+<p>Parses the lgtfile. If no lgtfile is defined falass will help the user to build one by working through the
+atom types in the pdb file and requesting input of the real and imaginary scattering lengths. This will also
+occur if a atom type if found in the pdbfile but not in the given lgts file. falass will write the lgtfile
+to disk if atom types do not feature in the given lgtfile or one is written from scratch.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="falass.readwrite.Files.read_pdb">
+<code class="descname">read_pdb</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#falass.readwrite.Files.read_pdb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse .pdb.</p>
+<p>Reads the .pdb file into memory. Currently the atoms must have the title ‘ATOM’, the timestep time needs to
+be the last text in the ‘TITLE’ line, and the cell dimensions are taken from the ‘CRYST1’ line, and assumed to
+be orthorhomic. Non-orthorhomic cells are not necessarily supported.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="falass.readwrite.Files.set_file">
+<code class="descname">set_file</code><span class="sig-paren">(</span><em>pdbfile=None</em>, <em>lgtfile=None</em>, <em>datfile=None</em><span class="sig-paren">)</span><a class="headerlink" href="#falass.readwrite.Files.set_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Edits files.</p>
+<p>Let the subsequent definition, or redefinition of the pdbfile, lgtfile or datfile.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pdbfile</strong> (<em>str</em>) – Path and name of the .pdb file to be analysed.</li>
+<li><strong>lgtfile</strong> (<em>str</em><em>, </em><em>optional</em>) – Path and name of the .lgt file (which contains the scattering lengths of each of the atom types in the
+pdbfile). If a lgtfile is not defined falass will help in the creation of one.
+Currently the .lgt file style that is supported is a 3 column space separated txt file where the columns are
+atom_type, real_scattering_length, and imaginary_scattering_length respectively.</li>
+<li><strong>datfile</strong> (<em>str</em><em>, </em><em>optional</em>) – Path and name of the .dat file (from which the analysis q vectors are drawn and also for subsequent
+comparison between theory and experiment). If a datfile is not defined falass will allow the user to
+define a range of q vectors to calculate the reflectometry over.
+Currently the .dat file style that is supported is a 2, 3, and 4 column space separated txt files where the
+columns are q, i, di, and dq respectively.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="falass.readwrite.check_duplicates">
+<code class="descclassname">falass.readwrite.</code><code class="descname">check_duplicates</code><span class="sig-paren">(</span><em>array</em>, <em>check</em><span class="sig-paren">)</span><a class="headerlink" href="#falass.readwrite.check_duplicates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stops duplicate atom types.</p>
+<p>Checks if an atom type has already been added to an array.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>array</strong> (<em>array-type ScatLens</em>) – The array to check.</li>
+<li><strong>check</strong> (<em>str</em>) – The atom type to try and find.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">True if the atom type is already present in the scatlen type array, false if not.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="falass.readwrite.line_count">
+<code class="descclassname">falass.readwrite.</code><code class="descname">line_count</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="headerlink" href="#falass.readwrite.line_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>File length.</p>
+<p>Quickly counts the number of lines in a file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<em>str</em>) – Name of the file that the number of lines is desired for.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Number of lines in the file</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-falass.reflect">
+<span id="falass-reflect-module"></span><h2>falass.reflect module<a class="headerlink" href="#module-falass.reflect" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="falass.reflect.Reflect">
+<em class="property">class </em><code class="descclassname">falass.reflect.</code><code class="descname">Reflect</code><span class="sig-paren">(</span><em>sld_profile</em>, <em>exp_data</em>, <em>job</em><span class="sig-paren">)</span><a class="headerlink" href="#falass.reflect.Reflect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Reflectometry calculation.</p>
+<p>A class for the calculation of reflectometry from the sld profile defined in the falass.sld.SLD class.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>sld_profile</strong> (<em>array_like falass.dataformat.SLDPro</em>) – An array describing the scattering length density of the simulation cell under study.</li>
+<li><strong>exp_data</strong> (<em>array_like falass.dataformat.QData</em>) – An array giving the experimental data from the datfile.</li>
+<li><strong>job</strong> (<a class="reference internal" href="#falass.job.Job" title="falass.job.Job"><em>falass.job.Job</em></a>) – A class describing the falass job at hand.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="falass.reflect.Reflect.average_ref">
+<code class="descname">average_ref</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#falass.reflect.Reflect.average_ref" title="Permalink to this definition">¶</a></dt>
+<dd><p>Average reflectometry profiles.</p>
+<p>The averaging of the reflectometry profiles as calculated by the calc_ref() function.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="falass.reflect.Reflect.calc_ref">
+<code class="descname">calc_ref</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#falass.reflect.Reflect.calc_ref" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate reflectometry.</p>
+<p>The calculation of the reflectometry profiles based on the sld profiles calculated from each of the timesteps
+under study.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="falass.reflect.Reflect.plot_ref">
+<code class="descname">plot_ref</code><span class="sig-paren">(</span><em>rq4=True</em><span class="sig-paren">)</span><a class="headerlink" href="#falass.reflect.Reflect.plot_ref" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot reflectometry profile.</p>
+<p>The plotting of the calculated reflectometry data without comparison to experimental data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rq4</strong> (<em>bool</em>) – Should the data be transformed to rq4 space.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="falass.reflect.convolution">
+<code class="descclassname">falass.reflect.</code><code class="descname">convolution</code><span class="sig-paren">(</span><em>exp_data</em>, <em>sld_profile</em>, <em>lt</em><span class="sig-paren">)</span><a class="headerlink" href="#falass.reflect.convolution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convolution/smearing</p>
+<p>The convolution of the reflectometry data by a gaussian of constant width (a percentage of the q-vector)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>exp_data</strong> (<a class="reference internal" href="#falass.dataformat.QData" title="falass.dataformat.QData"><em>falass.dataformat.QData</em></a>) – The experimental data from the datfile.</li>
+<li><strong>sld_profile</strong> (<a class="reference internal" href="#falass.dataformat.SLDPro" title="falass.dataformat.SLDPro"><em>falass.dataformat.SLDPro</em></a>) – The SLD profile calculated from the simulation trajectory.</li>
+<li><strong>lt</strong> (<em>float</em>) – The thickness of the layers.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The smeared reflectometry profile.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">array_like</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="falass.reflect.reflectivity">
+<code class="descclassname">falass.reflect.</code><code class="descname">reflectivity</code><span class="sig-paren">(</span><em>exp_data</em>, <em>sld_profile</em>, <em>lt</em><span class="sig-paren">)</span><a class="headerlink" href="#falass.reflect.reflectivity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Abeles optical matrix formalism.</p>
+<p>The calculation of the reflectometry using the Abeles optical matrix method.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>exp_data</strong> (<a class="reference internal" href="#falass.dataformat.QData" title="falass.dataformat.QData"><em>falass.dataformat.QData</em></a>) – The experimental data from the datfile.</li>
+<li><strong>sld_profile</strong> (<a class="reference internal" href="#falass.dataformat.SLDPro" title="falass.dataformat.SLDPro"><em>falass.dataformat.SLDPro</em></a>) – The SLD profile calculated from the simulation trajectory.</li>
+<li><strong>lt</strong> (<em>float</em>) – The thickness of the layers.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The reflectometry profile.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">array_like</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-falass.sld">
+<span id="falass-sld-module"></span><h2>falass.sld module<a class="headerlink" href="#module-falass.sld" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="falass.sld.SLD">
+<em class="property">class </em><code class="descclassname">falass.sld.</code><code class="descname">SLD</code><span class="sig-paren">(</span><em>assigned_job</em><span class="sig-paren">)</span><a class="headerlink" href="#falass.sld.SLD" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>SLD profile calculation.</p>
+<p>This class enables the calculation of the SLD profile for each of the timesteps as defined in the
+falass.job.Job. Further it will then allow the calculation and plotting of the average SLD profile.</p>
+<dl class="docutils">
+<dt>assigned_job: falass.job.Job</dt>
+<dd>The is the Job class for the particular falass run taking place. See the job.Job class for more information.</dd>
+</dl>
+<dl class="method">
+<dt id="falass.sld.SLD.average_sld_profile">
+<code class="descname">average_sld_profile</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#falass.sld.SLD.average_sld_profile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Average SLD profiles.</p>
+<p>Allows for the calculation of the average SLD profile across all of the timesteps that were studied.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="falass.sld.SLD.get_sld_profile">
+<code class="descname">get_sld_profile</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#falass.sld.SLD.get_sld_profile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate SLD profile.</p>
+<p>This will calculate the SLD profile for each of the timesteps defined in the falass.job.Job. This is achieved
+by summing the scattering lengths for each of the atoms found in a given layer (of defined thickness). This
+total scattering length is converted to a density by division by the volume of the layer.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="falass.sld.SLD.plot_sld_profile">
+<code class="descname">plot_sld_profile</code><span class="sig-paren">(</span><em>real=True</em>, <em>imag=False</em><span class="sig-paren">)</span><a class="headerlink" href="#falass.sld.SLD.plot_sld_profile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot SLD.</p>
+<p>Plots the average sld profile using matplotlib.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>real</strong> (<em>bool</em>) – Should the real SLD profile be plotted (if both real and imaginary are true the real will be plotted).</li>
+<li><strong>imag</strong> (<em>bool</em>) – Should the imaginary SLD profile be plotted (if both real and imaginary are true the real will be plotted).</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="falass.sld.get_scatlen">
+<code class="descclassname">falass.sld.</code><code class="descname">get_scatlen</code><span class="sig-paren">(</span><em>atom</em>, <em>scat_lens</em><span class="sig-paren">)</span><a class="headerlink" href="#falass.sld.get_scatlen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find scattering length.</p>
+<p>This gets the scattering length for a given atom type</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>atom</strong> (<em>str</em>) – The name of the atom type that the scattering length is needed for.</li>
+<li><strong>scat_lens</strong> (<em>array_like falass.dataformat.ScatLens</em>) – The array of the scattering lengths that is defined in the falass.readwrite.Files class.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The real and imaginary scattering lengths for the given atom type.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">tuple_like</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-falass">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-falass" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Andrew R. McCluskey.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

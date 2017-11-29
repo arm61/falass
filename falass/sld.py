@@ -3,21 +3,26 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-class SLD(object):
+class SLD():
+    """SLD profile calculation.
+
+    This class enables the calculation of the SLD profile for each of the timesteps as defined in the
+    falass.job.Job. Further it will then allow the calculation and plotting of the average SLD profile.
+
+    Parameter
+    ---------
+    assigned_job: falass.job.Job
+        The is the Job class for the particular falass run taking place. See the job.Job class for more information.
+    """
     def __init__(self, assigned_job):
-        """
-        This class enables the calculation of the SLD profile for each of the timesteps as defined in the
-        falass.job.Job. Further it will then allow the calculation and plotting of the average SLD profile.
-        :param assigned_job: falass.job.Job
-            the is the Job class for the particular falass run taking place. See the job.Job class for more information
-        """
         self.assigned_job = assigned_job
         self.sld_profile = []
         self.av_sld_profile = []
         self.av_sld_profile_err = []
 
     def get_sld_profile(self):
-        """
+        """Calculate SLD profile.
+
         This will calculate the SLD profile for each of the timesteps defined in the falass.job.Job. This is achieved
         by summing the scattering lengths for each of the atoms found in a given layer (of defined thickness). This
         total scattering length is converted to a density by division by the volume of the layer.
@@ -64,7 +69,8 @@ class SLD(object):
                                                                                  self.assigned_job.layer_thickness)
 
     def average_sld_profile(self):
-        """
+        """Average SLD profiles.
+
         Allows for the calculation of the average SLD profile across all of the timesteps that were studied.
         """
         prog = 0
@@ -94,12 +100,16 @@ class SLD(object):
             self.av_sld_profile_err[j].imag = np.sqrt(1. / (len(self.assigned_job.times) - 1)) * self.av_sld_profile_err[j].imag
 
     def plot_sld_profile(self, real=True, imag=False):
-        """
+        """Plot SLD.
+
         Plots the average sld profile using matplotlib.
-        :param real: bool
-            Should the real SLD profile be plotted (if both real and imag are true the real will be plotted)
-        :param imag: bool
-            Should the imaginary SLD profile be plotted (if both real and imaginary are true the real will be plotted)
+
+        Parameters
+        ----------
+        real: bool
+            Should the real SLD profile be plotted (if both real and imaginary are true the real will be plotted).
+        imag: bool
+            Should the imaginary SLD profile be plotted (if both real and imaginary are true the real will be plotted).
         """
         x = []
         y = []
@@ -126,13 +136,21 @@ class SLD(object):
 
 
 def get_scatlen(atom, scat_lens):
-    """
+    """Find scattering length.
+
     This gets the scattering length for a given atom type
-    :param atom: str
-        the name of the atom type that the scattering length is needed for
-    :param scat_lens: array_like falass.dataformat.ScatLens
-        the array of the scattering lengths that is defined in the falass.readwrite.Files class
-    :return: the real and imaginary scattering lenghts for the given atom type
+
+    Parameters
+    ----------
+    atom: str
+        The name of the atom type that the scattering length is needed for.
+    scat_lens: array_like falass.dataformat.ScatLens
+        The array of the scattering lengths that is defined in the falass.readwrite.Files class.
+
+    Returns
+    -------
+    tuple_like
+        The real and imaginary scattering lengths for the given atom type.
     """
     for i in range(0, len(scat_lens)):
         if atom == scat_lens[i].atom:
