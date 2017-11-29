@@ -86,34 +86,30 @@ class Files:
         be orthorhomic. Non-orthorhomic cells are not necessarily supported.
         """
         lines = line_count(self.pdbfile)
-        print("Reading PDB file \n[ 0 % ]")
+        print("Reading PDB file \n")
         file = open(self.pdbfile, 'r')
-        string = 0
+        percentage = 0
+        print_update(percentage)
         atoms_each_timestep = []
         for i, line in enumerate(file):
-            string_new = np.floor(i / lines * 100)
-            if string_new > string + 9:
-                string = string_new
-                print("[{} {} % ]".format('#' * int(string / 10), int(string/10)*10))
+            percentage_new = np.floor(i / lines * 100)
+            percentage = check_update(percentage, percentage_new)
             if line[0:6] == "ATOM  ":
-                if self.flip:
-                    a = np.sqrt(np.square(self.cell[self.number_of_timesteps - 1][2] - float(line[46:54])))
-                    atoms_each_timestep.append(dataformat.AtomPositions(line[12:16].strip(), a))
-                else:
-                    atoms_each_timestep.append(dataformat.AtomPositions(line[12:16].strip(), float(line[46:54])))
+                atoms_each_timestep.append(get_atom_position(self.cell[self.number_of_timesteps - 1][2], line,
+                                                                self.flip))
             if "TITLE  " in line:
                 if self.number_of_timesteps == 0:
-                    self.number_of_timesteps += 1
-                    self.times.append(float(line.split()[-1]))
+                    self.number_of_timesteps, new_time = iterate_time(self.number_of_timesteps, line)
+                    self.times.append(new_time)
                 else:
                     self.atoms.append(atoms_each_timestep)
                     atoms_each_timestep = []
-                    self.number_of_timesteps += 1
-                    self.times.append(float(line.split()[-1]))
+                    self.number_of_timesteps, new_time = iterate_time(self.number_of_timesteps, line)
+                    self.times.append(new_time)
             if "CRYST1  " in line:
-                self.cell.append([float(line[6:15]), float(line[15:24]), float(line[24:33])])
+                self.cell.append(get_cell_parameters(line))
         self.atoms.append(atoms_each_timestep)
-        print("[{} {} % ]".format('#' * int(100 / 10), int(100)))
+        print_update(100)
         file.close()
         return
 
@@ -127,19 +123,18 @@ class Files:
         """
         if self.lgtfile:
             lines = line_count(self.lgtfile)
-            print("Reading LGT file \n[ 0 % ]")
+            print("Reading LGT file \n")
+            percentage = 0
+            print_update(percentage)
             file = open(self.lgtfile, 'r')
-            string = 0
             for i, line in enumerate(file):
-                string_new = np.floor(i / lines * 100)
-                if string_new > string + 9:
-                    string = string_new
-                    print("[{} {} % ]".format('#' * int(string / 10), int(string/10)*10))
+                percentage_new = np.floor(i / lines * 100)
+                percentage = check_update(percentage, percentage_new)
                 line_list = line.split()
                 duplicate = check_duplicates(self.scat_lens, line_list[0])
                 if not duplicate:
                     self.scat_lens.append(dataformat.ScatLens(line_list[0], float(line_list[1]), float(line_list[2])))
-            print("[{} {} %]".format('#' * int(100 / 10), int(100)))
+            print_update(100)
             file.close()
         else:
             raise ValueError("No lgtfile has been defined.")
@@ -154,14 +149,13 @@ class Files:
         """
         if self.datfile:
             lines = line_count(self.datfile)
-            print("Reading DAT file \n[ 0 % ]")
+            print("Reading DAT file \n")
+            percentage = 0
+            print_update(percentage)
             file = open(self.datfile, 'r')
-            string = 0
             for i, line in enumerate(file):
-                string_new = np.floor(i / lines * 100)
-                if string_new > string + 9:
-                    string = string_new
-                    print("[{} {} % ]".format('#' * int(string / 10), int(string/10)*10))
+                percentage_new = np.floor(i / lines * 100)
+                percentage = check_update(percentage, percentage_new)
                 if line[0] != '#':
                     line_list = line.split()
                     if len(line_list) == 2:
@@ -173,10 +167,9 @@ class Files:
                                                              float(line_list[2]),
                                                              float(line_list[0]) * (self.resolution / 100)))
                     if len(line_list) == 4:
-                        self.expdata.append(
-                            dataformat.QData(float(line_list[0]), float(line_list[1]), float(line_list[2]),
-                                             float(line_list[3])))
-            print("[{} {} %]".format('#' * int(100 / 10), int(100)))
+                        self.expdata.append(dataformat.QData(float(line_list[0]), float(line_list[1]),
+                                                             float(line_list[2]), float(line_list[3])))
+            print_update(100)
             file.close()
         else:
             print('No DAT file has been given, therefore no comparison will be conducted, please use the get_qs '
@@ -247,3 +240,123 @@ def line_count(filename):
         for i, l in enumerate(f):
             pass
     return i + 1
+
+
+def flip_zpos(cell, zpos):
+    """Flip the z-position
+
+    Flips the z-position through the xy-plane.
+
+    Parameters
+    ----------
+    cell: float
+        z-cell dimension.
+    zpos: float
+        z-position for an atom.
+
+    Returns
+    -------
+    float
+        z-position after the flipping
+    """
+    return np.sqrt(np.square(cell - zpos))
+
+
+def get_atom_position(cell, line, flip):
+    """Get the atom position and type
+
+    Reads the text line from the pdb and assigns it to an falass.dataformat.AtomPosition type object.
+
+    Parameters
+    ----------
+    cell: float
+        z-cell dimension.
+    line: str
+        Line from pdb file.
+    flip: bool
+        Should the cell be flipped in the z-dimension.
+
+    Returns
+    -------
+    falass.dataformat.AtomPositions
+        Object with atom type and z-position from the given line.
+    """
+    if flip:
+        new_zpos = flip_zpos(cell, float(line[46:54]))
+        return dataformat.AtomPositions(line[12:16].strip(), new_zpos)
+    else:
+        return dataformat.AtomPositions(line[12:16].strip(), float(line[46:54]))
+
+
+def get_cell_parameters(line):
+    """Identify cell parameters from line
+
+    Read the cell parameters from an appropriate line
+
+    Parameters
+    ----------
+    line: str
+        Line from pdb file.
+
+    Returns
+    -------
+    array_like float
+        the a, b, c cell vectors of the particular timestep
+    """
+    return [float(line[6:15]), float(line[15:24]), float(line[24:33])]
+
+
+def iterate_time(number_of_timesteps, line):
+    """Increases the number of timesteps
+
+    Iterates the number of timesteps and finds the new timestep value.
+
+    Parameters
+    ----------
+    number_of_timesteps: int
+        Number of timesteps found so far.
+    line: str
+        'TITLE' line from the pdb file which has timestep information.
+
+    Returns
+    -------
+    int
+        Number of timesteps iterated by 1.
+    float
+        Time of newest timestep.
+    """
+    number_of_timesteps += 1
+    new_time = float(line.split()[-1])
+    return number_of_timesteps, new_time
+
+def print_update(percentage):
+    """Print percentage read-in.
+
+    Prints a percentage of how much as been read in at a given time.
+
+    Parameters
+    ----------
+    string: int
+        Percentage read-in complete.
+    """
+    print("[{} {} % ]".format('#' * int(percentage / 10), int(percentage / 10) * 10))
+
+def check_update(percentage, percentage_new):
+    """Check if an update string should be printed.
+
+    Assess if an update string should be printed to the screen.
+
+    Parameters
+    ----------
+    string: int
+        Percentage of way through reading.
+
+    Returns
+    -------
+    int
+        New percentage of way through reading.
+    """
+    if percentage_new > percentage + 9:
+        percentage = percentage_new
+        print_update(percentage)
+    return percentage

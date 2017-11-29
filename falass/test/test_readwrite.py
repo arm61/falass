@@ -225,3 +225,51 @@ def test_line_count():
     lines = readwrite.line_count(os.path.join(path, 'test.pdb'))
     assert_equal(lines, 60)
     return
+
+def test_flip_zpos():
+    a = readwrite.flip_zpos(10., 2.)
+    assert_almost_equal(a, 8.)
+    return
+
+def test_flip_zpos_neg():
+    a = readwrite.flip_zpos(2., 10.)
+    assert_almost_equal(a, 8.)
+    return
+
+def test_get_atom_position():
+    line = 'ATOM      1  C1  DSPCA   1      00.500  00.500  02.000  1.00  0.00           C'
+    a = readwrite.get_atom_position(10, line, False)
+    assert_equal(a.atom, 'C1')
+    assert_almost_equal(a.zpos, 2.)
+    return
+
+def test_get_atom_position_flip():
+    line = 'ATOM      1  C1  DSPCA   1      00.500  00.500  02.000  1.00  0.00           C'
+    a = readwrite.get_atom_position(10, line, True)
+    assert_equal(a.atom, 'C1')
+    assert_almost_equal(a.zpos, 8.)
+    return
+
+def test_get_cell_parameters():
+    line = 'CRYST1    1.000    1.000    4.000  90.00  90.00  90.00 P 1           1'
+    a = readwrite.get_cell_parameters(line)
+    assert_equal(a, [1.000, 1.000, 4.000])
+    return
+
+def test_iterate_time():
+    a = 1
+    line = 'a 10000'
+    a, b = readwrite.iterate_time(a, line)
+    assert_equal(a, 2)
+    assert_almost_equal(b, 10000)
+    return
+
+def test_check_update_increase():
+    a = readwrite.check_update(10, 20)
+    assert_almost_equal(a, 20)
+    return
+
+def test_check_update_nochange():
+    a = readwrite.check_update(10, 8)
+    assert_almost_equal(a, 10)
+    return

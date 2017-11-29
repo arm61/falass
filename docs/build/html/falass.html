@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>falass package &mdash; falass 0.0.1 documentation</title>
+  <title>falass package &mdash; falass 0.0.2 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="falass 0.0.1 documentation" href="index.html"/>
+    <link rel="top" title="falass 0.0.2 documentation" href="index.html"/>
         <link rel="up" title="falass" href="modules.html"/>
         <link rel="prev" title="falass" href="modules.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.0.1
+                0.0.2
               </div>
             
           
@@ -355,21 +355,13 @@ of a vacuum gap at the bottom of the cell.</li>
 </table>
 <dl class="method">
 <dt id="falass.job.Job.set_lgts">
-<code class="descname">set_lgts</code><span class="sig-paren">(</span><em>files</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/falass/job.html#Job.set_lgts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#falass.job.Job.set_lgts" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_lgts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/falass/job.html#Job.set_lgts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#falass.job.Job.set_lgts" title="Permalink to this definition">¶</a></dt>
 <dd><p>Assign scattering lengths.</p>
 <p>Assigned the scattering lengths from the lgtfile to the different atom types. If no lgtfile is defined falass
 will help the user to build one by working through the atom types in the pdb file and requesting input of the
 real and imaginary scattering lengths. This will also occur if a atom type if found in the pdbfile but not in
 the given lgts file. falass will write the lgtfile to disk if atom types do not feature in the given lgtfile or
 one is written from scratch.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>files</strong> (<a class="reference internal" href="#falass.readwrite.Files" title="falass.readwrite.Files"><em>falass.readwrite.Files</em></a>) – A Files class item.</td>
-</tr>
-</tbody>
-</table>
 </dd></dl>
 
 <dl class="method">
@@ -576,6 +568,100 @@ columns are q, i, di, and dq respectively.</li>
 </dd></dl>
 
 <dl class="function">
+<dt id="falass.readwrite.check_update">
+<code class="descclassname">falass.readwrite.</code><code class="descname">check_update</code><span class="sig-paren">(</span><em>string</em>, <em>string_new</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/falass/readwrite.html#check_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#falass.readwrite.check_update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if an update string should be printed.</p>
+<p>Assess if an update string should be printed to the screen.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>string</strong> (<em>int</em>) – Percentage of way through reading.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">New percentage of way through reading.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="falass.readwrite.flip_zpos">
+<code class="descclassname">falass.readwrite.</code><code class="descname">flip_zpos</code><span class="sig-paren">(</span><em>cell</em>, <em>zpos</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/falass/readwrite.html#flip_zpos"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#falass.readwrite.flip_zpos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flip the z-position</p>
+<p>Flips the z-position through the xy-plane.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>cell</strong> (<em>float</em>) – z-cell dimension.</li>
+<li><strong>zpos</strong> (<em>float</em>) – z-position for an atom.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">z-position after the flipping</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="falass.readwrite.get_atom_position">
+<code class="descclassname">falass.readwrite.</code><code class="descname">get_atom_position</code><span class="sig-paren">(</span><em>cell</em>, <em>line</em>, <em>flip</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/falass/readwrite.html#get_atom_position"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#falass.readwrite.get_atom_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the atom position and type</p>
+<p>Reads the text line from the pdb and assigns it to an falass.dataformat.AtomPosition type object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>cell</strong> (<em>float</em>) – z-cell dimension.</li>
+<li><strong>line</strong> (<em>str</em>) – Line from pdb file.</li>
+<li><strong>flip</strong> (<em>bool</em>) – Should the cell be flipped in the z-dimension.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Object with atom type and z-position from the given line.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#falass.dataformat.AtomPositions" title="falass.dataformat.AtomPositions">falass.dataformat.AtomPositions</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="falass.readwrite.get_cell_parameters">
+<code class="descclassname">falass.readwrite.</code><code class="descname">get_cell_parameters</code><span class="sig-paren">(</span><em>line</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/falass/readwrite.html#get_cell_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#falass.readwrite.get_cell_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Identify cell parameters from line</p>
+<p>Read the cell parameters from an appropriate line</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>line</strong> (<em>str</em>) – Line from pdb file.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the a, b, c cell vectors of the particular timestep</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">array_like float</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="falass.readwrite.iterate_time">
+<code class="descclassname">falass.readwrite.</code><code class="descname">iterate_time</code><span class="sig-paren">(</span><em>number_of_timesteps</em>, <em>line</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/falass/readwrite.html#iterate_time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#falass.readwrite.iterate_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
 <dt id="falass.readwrite.line_count">
 <code class="descclassname">falass.readwrite.</code><code class="descname">line_count</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/falass/readwrite.html#line_count"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#falass.readwrite.line_count" title="Permalink to this definition">¶</a></dt>
 <dd><p>File length.</p>
@@ -594,12 +680,27 @@ columns are q, i, di, and dq respectively.</li>
 </table>
 </dd></dl>
 
+<dl class="function">
+<dt id="falass.readwrite.print_update">
+<code class="descclassname">falass.readwrite.</code><code class="descname">print_update</code><span class="sig-paren">(</span><em>string</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/falass/readwrite.html#print_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#falass.readwrite.print_update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print percentage read-in.</p>
+<p>Prints a percentage of how much as been read in at a given time.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>string</strong> (<em>int</em>) – Percentage read-in complete.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 <div class="section" id="module-falass.reflect">
 <span id="falass-reflect-module"></span><h2>falass.reflect module<a class="headerlink" href="#module-falass.reflect" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="falass.reflect.Reflect">
-<em class="property">class </em><code class="descclassname">falass.reflect.</code><code class="descname">Reflect</code><span class="sig-paren">(</span><em>sld_profile</em>, <em>exp_data</em>, <em>job</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/falass/reflect.html#Reflect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#falass.reflect.Reflect" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">falass.reflect.</code><code class="descname">Reflect</code><span class="sig-paren">(</span><em>sld_profile</em>, <em>exp_data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/falass/reflect.html#Reflect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#falass.reflect.Reflect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <p>Reflectometry calculation.</p>
 <p>A class for the calculation of reflectometry from the sld profile defined in the falass.sld.SLD class.</p>
@@ -610,7 +711,6 @@ columns are q, i, di, and dq respectively.</li>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>sld_profile</strong> (<em>array_like falass.dataformat.SLDPro</em>) – An array describing the scattering length density of the simulation cell under study.</li>
 <li><strong>exp_data</strong> (<em>array_like falass.dataformat.QData</em>) – An array giving the experimental data from the datfile.</li>
-<li><strong>job</strong> (<a class="reference internal" href="#falass.job.Job" title="falass.job.Job"><em>falass.job.Job</em></a>) – A class describing the falass job at hand.</li>
 </ul>
 </td>
 </tr>
@@ -650,7 +750,7 @@ under study.</p>
 
 <dl class="function">
 <dt id="falass.reflect.convolution">
-<code class="descclassname">falass.reflect.</code><code class="descname">convolution</code><span class="sig-paren">(</span><em>exp_data</em>, <em>sld_profile</em>, <em>lt</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/falass/reflect.html#convolution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#falass.reflect.convolution" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">falass.reflect.</code><code class="descname">convolution</code><span class="sig-paren">(</span><em>exp_data</em>, <em>sld_profile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/falass/reflect.html#convolution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#falass.reflect.convolution" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convolution/smearing</p>
 <p>The convolution of the reflectometry data by a gaussian of constant width (a percentage of the q-vector)</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -676,7 +776,7 @@ under study.</p>
 
 <dl class="function">
 <dt id="falass.reflect.reflectivity">
-<code class="descclassname">falass.reflect.</code><code class="descname">reflectivity</code><span class="sig-paren">(</span><em>exp_data</em>, <em>sld_profile</em>, <em>lt</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/falass/reflect.html#reflectivity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#falass.reflect.reflectivity" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">falass.reflect.</code><code class="descname">reflectivity</code><span class="sig-paren">(</span><em>exp_data</em>, <em>sld_profile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/falass/reflect.html#reflectivity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#falass.reflect.reflectivity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Abeles optical matrix formalism.</p>
 <p>The calculation of the reflectometry using the Abeles optical matrix method.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -828,7 +928,7 @@ total scattering length is converted to a density by division by the volume of t
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.0.1',
+            VERSION:'0.0.2',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

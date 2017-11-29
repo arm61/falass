@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>falass.reflect &mdash; falass 0.0.1 documentation</title>
+  <title>falass.reflect &mdash; falass 0.0.2 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="falass 0.0.1 documentation" href="../../index.html"/>
+    <link rel="top" title="falass 0.0.2 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.0.1
+                0.0.2
               </div>
             
           
@@ -162,7 +162,7 @@
 <span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="k">import</span> <span class="n">InterpolatedUnivariateSpline</span>
 
 
-<div class="viewcode-block" id="Reflect"><a class="viewcode-back" href="../../falass.html#falass.reflect.Reflect">[docs]</a><span class="k">class</span> <span class="nc">Reflect</span><span class="p">():</span>
+<div class="viewcode-block" id="Reflect"><a class="viewcode-back" href="../../falass.html#falass.reflect.Reflect">[docs]</a><span class="k">class</span> <span class="nc">Reflect</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Reflectometry calculation.</span>
 
 <span class="sd">    A class for the calculation of reflectometry from the sld profile defined in the falass.sld.SLD class.</span>
@@ -173,13 +173,10 @@
 <span class="sd">        An array describing the scattering length density of the simulation cell under study.</span>
 <span class="sd">    exp_data: array_like falass.dataformat.QData</span>
 <span class="sd">        An array giving the experimental data from the datfile.</span>
-<span class="sd">    job: falass.job.Job</span>
-<span class="sd">        A class describing the falass job at hand.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sld_profile</span><span class="p">,</span> <span class="n">exp_data</span><span class="p">,</span> <span class="n">job</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sld_profile</span><span class="p">,</span> <span class="n">exp_data</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sld_profile</span> <span class="o">=</span> <span class="n">sld_profile</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">exp_data</span> <span class="o">=</span> <span class="n">exp_data</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">job</span> <span class="o">=</span> <span class="n">job</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">averagereflect</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reflect</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -200,7 +197,7 @@
                 <span class="k">if</span> <span class="n">prog_new</span> <span class="o">&gt;</span> <span class="n">prog</span> <span class="o">+</span> <span class="mi">9</span><span class="p">:</span>
                     <span class="n">prog</span> <span class="o">=</span> <span class="n">prog_new</span>
                     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[</span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2"> % ]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;#&#39;</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">prog</span> <span class="o">/</span> <span class="mi">10</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">prog</span> <span class="o">/</span> <span class="mi">10</span><span class="p">)</span> <span class="o">*</span> <span class="mi">10</span><span class="p">))</span>
-                <span class="n">refl</span> <span class="o">=</span> <span class="n">convolution</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exp_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sld_profile</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">job</span><span class="o">.</span><span class="n">layer_thickness</span><span class="p">)</span>
+                <span class="n">refl</span> <span class="o">=</span> <span class="n">convolution</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exp_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sld_profile</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
                 <span class="n">a</span> <span class="o">=</span> <span class="p">[]</span>
                 <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exp_data</span><span class="p">)):</span>
                     <span class="n">a</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dataformat</span><span class="o">.</span><span class="n">QData</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exp_data</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">q</span><span class="p">,</span> <span class="n">refl</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">exp_data</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">dq</span><span class="p">))</span>
@@ -220,10 +217,10 @@
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reflect</span><span class="p">[</span><span class="mi">0</span><span class="p">])):</span>
                 <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reflect</span><span class="p">)):</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">averagereflect</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">i</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reflect</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">i</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">averagereflect</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">i</span> <span class="o">/=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">job</span><span class="o">.</span><span class="n">times</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">averagereflect</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">i</span> <span class="o">/=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reflect</span><span class="p">)</span>
                 <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reflect</span><span class="p">)):</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">averagereflect</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">di</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reflect</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">i</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">averagereflect</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">i</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">averagereflect</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">di</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">1.</span> <span class="o">/</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">job</span><span class="o">.</span><span class="n">times</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">averagereflect</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">di</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">averagereflect</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">di</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">1.</span> <span class="o">/</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reflect</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">averagereflect</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">di</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;No q vectors have been defined -- either read a .dat file or get q vectors.&#39;</span><span class="p">)</span></div>
 
@@ -265,7 +262,7 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;No q vectors have been defined -- either read a .dat file or get q vectors.&#39;</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="convolution"><a class="viewcode-back" href="../../falass.html#falass.reflect.convolution">[docs]</a><span class="k">def</span> <span class="nf">convolution</span><span class="p">(</span><span class="n">exp_data</span><span class="p">,</span> <span class="n">sld_profile</span><span class="p">,</span> <span class="n">lt</span><span class="p">):</span>
+<div class="viewcode-block" id="convolution"><a class="viewcode-back" href="../../falass.html#falass.reflect.convolution">[docs]</a><span class="k">def</span> <span class="nf">convolution</span><span class="p">(</span><span class="n">exp_data</span><span class="p">,</span> <span class="n">sld_profile</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Convolution/smearing</span>
 
 <span class="sd">    The convolution of the reflectometry data by a gaussian of constant width (a percentage of the q-vector)</span>
@@ -289,7 +286,7 @@
     <span class="n">res</span> <span class="o">=</span> <span class="n">exp_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dq</span> <span class="o">/</span> <span class="n">exp_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">q</span>
 
     <span class="k">if</span> <span class="n">exp_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dq</span> <span class="o">/</span> <span class="n">exp_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">q</span> <span class="o">&lt;</span> <span class="mf">0.0005</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">reflectivity</span><span class="p">(</span><span class="n">exp_data</span><span class="p">,</span> <span class="n">sld_profile</span><span class="p">,</span> <span class="n">lt</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">reflectivity</span><span class="p">(</span><span class="n">exp_data</span><span class="p">,</span> <span class="n">sld_profile</span><span class="p">)</span>
 
     <span class="n">gnum</span> <span class="o">=</span> <span class="mi">51</span>
     <span class="n">ggpoint</span> <span class="o">=</span> <span class="p">(</span><span class="n">gnum</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
@@ -314,7 +311,7 @@
     <span class="n">gaussx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">1.7</span> <span class="o">*</span> <span class="n">res</span><span class="p">,</span> <span class="mf">1.7</span> <span class="o">*</span> <span class="n">res</span><span class="p">,</span> <span class="n">gnum</span><span class="p">)</span>
     <span class="n">gaussy</span> <span class="o">=</span> <span class="n">gauss</span><span class="p">(</span><span class="n">gaussx</span><span class="p">,</span> <span class="n">res</span> <span class="o">/</span> <span class="n">fwhm</span><span class="p">)</span>
 
-    <span class="n">rvals</span> <span class="o">=</span> <span class="n">reflectivity</span><span class="p">(</span><span class="n">xlin</span><span class="p">,</span> <span class="n">sld_profile</span><span class="p">,</span> <span class="n">lt</span><span class="p">)</span>
+    <span class="n">rvals</span> <span class="o">=</span> <span class="n">reflectivity</span><span class="p">(</span><span class="n">xlin</span><span class="p">,</span> <span class="n">sld_profile</span><span class="p">)</span>
     <span class="n">smeared_rvals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">rvals</span><span class="p">,</span> <span class="n">gaussy</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
     <span class="n">interpol</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="n">xlin</span><span class="p">,</span> <span class="n">smeared_rvals</span><span class="p">)</span>
 
@@ -323,7 +320,7 @@
     <span class="k">return</span> <span class="n">smeared_output</span></div>
 
 
-<div class="viewcode-block" id="reflectivity"><a class="viewcode-back" href="../../falass.html#falass.reflect.reflectivity">[docs]</a><span class="k">def</span> <span class="nf">reflectivity</span><span class="p">(</span><span class="n">exp_data</span><span class="p">,</span> <span class="n">sld_profile</span><span class="p">,</span> <span class="n">lt</span><span class="p">):</span>
+<div class="viewcode-block" id="reflectivity"><a class="viewcode-back" href="../../falass.html#falass.reflect.reflectivity">[docs]</a><span class="k">def</span> <span class="nf">reflectivity</span><span class="p">(</span><span class="n">exp_data</span><span class="p">,</span> <span class="n">sld_profile</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Abeles optical matrix formalism.</span>
 
 <span class="sd">    The calculation of the reflectometry using the Abeles optical matrix method.</span>
@@ -344,7 +341,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">layers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">sld_profile</span><span class="p">),</span> <span class="mi">4</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">sld_profile</span><span class="p">)):</span>
-        <span class="n">layers</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">lt</span>
+        <span class="n">layers</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">sld_profile</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">thick</span>
         <span class="n">layers</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">sld_profile</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">real</span>
         <span class="n">layers</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">sld_profile</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">imag</span>
         <span class="n">layers</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
@@ -429,7 +426,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'0.0.1',
+            VERSION:'0.0.2',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
