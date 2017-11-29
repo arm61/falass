@@ -114,6 +114,7 @@ class Files:
                 self.cell.append([float(line[6:15]), float(line[15:24]), float(line[24:33])])
         self.atoms.append(atoms_each_timestep)
         print("[{} {} % ]".format('#' * int(100 / 10), int(100)))
+        file.close()
         return
 
     def read_lgt(self):
@@ -139,6 +140,7 @@ class Files:
                 if not duplicate:
                     self.scat_lens.append(dataformat.ScatLens(line_list[0], float(line_list[1]), float(line_list[2])))
             print("[{} {} %]".format('#' * int(100 / 10), int(100)))
+            file.close()
         else:
             raise ValueError("No lgtfile has been defined.")
         return
@@ -175,6 +177,7 @@ class Files:
                             dataformat.QData(float(line_list[0]), float(line_list[1]), float(line_list[2]),
                                              float(line_list[3])))
             print("[{} {} %]".format('#' * int(100 / 10), int(100)))
+            file.close()
         else:
             print('No DAT file has been given, therefore no comparison will be conducted, please use the get_qs '
                   'function. Alternatively the DAT file can be added using the setFile function.')

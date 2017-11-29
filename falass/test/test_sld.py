@@ -38,8 +38,6 @@ class TestSLD(unittest.TestCase):
         assert_equal(len(c.sld_profile), 3)
         for i in range(0, len(c.sld_profile)):
             assert_equal(len(c.sld_profile[i]), 4)
-            for j in range(0, len(c.sld_profile[i])):
-                print(i, j, c.sld_profile[i][j].real)
         assert_almost_equal(c.sld_profile[0][0].thick, 1.)
         assert_almost_equal(c.sld_profile[0][0].real, 0.)
         assert_almost_equal(c.sld_profile[0][0].imag, 0.)

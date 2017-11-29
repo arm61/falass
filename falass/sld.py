@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-class SLD():
+class SLD:
     """SLD profile calculation.
 
     This class enables the calculation of the SLD profile for each of the timesteps as defined in the
@@ -84,7 +84,6 @@ class SLD():
             self.av_sld_profile.append(dataformat.SLDPro(self.assigned_job.layer_thickness, 0, 0))
             for i in range(0, len(self.assigned_job.times)):
                 self.av_sld_profile[j].real += self.sld_profile[i][j].real
-                print(i, j,self.av_sld_profile[j].real / 3., self.sld_profile[i][j].real)
                 self.av_sld_profile[j].imag += self.sld_profile[i][j].imag
             self.av_sld_profile[j].real /= len(self.assigned_job.times)
             self.av_sld_profile[j].imag /= len(self.assigned_job.times)

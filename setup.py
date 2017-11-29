@@ -4,9 +4,9 @@ from setuptools import find_packages
 # versioning
 MAJOR = 0
 MINOR = 0 
-MICRO = 1
+MAINT = 1
 ISRELEASED = False
-VERSION = '%d.%d.%d' % (MAJOR, MINOR, MICRO)
+VERSION = '%d.%d.%d' % (MAJOR, MINOR, MAINT)
 
 PACKAGES = find_packages()
 
@@ -26,6 +26,14 @@ setup(
         'numpy', 'matplotlib', 'scipy'
     ],
     include_package_data=True,
+    classifiers=[
+        'Development Status :: 3 - Alpha',
+        'Intended Audience :: Science/Research',
+        'Topic :: Scientific/Engineering',
+        'Topic :: Scientific/Engineering :: Chemistry',
+        'Topic :: Scientific/Engineering :: Physics',
+        'Programming Language :: Python :: 3',
+    ]
 )
 
 

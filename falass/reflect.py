@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from scipy.interpolate import InterpolatedUnivariateSpline
 
 
-class Reflect():
+class Reflect:
     """Reflectometry calculation.
 
     A class for the calculation of reflectometry from the sld profile defined in the falass.sld.SLD class.
@@ -15,13 +15,10 @@ class Reflect():
         An array describing the scattering length density of the simulation cell under study.
     exp_data: array_like falass.dataformat.QData
         An array giving the experimental data from the datfile.
-    job: falass.job.Job
-        A class describing the falass job at hand.
     """
-    def __init__(self, sld_profile, exp_data, job):
+    def __init__(self, sld_profile, exp_data):
         self.sld_profile = sld_profile
         self.exp_data = exp_data
-        self.job = job
         self.averagereflect = []
         self.reflect = []
 
@@ -42,7 +39,7 @@ class Reflect():
                 if prog_new > prog + 9:
                     prog = prog_new
                     print("[{} {} % ]".format('#' * int(prog / 10), int(prog / 10) * 10))
-                refl = convolution(self.exp_data, self.sld_profile[i], self.job.layer_thickness)
+                refl = convolution(self.exp_data, self.sld_profile[i])
                 a = []
                 for j in range(0, len(self.exp_data)):
                     a.append(dataformat.QData(self.exp_data[j].q, refl[j], 0, self.exp_data[j].dq))
@@ -62,10 +59,10 @@ class Reflect():
             for i in range(0, len(self.reflect[0])):
                 for j in range(0, len(self.reflect)):
                     self.averagereflect[i].i += self.reflect[j][i].i
-                self.averagereflect[i].i /= len(self.job.times)
+                self.averagereflect[i].i /= len(self.reflect)
                 for j in range(0, len(self.reflect)):
                     self.averagereflect[i].di += np.square(self.reflect[j][i].i - self.averagereflect[i].i)
-                self.averagereflect[i].di = np.sqrt(1. / (len(self.job.times) - 1) * self.averagereflect[i].di)
+                self.averagereflect[i].di = np.sqrt(1. / (len(self.reflect) - 1) * self.averagereflect[i].di)
         else:
             raise ValueError('No q vectors have been defined -- either read a .dat file or get q vectors.')
 
@@ -107,7 +104,7 @@ class Reflect():
             raise ValueError('No q vectors have been defined -- either read a .dat file or get q vectors.')
 
 
-def convolution(exp_data, sld_profile, lt):
+def convolution(exp_data, sld_profile):
     """Convolution/smearing
 
     The convolution of the reflectometry data by a gaussian of constant width (a percentage of the q-vector)
@@ -131,7 +128,7 @@ def convolution(exp_data, sld_profile, lt):
     res = exp_data[0].dq / exp_data[0].q
 
     if exp_data[0].dq / exp_data[0].q < 0.0005:
-        return reflectivity(exp_data, sld_profile, lt)
+        return reflectivity(exp_data, sld_profile)
 
     gnum = 51
     ggpoint = (gnum - 1) / 2
@@ -156,7 +153,7 @@ def convolution(exp_data, sld_profile, lt):
     gaussx = np.linspace(-1.7 * res, 1.7 * res, gnum)
     gaussy = gauss(gaussx, res / fwhm)
 
-    rvals = reflectivity(xlin, sld_profile, lt)
+    rvals = reflectivity(xlin, sld_profile)
     smeared_rvals = np.convolve(rvals, gaussy, mode='same')
     interpol = InterpolatedUnivariateSpline(xlin, smeared_rvals)
 
@@ -165,7 +162,7 @@ def convolution(exp_data, sld_profile, lt):
     return smeared_output
 
 
-def reflectivity(exp_data, sld_profile, lt):
+def reflectivity(exp_data, sld_profile):
     """Abeles optical matrix formalism.
 
     The calculation of the reflectometry using the Abeles optical matrix method.
@@ -186,7 +183,7 @@ def reflectivity(exp_data, sld_profile, lt):
     """
     layers = np.zeros((len(sld_profile), 4))
     for i in range(0, len(sld_profile)):
-        layers[i][0] = lt
+        layers[i][0] = sld_profile[i].thick
         layers[i][1] = sld_profile[i].real
         layers[i][2] = sld_profile[i].imag
         layers[i][3] = 0

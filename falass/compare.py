@@ -4,7 +4,7 @@ from scipy.optimize import curve_fit
 from falass import dataformat
 
 
-class Compare():
+class Compare:
     """Comparison and fitting.
 
     For the comparison and fitting of calculated and experimental reflectometry.

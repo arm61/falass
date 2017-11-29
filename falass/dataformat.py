@@ -1,4 +1,4 @@
-class QData():
+class QData:
     """Reflectometry data.
 
     A class to hold the qdata information consisting of four floats associated with the q-vector, the intensity of the
@@ -11,7 +11,7 @@ class QData():
         self.dq = dq
 
 
-class ScatLens():
+class ScatLens:
     """Scattering lengths.
 
     A class to hold the scattering lengths of the different atom types consisting of a str atom type name, and two
@@ -23,7 +23,7 @@ class ScatLens():
         self.imag = imag * 1e-5
 
 
-class AtomPositions():
+class AtomPositions:
     """z-Dimension positions.
 
     A class to hold the atom positions in the z-dimension, consisting of the str atom type name and a float giving the
@@ -34,7 +34,7 @@ class AtomPositions():
         self.zpos = position
 
 
-class SLDPro():
+class SLDPro:
     """Layer information for SLD profile.
 
     A class to hold the layer description of the sld profile consisting of three floats associated with the thickness,
