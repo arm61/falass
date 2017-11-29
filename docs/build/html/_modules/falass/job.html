@@ -1,0 +1,376 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>falass.job &mdash; falass 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="falass 0.0.1 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> falass
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">falass</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">falass</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>falass.job</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for falass.job</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">falass</span> <span class="k">import</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">dataformat</span>
+
+
+<div class="viewcode-block" id="Job"><a class="viewcode-back" href="../../falass.html#falass.job.Job">[docs]</a><span class="k">class</span> <span class="nc">Job</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;The catch all.</span>
+
+<span class="sd">    This class is used for setting up the falass job -- and is generally a catch all for inputs that do not fit into</span>
+<span class="sd">    other parts.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    files: falass.readwrite.Files</span>
+<span class="sd">        A Files class item.</span>
+<span class="sd">    layer_thickness: float</span>
+<span class="sd">        The thickness of the layers that the simulation cell should be sliced into.</span>
+<span class="sd">    cut_off_size: float</span>
+<span class="sd">        The size of the simulation cell that should be ignored from the bottom -- this is to allow for the use</span>
+<span class="sd">        of a vacuum gap at the bottom of the cell.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">,</span> <span class="n">layer_thickness</span><span class="p">,</span> <span class="n">cut_off_size</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">files</span> <span class="o">=</span> <span class="n">files</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layer_thickness</span> <span class="o">=</span> <span class="n">layer_thickness</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cut_off_size</span> <span class="o">=</span> <span class="n">cut_off_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">times</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Job.set_run"><a class="viewcode-back" href="../../falass.html#falass.job.Job.set_run">[docs]</a>    <span class="k">def</span> <span class="nf">set_run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">layer_thickness</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cut_off_size</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Edit job inputs.</span>
+
+<span class="sd">        This allows parts of the class to be assigned after the initial assignment or changed</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        files: falass.readwrite.Files</span>
+<span class="sd">            A Files class item.</span>
+<span class="sd">        layer_thickness: float</span>
+<span class="sd">            The thickness of the layers that the simulation cell should be sliced into.</span>
+<span class="sd">        cut_off_size: float</span>
+<span class="sd">            The size of the simulation cell that should be ignored from the bottom -- this is to allow for the use</span>
+<span class="sd">            of a vacuum gap at the bottom of the cell.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">files</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">files</span> <span class="o">=</span> <span class="n">files</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">times</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">layer_thickness</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">layer_thickness</span> <span class="o">=</span> <span class="n">layer_thickness</span>
+        <span class="k">if</span> <span class="n">cut_off_size</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cut_off_size</span> <span class="o">=</span> <span class="n">cut_off_size</span></div>
+
+<div class="viewcode-block" id="Job.set_lgts"><a class="viewcode-back" href="../../falass.html#falass.job.Job.set_lgts">[docs]</a>    <span class="k">def</span> <span class="nf">set_lgts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Assign scattering lengths.</span>
+
+<span class="sd">        Assigned the scattering lengths from the lgtfile to the different atom types. If no lgtfile is defined falass</span>
+<span class="sd">        will help the user to build one by working through the atom types in the pdb file and requesting input of the</span>
+<span class="sd">        real and imaginary scattering lengths. This will also occur if a atom type if found in the pdbfile but not in</span>
+<span class="sd">        the given lgts file. falass will write the lgtfile to disk if atom types do not feature in the given lgtfile or</span>
+<span class="sd">        one is written from scratch.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        files: falass.readwrite.Files</span>
+<span class="sd">            A Files class item.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">lgtfile</span><span class="p">:</span>
+            <span class="n">lgtfile_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">lgtfile</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">atoms</span><span class="p">)):</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">])):</span>
+                    <span class="n">duplicate</span> <span class="o">=</span> <span class="n">readwrite</span><span class="o">.</span><span class="n">check_duplicates</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">scat_lens</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">atom</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">duplicate</span><span class="p">:</span>
+                        <span class="n">real_scat_len</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;The following atom type has no scattering length given &#39;</span>
+                                              <span class="s1">&#39;in the lgt file </span><span class="si">{}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">Please define a real scattering length for &#39;</span>
+                                              <span class="s1">&#39;this atom type: &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">atom</span><span class="p">))</span>
+                        <span class="n">imag_scat_len</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Please define a imaginary scattering length for &#39;</span>
+                                              <span class="s1">&#39;this atom type: &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">atom</span><span class="p">))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">scat_lens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dataformat</span><span class="o">.</span><span class="n">ScatLens</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">atom</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">real_scat_len</span><span class="p">),</span>
+                                                                  <span class="nb">float</span><span class="p">(</span><span class="n">imag_scat_len</span><span class="p">)))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;There was no lgt file defined, falass will help you define one and save it for future use.&#39;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">atoms</span><span class="p">)):</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">])):</span>
+                    <span class="n">duplicate</span> <span class="o">=</span> <span class="n">check_duplicates</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">scat_lens</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">atom</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">duplicate</span><span class="p">:</span>
+                        <span class="n">real_scat_len</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;The following atom type has no scattering length given &#39;</span>
+                                              <span class="s1">&#39;in the lgt file </span><span class="si">{}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">Please define a real scattering length for &#39;</span>
+                                              <span class="s1">&#39;this atom type: &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">atom</span><span class="p">))</span>
+                        <span class="n">imag_scat_len</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Please define a imaginary scattering length for &#39;</span>
+                                              <span class="s1">&#39;this atom type: &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">atom</span><span class="p">))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">scat_lens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dataformat</span><span class="o">.</span><span class="n">ScatLens</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">atom</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">real_scat_len</span><span class="p">),</span>
+                                                                  <span class="nb">float</span><span class="p">(</span><span class="n">imag_scat_len</span><span class="p">)))</span>
+            <span class="n">lgtfile_name</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;What should the lgt file be named? &quot;</span><span class="p">)</span>
+            <span class="n">path</span><span class="p">,</span> <span class="n">extension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">lgtfile_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">extension</span> <span class="o">!=</span> <span class="s1">&#39;.lgt&#39;</span><span class="p">:</span>
+                <span class="n">lgtfile_name</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s1">&#39;.lgt&#39;</span>
+        <span class="n">lgtsf</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">lgtfile_name</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">scat_lens</span><span class="p">)):</span>
+            <span class="n">lgtsf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> </span><span class="si">{}</span><span class="s1"> </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">scat_lens</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">atom</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">scat_lens</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">real</span> <span class="o">*</span> <span class="mf">1e5</span><span class="p">,</span>
+                                            <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">scat_lens</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">imag</span> <span class="o">*</span> <span class="mf">1e5</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Job.set_times"><a class="viewcode-back" href="../../falass.html#falass.job.Job.set_times">[docs]</a>    <span class="k">def</span> <span class="nf">set_times</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">times</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Assign times to analyse.</span>
+
+<span class="sd">        The assignment of the simulation timesteps that should be analysed. if none are given all will be analysed.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        times: array_like float</span>
+<span class="sd">            The timesteps that should be analysed, in the unit of time that present in the pdbfile.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">times</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">times</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">times</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="n">times</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">times</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">first_times</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span>
+                <span class="s2">&quot;Please define the first timestep to be analysed, the first in the pdb file was </span><span class="si">{}</span><span class="s2"> ps: &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">times</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>
+            <span class="k">while</span> <span class="n">check_array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">times</span><span class="p">,</span> <span class="n">first_times</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">first_times</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;TIMESTEP NOT FOUND. Please define the first timestep to be analysed, &quot;</span>
+                                    <span class="s2">&quot;the first in the pdb file was </span><span class="si">{}</span><span class="s2"> ps: &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">times</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>
+            <span class="n">last_times</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span>
+                <span class="s2">&quot;Please define the last timestep to be analysed, the last in the pdb file was </span><span class="si">{}</span><span class="s2"> ps: &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])))</span>
+            <span class="k">while</span> <span class="n">check_array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">times</span><span class="p">,</span> <span class="n">last_times</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">last_times</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;TIMESTEP NOT FOUND. Please define the last timestep to be analysed, &quot;</span>
+                                   <span class="s2">&quot;the last in the pdb file was </span><span class="si">{}</span><span class="s2"> ps: &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])))</span>
+            <span class="n">interval_times</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please define time interval for analysis, the smallest interval in the pdb &quot;</span>
+                                   <span class="s2">&quot;file was </span><span class="si">{}</span><span class="s2"> ps: &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">times</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">times</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>
+            <span class="k">while</span> <span class="n">interval_times</span> <span class="o">&gt;</span> <span class="n">last_times</span><span class="p">:</span>
+                <span class="n">interval_times</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;NOT A VALID INTERVAL. Please define time interval for analysis, &quot;</span>
+                                       <span class="s2">&quot;the smallest interval in the pdb file was </span><span class="si">{}</span><span class="s2"> ps: &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">times</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span>
+                                                                                                  <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">times</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">first_times</span><span class="p">,</span> <span class="n">last_times</span> <span class="o">+</span> <span class="n">interval_times</span><span class="p">,</span> <span class="n">interval_times</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="check_array"><a class="viewcode-back" href="../../falass.html#falass.job.check_array">[docs]</a><span class="k">def</span> <span class="nf">check_array</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">check</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Checks if item is in array.</span>
+
+<span class="sd">    Checks if an item has already been added to an array.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    array: array-type</span>
+<span class="sd">        The array to check.</span>
+<span class="sd">    check: str</span>
+<span class="sd">        The item to try and find.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    bool</span>
+<span class="sd">        true if the item is already present in the scatlen type array, false if not.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">check</span> <span class="o">==</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Andrew R. McCluskey.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

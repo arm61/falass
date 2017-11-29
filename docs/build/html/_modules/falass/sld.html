@@ -1,0 +1,382 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>falass.sld &mdash; falass 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="falass 0.0.1 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> falass
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">falass</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">falass</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>falass.sld</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for falass.sld</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">falass</span> <span class="k">import</span> <span class="n">dataformat</span><span class="p">,</span> <span class="n">job</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+
+<div class="viewcode-block" id="SLD"><a class="viewcode-back" href="../../falass.html#falass.sld.SLD">[docs]</a><span class="k">class</span> <span class="nc">SLD</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;SLD profile calculation.</span>
+
+<span class="sd">    This class enables the calculation of the SLD profile for each of the timesteps as defined in the</span>
+<span class="sd">    falass.job.Job. Further it will then allow the calculation and plotting of the average SLD profile.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    assigned_job: falass.job.Job</span>
+<span class="sd">        The is the Job class for the particular falass run taking place. See the job.Job class for more information.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">assigned_job</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span> <span class="o">=</span> <span class="n">assigned_job</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sld_profile</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">av_sld_profile</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">av_sld_profile_err</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="SLD.get_sld_profile"><a class="viewcode-back" href="../../falass.html#falass.sld.SLD.get_sld_profile">[docs]</a>    <span class="k">def</span> <span class="nf">get_sld_profile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Calculate SLD profile.</span>
+
+<span class="sd">        This will calculate the SLD profile for each of the timesteps defined in the falass.job.Job. This is achieved</span>
+<span class="sd">        by summing the scattering lengths for each of the atoms found in a given layer (of defined thickness). This</span>
+<span class="sd">        total scattering length is converted to a density by division by the volume of the layer.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">prog</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sld_profile</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[ 0 % ]&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">atoms</span><span class="p">)):</span>
+            <span class="n">build_sld</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">if</span> <span class="n">job</span><span class="o">.</span><span class="n">check_array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">times</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">times</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">z_cut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">cell</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">cut_off_size</span>
+                <span class="n">number_of_bins</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">z_cut</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">layer_thickness</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">number_of_bins</span><span class="p">):</span>
+                    <span class="n">build_sld</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dataformat</span><span class="o">.</span><span class="n">SLDPro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">layer_thickness</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sld_profile</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">build_sld</span><span class="p">)</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">atoms</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">job</span><span class="o">.</span><span class="n">check_array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">times</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">times</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">z_cut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">cell</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">cut_off_size</span>
+                <span class="n">number_of_bins</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">z_cut</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">layer_thickness</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">])):</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">zpos</span> <span class="o">&lt;</span> <span class="n">number_of_bins</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">layer_thickness</span><span class="p">:</span>
+                        <span class="n">bin_choose</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">zpos</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">layer_thickness</span><span class="p">)</span>
+                        <span class="n">scatlen_to_add</span> <span class="o">=</span> <span class="n">get_scatlen</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">atom</span><span class="p">,</span> 
+                                                     <span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">scat_lens</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">sld_profile</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">bin_choose</span><span class="p">]</span><span class="o">.</span><span class="n">real</span> <span class="o">+=</span> <span class="n">scatlen_to_add</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">sld_profile</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">bin_choose</span><span class="p">]</span><span class="o">.</span><span class="n">imag</span> <span class="o">+=</span> <span class="n">scatlen_to_add</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">prog_new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">k</span> <span class="o">/</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">*</span> 
+                                             <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">atoms</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">prog_new</span> <span class="o">&gt;</span> <span class="n">prog</span> <span class="o">+</span> <span class="mi">9</span><span class="p">:</span>
+                        <span class="n">prog</span> <span class="o">=</span> <span class="n">prog_new</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[</span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2"> % ]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;#&#39;</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">prog</span> <span class="o">/</span> <span class="mi">10</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">prog</span> <span class="o">/</span> <span class="mi">10</span><span class="p">)</span> <span class="o">*</span> <span class="mi">10</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">atoms</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">job</span><span class="o">.</span><span class="n">check_array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">times</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">times</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">z_cut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">cell</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">cut_off_size</span>
+                <span class="n">number_of_bins</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">z_cut</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">layer_thickness</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">number_of_bins</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">sld_profile</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">real</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sld_profile</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">real</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">cell</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span>
+                                                                                 <span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">cell</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span>
+                                                                                 <span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">layer_thickness</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">sld_profile</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">imag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sld_profile</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">imag</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">cell</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span>
+                                                                                 <span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">cell</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span>
+                                                                                 <span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">layer_thickness</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SLD.average_sld_profile"><a class="viewcode-back" href="../../falass.html#falass.sld.SLD.average_sld_profile">[docs]</a>    <span class="k">def</span> <span class="nf">average_sld_profile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Average SLD profiles.</span>
+
+<span class="sd">        Allows for the calculation of the average SLD profile across all of the timesteps that were studied.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">prog</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">av_sld_profile_err</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">av_sld_profile</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[ 0 % ]&quot;</span><span class="p">)</span>
+        <span class="n">z_cut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">cell</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">cut_off_size</span>
+        <span class="n">number_of_bins</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">z_cut</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">layer_thickness</span><span class="p">)</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">number_of_bins</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">av_sld_profile</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dataformat</span><span class="o">.</span><span class="n">SLDPro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">layer_thickness</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">atoms</span><span class="p">)):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">av_sld_profile</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">real</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sld_profile</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">real</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">av_sld_profile</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">imag</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sld_profile</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">imag</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">av_sld_profile</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">real</span> <span class="o">/=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">times</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">av_sld_profile</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">imag</span> <span class="o">/=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">times</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">av_sld_profile_err</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dataformat</span><span class="o">.</span><span class="n">SLDPro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">layer_thickness</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">atoms</span><span class="p">)):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">av_sld_profile_err</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">real</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sld_profile</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">real</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">av_sld_profile</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">real</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">av_sld_profile_err</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">imag</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sld_profile</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">imag</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">av_sld_profile</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">imag</span><span class="p">)</span>
+                <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">prog_new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">k</span> <span class="o">/</span> <span class="p">(</span><span class="n">number_of_bins</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">atoms</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">prog_new</span> <span class="o">&gt;</span> <span class="n">prog</span> <span class="o">+</span> <span class="mi">9</span><span class="p">:</span>
+                    <span class="n">prog</span> <span class="o">=</span> <span class="n">prog_new</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[</span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2"> % ]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;#&#39;</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">prog</span> <span class="o">/</span> <span class="mi">10</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">prog</span> <span class="o">/</span> <span class="mi">10</span><span class="p">)</span> <span class="o">*</span> <span class="mi">10</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">av_sld_profile_err</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">real</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">1.</span> <span class="o">/</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">times</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">av_sld_profile_err</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">real</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">av_sld_profile_err</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">imag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">1.</span> <span class="o">/</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">times</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">av_sld_profile_err</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">imag</span></div>
+
+<div class="viewcode-block" id="SLD.plot_sld_profile"><a class="viewcode-back" href="../../falass.html#falass.sld.SLD.plot_sld_profile">[docs]</a>    <span class="k">def</span> <span class="nf">plot_sld_profile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">real</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">imag</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Plot SLD.</span>
+
+<span class="sd">        Plots the average sld profile using matplotlib.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        real: bool</span>
+<span class="sd">            Should the real SLD profile be plotted (if both real and imaginary are true the real will be plotted).</span>
+<span class="sd">        imag: bool</span>
+<span class="sd">            Should the imaginary SLD profile be plotted (if both real and imaginary are true the real will be plotted).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">dy</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">buildx</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="n">usetex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;font&#39;</span><span class="p">,</span> <span class="n">family</span><span class="o">=</span><span class="s1">&#39;serif&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">av_sld_profile</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">real</span><span class="p">:</span>
+                <span class="n">y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">av_sld_profile</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">real</span><span class="p">)</span>
+                <span class="n">dy</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">av_sld_profile_err</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">real</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">imag</span><span class="p">:</span>
+                <span class="n">y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">av_sld_profile</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">imag</span><span class="p">)</span>
+                <span class="n">dy</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">av_sld_profile_err</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">imag</span><span class="p">)</span>
+            <span class="n">buildx</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">av_sld_profile</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">thick</span>
+            <span class="n">x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">buildx</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">layer_thickness</span><span class="o">/</span><span class="mf">2.</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">*</span><span class="mf">1e6</span><span class="p">,</span> 
+                <span class="n">width</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">assigned_job</span><span class="o">.</span><span class="n">layer_thickness</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">dy</span><span class="p">)</span><span class="o">*</span><span class="mf">1e6</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;SLD (10$^{-6}$ \AA$^{-2}$)&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$z$ (\AA)&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">x</span><span class="p">)])</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">amin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">*</span><span class="mf">1e6</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">*</span><span class="mf">1e6</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="get_scatlen"><a class="viewcode-back" href="../../falass.html#falass.sld.get_scatlen">[docs]</a><span class="k">def</span> <span class="nf">get_scatlen</span><span class="p">(</span><span class="n">atom</span><span class="p">,</span> <span class="n">scat_lens</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Find scattering length.</span>
+
+<span class="sd">    This gets the scattering length for a given atom type</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    atom: str</span>
+<span class="sd">        The name of the atom type that the scattering length is needed for.</span>
+<span class="sd">    scat_lens: array_like falass.dataformat.ScatLens</span>
+<span class="sd">        The array of the scattering lengths that is defined in the falass.readwrite.Files class.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    tuple_like</span>
+<span class="sd">        The real and imaginary scattering lengths for the given atom type.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">scat_lens</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">atom</span> <span class="o">==</span> <span class="n">scat_lens</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">atom</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">scat_lens</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">scat_lens</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">imag</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Attempt to get the scattering length of the atom type </span><span class="si">{}</span><span class="s2"> failed. This should never happen. &quot;</span>
+                     <span class="s2">&quot;Please contact the developers&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">atom</span><span class="p">))</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Andrew R. McCluskey.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
