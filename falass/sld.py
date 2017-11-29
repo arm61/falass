@@ -32,7 +32,7 @@ class SLD():
         print("[ 0 % ]")
         for i in range(0, len(self.assigned_job.files.atoms)):
             build_sld = []
-            if job.check_array(self.assigned_job.times, self.assigned_job.files.times[i]) is True:
+            if job.check_array(self.assigned_job.times, self.assigned_job.files.times[i]):
                 z_cut = self.assigned_job.files.cell[i][2] - self.assigned_job.cut_off_size
                 number_of_bins = int(z_cut / self.assigned_job.layer_thickness)
                 for j in range(0, number_of_bins):
@@ -40,13 +40,13 @@ class SLD():
                 self.sld_profile.append(build_sld)
         k = 0
         for i in range(0, len(self.assigned_job.files.atoms)):
-            if job.check_array(self.assigned_job.times, self.assigned_job.files.times[i]) is True:
+            if job.check_array(self.assigned_job.times, self.assigned_job.files.times[i]):
                 z_cut = self.assigned_job.files.cell[i][2] - self.assigned_job.cut_off_size
                 number_of_bins = int(z_cut / self.assigned_job.layer_thickness)
                 for j in range(0, len(self.assigned_job.files.atoms[i])):
                     if self.assigned_job.files.atoms[i][j].zpos < number_of_bins * self.assigned_job.layer_thickness:
                         bin_choose = int(self.assigned_job.files.atoms[i][j].zpos / self.assigned_job.layer_thickness)
-                        scatlen_to_add = get_scatlen(self.assigned_job.files.atoms[i][j].atom, 
+                        scatlen_to_add = get_scatlen(self.assigned_job.files.atoms[i][j].atom,
                                                      self.assigned_job.files.scat_lens)
                         self.sld_profile[i][bin_choose].real += scatlen_to_add[0]
                         self.sld_profile[i][bin_choose].imag += scatlen_to_add[1]
@@ -82,13 +82,14 @@ class SLD():
         k = 0
         for j in range(0, number_of_bins):
             self.av_sld_profile.append(dataformat.SLDPro(self.assigned_job.layer_thickness, 0, 0))
-            for i in range(0, len(self.assigned_job.files.atoms)):
+            for i in range(0, len(self.assigned_job.times)):
                 self.av_sld_profile[j].real += self.sld_profile[i][j].real
+                print(i, j,self.av_sld_profile[j].real / 3., self.sld_profile[i][j].real)
                 self.av_sld_profile[j].imag += self.sld_profile[i][j].imag
             self.av_sld_profile[j].real /= len(self.assigned_job.times)
             self.av_sld_profile[j].imag /= len(self.assigned_job.times)
             self.av_sld_profile_err.append(dataformat.SLDPro(self.assigned_job.layer_thickness, 0, 0))
-            for i in range(0, len(self.assigned_job.files.atoms)):
+            for i in range(0, len(self.assigned_job.times)):
                 self.av_sld_profile_err[j].real += np.square(self.sld_profile[i][j].real - self.av_sld_profile[j].real)
                 self.av_sld_profile_err[j].imag += np.square(self.sld_profile[i][j].imag - self.av_sld_profile[j].imag)
                 k += 1
