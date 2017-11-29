@@ -19,10 +19,13 @@ setup(
     author_email='arm61@bath.ac.uk',
     long_description=open('README.txt').read(),
     license='MIT',
-    url='https://github.com/arm61/falass',
+    url='http://people.bath.ac.uk/arm61/falass/',
     packages=PACKAGES,
     platforms=['Windows', 'Linux', 'Solaris', 'Mac OS-X', 'Unix'],
     install_requires=[
         'numpy', 'matplotlib', 'scipy'
-    ]
+    ],
+    include_package_data=True,
 )
+
+

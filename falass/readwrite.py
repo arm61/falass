@@ -1,9 +1,8 @@
 import numpy as np
-import os
 from falass import dataformat
 
 
-class Files():
+class Files:
     """File parsing.
 
     Definition of the files to be used in the analysis; such as the .pdb file, .lgt file (is one exists), .dat file
@@ -43,14 +42,12 @@ class Files():
         self.times = []
         self.lgtfile = lgtfile
         self.scat_lens = []
-        self.real_scat_lens = {}
-        self.imag_scat_lens = {}
-        self.elements = []
         self.datfile = datfile
         self.expdata = []
         self.ierror = ierror
         self.resolution = resolution
         self.flip = flip
+        return
 
     def set_file(self, pdbfile=None, lgtfile=None, datfile=None):
         """Edits files.
@@ -79,6 +76,7 @@ class Files():
             self.lgtfile = lgtfile
         if datfile:
             self.datfile = datfile
+        return
 
     def read_pdb(self):
         """Parse .pdb.
@@ -114,7 +112,9 @@ class Files():
                     self.times.append(float(line.split()[-1]))
             if "CRYST1  " in line:
                 self.cell.append([float(line[6:15]), float(line[15:24]), float(line[24:33])])
+        self.atoms.append(atoms_each_timestep)
         print("[{} {} % ]".format('#' * int(100 / 10), int(100)))
+        return
 
     def read_lgt(self):
         """Parses .lgt.
@@ -141,7 +141,7 @@ class Files():
             print("[{} {} %]".format('#' * int(100 / 10), int(100)))
         else:
             raise ValueError("No lgtfile has been defined.")
-
+        return
 
     def read_dat(self):
         """Parses .dat.
@@ -164,20 +164,21 @@ class Files():
                     line_list = line.split()
                     if len(line_list) == 2:
                         self.expdata.append(dataformat.QData(float(line_list[0]), float(line_list[1]),
-                                                                  float(line_list[1]) * (self.ierror / 100),
-                                                                  float(line_list[0]) * (self.resolution / 100)))
+                                                             float(line_list[1]) * (self.ierror / 100),
+                                                             float(line_list[0]) * (self.resolution / 100)))
                     if len(line_list) == 3:
                         self.expdata.append(dataformat.QData(float(line_list[0]), float(line_list[1]),
-                                                                  float(line_list[2]),
-                                                                  float(line_list[0]) * (self.resolution / 100)))
+                                                             float(line_list[2]),
+                                                             float(line_list[0]) * (self.resolution / 100)))
                     if len(line_list) == 4:
                         self.expdata.append(
                             dataformat.QData(float(line_list[0]), float(line_list[1]), float(line_list[2]),
-                                                  float(line_list[3])))
+                                             float(line_list[3])))
             print("[{} {} %]".format('#' * int(100 / 10), int(100)))
         else:
             print('No DAT file has been given, therefore no comparison will be conducted, please use the get_qs '
                   'function. Alternatively the DAT file can be added using the setFile function.')
+        return
 
     def get_qs(self, start=0.005, end=0.5, number=50):
         """Make custom q-vectors.
@@ -197,7 +198,7 @@ class Files():
         q_values = np.linspace(start, end, number)
         for i in range(0, len(q_values)):
             self.expdata.append(dataformat.QData(q_values[i], None, None, q_values[i] * (self.resolution / 100)))
-
+        return
 
 
 def check_duplicates(array, check):

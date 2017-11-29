@@ -9,8 +9,8 @@ class SLD():
     This class enables the calculation of the SLD profile for each of the timesteps as defined in the
     falass.job.Job. Further it will then allow the calculation and plotting of the average SLD profile.
 
-    Parameter
-    ---------
+    Parameters
+    ----------
     assigned_job: falass.job.Job
         The is the Job class for the particular falass run taking place. See the job.Job class for more information.
     """
