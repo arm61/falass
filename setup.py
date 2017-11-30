@@ -17,7 +17,7 @@ setup(
     description='Neutron and X-ray Reflectometry from Computer Simulation',
     author='Andrew R. McCluskey',
     author_email='arm61@bath.ac.uk',
-    long_description=open('README.txt').read(),
+    long_description=open('README.md').read(),
     license='MIT',
     url='http://people.bath.ac.uk/arm61/falass/',
     packages=PACKAGES,
