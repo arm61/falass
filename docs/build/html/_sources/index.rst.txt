@@ -12,10 +12,10 @@ Welcome to falass's documentation!
    
    modules
 
+.. include:: ../README.rst
 
 Indices and tables
 ==================
 
 * :ref:`genindex`
 * :ref:`modindex`
-* :ref:`search`
