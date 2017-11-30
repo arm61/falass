@@ -243,7 +243,7 @@ def line_count(filename):
 
 
 def flip_zpos(cell, zpos):
-    """Flip the z-position
+    """Flip the z-position.
 
     Flips the z-position through the xy-plane.
 
@@ -289,7 +289,7 @@ def get_atom_position(cell, line, flip):
 
 
 def get_cell_parameters(line):
-    """Identify cell parameters from line
+    """Identify cell parameters from line.
 
     Read the cell parameters from an appropriate line
 
