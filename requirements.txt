@@ -1,0 +1,7 @@
+numpy
+scipy
+unittest
+matplotlib
+os
+sys
+__future__
