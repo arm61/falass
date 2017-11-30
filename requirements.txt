@@ -1,6 +1,5 @@
 numpy
 scipy
-unittest
 matplotlib
 os
 sys
