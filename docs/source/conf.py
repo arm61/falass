@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 # falass documentation build configuration file, created by
-# sphinx-quickstart on Tue Nov 28 21:05:21 2017.
+# sphinx-quickstart on Thu Nov 30 08:55:40 2017.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -19,8 +19,7 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../../falass'))
-
+sys.path.insert(0, os.path.abspath('.'))
 
 
 # -- General configuration ------------------------------------------------
@@ -35,8 +34,12 @@ sys.path.insert(0, os.path.abspath('../../falass'))
 extensions = ['sphinx.ext.autodoc',
     'sphinx.ext.coverage',
     'sphinx.ext.viewcode', 
-    'sphinx.ext.napoleon'
+    'sphinx.ext.napoleon',
 ]
+
+napoleon_google_docstring = False
+napoleon_use_param = False
+napoleon_use_ivar = True
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -100,21 +103,6 @@ html_theme = 'sphinx_rtd_theme'
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
-
-# Custom sidebar templates, must be a dictionary that maps document names
-# to template names.
-#
-# This is required for the alabaster theme
-# refs: http://alabaster.readthedocs.io/en/latest/installation.html#sidebars
-html_sidebars = {
-    '**': [
-        'about.html',
-        'navigation.html',
-        'relations.html',  # needs 'show_related': True theme option to display
-        'searchbox.html',
-        'donate.html',
-    ]
-}
 
 
 # -- Options for HTMLHelp output ------------------------------------------

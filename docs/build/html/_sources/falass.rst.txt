@@ -1,6 +1,13 @@
 falass package
 ==============
 
+Subpackages
+-----------
+
+.. toctree::
+
+    falass.test
+
 Submodules
 ----------
 

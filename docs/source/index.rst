@@ -1,5 +1,5 @@
 .. falass documentation master file, created by
-   sphinx-quickstart on Tue Nov 28 21:05:21 2017.
+   sphinx-quickstart on Thu Nov 30 08:55:40 2017.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
