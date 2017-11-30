@@ -10,11 +10,11 @@ API-level documentation is available at: [http://falass.readthedocs.io/en/latest
 
 Either clone the repository and install with:
 
-`python setup.py build
+```python setup.py build
 
 python setup.py install 
 
-python runtests.py`
+python runtests.py```
 
 Or get a build from pip with:
 
