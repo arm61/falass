@@ -22,4 +22,5 @@ Or get a build from pip with:
 `pip install falass`
 
 [![Build Status](https://travis-ci.org/arm61/falass.svg?branch=0.0.2)](https://travis-ci.org/arm61/falass)
+[![Coverage Status](https://coveralls.io/repos/github/arm61/falass/badge.svg?branch=master)](https://coveralls.io/github/arm61/falass?branch=master)
 [![DOI](https://zenodo.org/badge/112358527.svg)](https://zenodo.org/badge/latestdoi/112358527)
