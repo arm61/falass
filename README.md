@@ -22,3 +22,4 @@ Or get a build from pip with:
 `pip install falass`
 
 [![Build Status](https://travis-ci.org/arm61/falass.svg?branch=0.0.2)](https://travis-ci.org/arm61/falass)
+[![DOI](https://zenodo.org/badge/112358527.svg)](https://zenodo.org/badge/latestdoi/112358527)
