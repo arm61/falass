@@ -9,5 +9,5 @@ python:
 install:
   - pip install -r requirements.txt
 script:
-  - python run --source=falass setup.py test
+  - coverage run --source=falass setup.py test
   - coveralls
