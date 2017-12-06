@@ -14,7 +14,7 @@ Either clone the repository and install with:
 
 python setup.py install 
 
-python runtests.py
+python setup.py test
 ```
 
 Or get a build from pip with:
