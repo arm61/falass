@@ -88,7 +88,7 @@ class TestReflect(unittest.TestCase):
         self.assertTrue('No q vectors have been defined -- either read a .dat file or get q vectors.' in str(context.exception))
 
 
-    def test_make_kn():
+    def test_make_kn(self):
         layer1 = dataformat.SLDPro(5., 5., 0.)
         layer2 = dataformat.SLDPro(5., 0., 0.)
         sld_profile = [layer1, layer2]
@@ -107,7 +107,7 @@ class TestReflect(unittest.TestCase):
                                  [0.25 + 0j, 7.93059601 + 0j]])
 
 
-    def test_knext_and_rj():
+    def test_knext_and_rj(self):
         kn = np.array([[0.025 + 0j, 7.9266940191 + 0j], [0.125 + 0j, 7.927640133 + 0j],
                        [0.25 + 0j, 7.93059601 + 0j]])
         k = np.array([0.025 + 0j, 0.125 + 0j, 0.25 + 0j])

@@ -209,7 +209,7 @@ class TestFiles(unittest.TestCase):
         unittest.main()
 
 
-    def test_check_duplicates_true():
+    def test_check_duplicates_true(self):
         atom1 = dataformat.ScatLens('C1', 1.0, 0.0)
         atom2 = dataformat.ScatLens('C2', 2.0, 1.0)
         atom3 = dataformat.ScatLens('C3', 3.0, 2.0)
@@ -220,7 +220,7 @@ class TestFiles(unittest.TestCase):
         return
 
 
-    def test_check_duplicates_false():
+    def test_check_duplicates_false(self):
         atom1 = dataformat.ScatLens('C1', 1.0, 0.0)
         atom2 = dataformat.ScatLens('C2', 2.0, 1.0)
         atom3 = dataformat.ScatLens('C3', 3.0, 2.0)
@@ -231,43 +231,43 @@ class TestFiles(unittest.TestCase):
         return
 
 
-    def test_line_count():
+    def test_line_count(self):
         path = os.path.dirname(os.path.abspath(__file__))
         lines = readwrite.line_count(os.path.join(path, 'test.pdb'))
         assert_equal(lines, 60)
         return
 
-    def test_flip_zpos():
+    def test_flip_zpos(self):
         a = readwrite.flip_zpos(10., 2.)
         assert_almost_equal(a, 8.)
         return
 
-    def test_flip_zpos_neg():
+    def test_flip_zpos_neg(self):
         a = readwrite.flip_zpos(2., 10.)
         assert_almost_equal(a, 8.)
         return
 
-    def test_get_atom_position():
+    def test_get_atom_position(self):
         line = 'ATOM      1  C1  DSPCA   1      00.500  00.500  02.000  1.00  0.00           C'
         a = readwrite.get_atom_position(10, line, False)
         assert_equal(a.atom, 'C1')
         assert_almost_equal(a.zpos, 2.)
         return
 
-    def test_get_atom_position_flip():
+    def test_get_atom_position_flip(self):
         line = 'ATOM      1  C1  DSPCA   1      00.500  00.500  02.000  1.00  0.00           C'
         a = readwrite.get_atom_position(10, line, True)
         assert_equal(a.atom, 'C1')
         assert_almost_equal(a.zpos, 8.)
         return
 
-    def test_get_cell_parameters():
+    def test_get_cell_parameters(self):
         line = 'CRYST1    1.000    1.000    4.000  90.00  90.00  90.00 P 1           1'
         a = readwrite.get_cell_parameters(line)
         assert_equal(a, [1.000, 1.000, 4.000])
         return
 
-    def test_iterate_time():
+    def test_iterate_time(self):
         a = 1
         line = 'a 10000'
         a, b = readwrite.iterate_time(a, line)
@@ -275,12 +275,12 @@ class TestFiles(unittest.TestCase):
         assert_almost_equal(b, 10000)
         return
 
-    def test_check_update_increase():
+    def test_check_update_increase(self):
         a = readwrite.check_update(10, 20)
         assert_almost_equal(a, 20)
         return
 
-    def test_check_update_nochange():
+    def test_check_update_nochange(self):
         a = readwrite.check_update(10, 8)
         assert_almost_equal(a, 10)
         return

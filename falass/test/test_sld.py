@@ -141,7 +141,7 @@ class TestSLD(unittest.TestCase):
         return
 
 
-    def test_get_scatlen():
+    def test_get_scatlen(self):
         atom1 = dataformat.ScatLens('C1', 1.0, 0.0)
         atom2 = dataformat.ScatLens('C2', 2.0, 1.0)
         atom3 = dataformat.ScatLens('C3', 3.0, 2.0)
@@ -152,7 +152,7 @@ class TestSLD(unittest.TestCase):
         return
 
 
-    def test_get_scatlen_fail():
+    def test_get_scatlen_fail(self):
         atom1 = dataformat.ScatLens('C1', 1.0, 0.0)
         atom2 = dataformat.ScatLens('C2', 2.0, 1.0)
         atom3 = dataformat.ScatLens('C3', 3.0, 2.0)
