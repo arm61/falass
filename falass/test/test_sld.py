@@ -141,24 +141,24 @@ class TestSLD(unittest.TestCase):
         return
 
 
-def test_get_scatlen():
-    atom1 = dataformat.ScatLens('C1', 1.0, 0.0)
-    atom2 = dataformat.ScatLens('C2', 2.0, 1.0)
-    atom3 = dataformat.ScatLens('C3', 3.0, 2.0)
-    array = [atom1, atom2, atom3]
-    real, imag = sld.get_scatlen('C3', array)
-    assert_almost_equal(real, 3.0e-5)
-    assert_almost_equal(imag, 2.0e-5)
-    return
+    def test_get_scatlen():
+        atom1 = dataformat.ScatLens('C1', 1.0, 0.0)
+        atom2 = dataformat.ScatLens('C2', 2.0, 1.0)
+        atom3 = dataformat.ScatLens('C3', 3.0, 2.0)
+        array = [atom1, atom2, atom3]
+        real, imag = sld.get_scatlen('C3', array)
+        assert_almost_equal(real, 3.0e-5)
+        assert_almost_equal(imag, 2.0e-5)
+        return
 
 
-def test_get_scatlen_fail():
-    atom1 = dataformat.ScatLens('C1', 1.0, 0.0)
-    atom2 = dataformat.ScatLens('C2', 2.0, 1.0)
-    atom3 = dataformat.ScatLens('C3', 3.0, 2.0)
-    array = [atom1, atom2, atom3]
-    with self.assertRaises(ValueError) as context:
-        sld.get_scatlen('C4', array)
-    self.assertTrue("Attempt to get the scattering length of the atom type {} failed. This should never "
-                                 "happen. Please contact the developers".format('C4') in str(context.exception))
-    return
+    def test_get_scatlen_fail():
+        atom1 = dataformat.ScatLens('C1', 1.0, 0.0)
+        atom2 = dataformat.ScatLens('C2', 2.0, 1.0)
+        atom3 = dataformat.ScatLens('C3', 3.0, 2.0)
+        array = [atom1, atom2, atom3]
+        with self.assertRaises(ValueError) as context:
+            sld.get_scatlen('C4', array)
+        self.assertTrue("Attempt to get the scattering length of the atom type {} failed. This should never "
+                                     "happen. Please contact the developers".format('C4') in str(context.exception))
+        return

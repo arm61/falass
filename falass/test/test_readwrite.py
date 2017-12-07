@@ -209,78 +209,78 @@ class TestFiles(unittest.TestCase):
         unittest.main()
 
 
-def test_check_duplicates_true():
-    atom1 = dataformat.ScatLens('C1', 1.0, 0.0)
-    atom2 = dataformat.ScatLens('C2', 2.0, 1.0)
-    atom3 = dataformat.ScatLens('C3', 3.0, 2.0)
-    array = [atom1, atom2, atom3]
-    check = dataformat.ScatLens('C2', 2.0, 1.0)
-    bool_ret = readwrite.check_duplicates(array, check.atom)
-    assert_equal(bool_ret, True)
-    return
+    def test_check_duplicates_true():
+        atom1 = dataformat.ScatLens('C1', 1.0, 0.0)
+        atom2 = dataformat.ScatLens('C2', 2.0, 1.0)
+        atom3 = dataformat.ScatLens('C3', 3.0, 2.0)
+        array = [atom1, atom2, atom3]
+        check = dataformat.ScatLens('C2', 2.0, 1.0)
+        bool_ret = readwrite.check_duplicates(array, check.atom)
+        assert_equal(bool_ret, True)
+        return
 
 
-def test_check_duplicates_false():
-    atom1 = dataformat.ScatLens('C1', 1.0, 0.0)
-    atom2 = dataformat.ScatLens('C2', 2.0, 1.0)
-    atom3 = dataformat.ScatLens('C3', 3.0, 2.0)
-    array = [atom1, atom2, atom3]
-    check = dataformat.ScatLens('C4', 4.0, 3.0)
-    bool_ret = readwrite.check_duplicates(array, check.atom)
-    assert_equal(bool_ret, False)
-    return
+    def test_check_duplicates_false():
+        atom1 = dataformat.ScatLens('C1', 1.0, 0.0)
+        atom2 = dataformat.ScatLens('C2', 2.0, 1.0)
+        atom3 = dataformat.ScatLens('C3', 3.0, 2.0)
+        array = [atom1, atom2, atom3]
+        check = dataformat.ScatLens('C4', 4.0, 3.0)
+        bool_ret = readwrite.check_duplicates(array, check.atom)
+        assert_equal(bool_ret, False)
+        return
 
 
-def test_line_count():
-    path = os.path.dirname(os.path.abspath(__file__))
-    lines = readwrite.line_count(os.path.join(path, 'test.pdb'))
-    assert_equal(lines, 60)
-    return
+    def test_line_count():
+        path = os.path.dirname(os.path.abspath(__file__))
+        lines = readwrite.line_count(os.path.join(path, 'test.pdb'))
+        assert_equal(lines, 60)
+        return
 
-def test_flip_zpos():
-    a = readwrite.flip_zpos(10., 2.)
-    assert_almost_equal(a, 8.)
-    return
+    def test_flip_zpos():
+        a = readwrite.flip_zpos(10., 2.)
+        assert_almost_equal(a, 8.)
+        return
 
-def test_flip_zpos_neg():
-    a = readwrite.flip_zpos(2., 10.)
-    assert_almost_equal(a, 8.)
-    return
+    def test_flip_zpos_neg():
+        a = readwrite.flip_zpos(2., 10.)
+        assert_almost_equal(a, 8.)
+        return
 
-def test_get_atom_position():
-    line = 'ATOM      1  C1  DSPCA   1      00.500  00.500  02.000  1.00  0.00           C'
-    a = readwrite.get_atom_position(10, line, False)
-    assert_equal(a.atom, 'C1')
-    assert_almost_equal(a.zpos, 2.)
-    return
+    def test_get_atom_position():
+        line = 'ATOM      1  C1  DSPCA   1      00.500  00.500  02.000  1.00  0.00           C'
+        a = readwrite.get_atom_position(10, line, False)
+        assert_equal(a.atom, 'C1')
+        assert_almost_equal(a.zpos, 2.)
+        return
 
-def test_get_atom_position_flip():
-    line = 'ATOM      1  C1  DSPCA   1      00.500  00.500  02.000  1.00  0.00           C'
-    a = readwrite.get_atom_position(10, line, True)
-    assert_equal(a.atom, 'C1')
-    assert_almost_equal(a.zpos, 8.)
-    return
+    def test_get_atom_position_flip():
+        line = 'ATOM      1  C1  DSPCA   1      00.500  00.500  02.000  1.00  0.00           C'
+        a = readwrite.get_atom_position(10, line, True)
+        assert_equal(a.atom, 'C1')
+        assert_almost_equal(a.zpos, 8.)
+        return
 
-def test_get_cell_parameters():
-    line = 'CRYST1    1.000    1.000    4.000  90.00  90.00  90.00 P 1           1'
-    a = readwrite.get_cell_parameters(line)
-    assert_equal(a, [1.000, 1.000, 4.000])
-    return
+    def test_get_cell_parameters():
+        line = 'CRYST1    1.000    1.000    4.000  90.00  90.00  90.00 P 1           1'
+        a = readwrite.get_cell_parameters(line)
+        assert_equal(a, [1.000, 1.000, 4.000])
+        return
 
-def test_iterate_time():
-    a = 1
-    line = 'a 10000'
-    a, b = readwrite.iterate_time(a, line)
-    assert_equal(a, 2)
-    assert_almost_equal(b, 10000)
-    return
+    def test_iterate_time():
+        a = 1
+        line = 'a 10000'
+        a, b = readwrite.iterate_time(a, line)
+        assert_equal(a, 2)
+        assert_almost_equal(b, 10000)
+        return
 
-def test_check_update_increase():
-    a = readwrite.check_update(10, 20)
-    assert_almost_equal(a, 20)
-    return
+    def test_check_update_increase():
+        a = readwrite.check_update(10, 20)
+        assert_almost_equal(a, 20)
+        return
 
-def test_check_update_nochange():
-    a = readwrite.check_update(10, 8)
-    assert_almost_equal(a, 10)
-    return
+    def test_check_update_nochange():
+        a = readwrite.check_update(10, 8)
+        assert_almost_equal(a, 10)
+        return

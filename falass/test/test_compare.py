@@ -131,11 +131,11 @@ class TestCompare(unittest.TestCase):
         self.assertTrue('No experimental data has been set for comparison, please read in a a .dat file.' in str(context.exception))
 
 
-def test_scale_and_background():
-    a = np.array([1., 2., 3.])
-    scale = 2.
-    background = 1.
-    b = compare.scale_and_background(a, scale, background)
-    assert_almost_equal(b[0], 1.098612289)
-    assert_almost_equal(b[1], 1.609437912)
-    assert_almost_equal(b[2], 1.945910149)
+    def test_scale_and_background():
+        a = np.array([1., 2., 3.])
+        scale = 2.
+        background = 1.
+        b = compare.scale_and_background(a, scale, background)
+        assert_almost_equal(b[0], 1.098612289)
+        assert_almost_equal(b[1], 1.609437912)
+        assert_almost_equal(b[2], 1.945910149)

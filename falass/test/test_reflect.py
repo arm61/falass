@@ -88,30 +88,30 @@ class TestReflect(unittest.TestCase):
         self.assertTrue('No q vectors have been defined -- either read a .dat file or get q vectors.' in str(context.exception))
 
 
-def test_make_kn():
-    layer1 = dataformat.SLDPro(5., 5., 0.)
-    layer2 = dataformat.SLDPro(5., 0., 0.)
-    sld_profile = [layer1, layer2]
-    exp_data = [0.05, 0.25, 0.5]
-    layers = np.zeros((len(sld_profile), 4))
-    for i in range(0, len(sld_profile)):
-        layers[i][0] = sld_profile[i].thick
-        layers[i][1] = sld_profile[i].real
-        layers[i][2] = sld_profile[i].imag
-        layers[i][3] = 0
-    qvals = np.asfarray(exp_data).ravel()
-    nlayers = len(sld_profile) - 2
-    npnts = qvals.size
-    kn = reflect.make_kn(npnts, nlayers, layers, qvals)
-    assert_almost_equal(kn, [[0.025 + 0j, 7.9266940191 + 0j], [0.125 + 0j, 7.927640133 + 0j],
-                             [0.25 + 0j, 7.93059601 + 0j]])
+    def test_make_kn():
+        layer1 = dataformat.SLDPro(5., 5., 0.)
+        layer2 = dataformat.SLDPro(5., 0., 0.)
+        sld_profile = [layer1, layer2]
+        exp_data = [0.05, 0.25, 0.5]
+        layers = np.zeros((len(sld_profile), 4))
+        for i in range(0, len(sld_profile)):
+            layers[i][0] = sld_profile[i].thick
+            layers[i][1] = sld_profile[i].real
+            layers[i][2] = sld_profile[i].imag
+            layers[i][3] = 0
+        qvals = np.asfarray(exp_data).ravel()
+        nlayers = len(sld_profile) - 2
+        npnts = qvals.size
+        kn = reflect.make_kn(npnts, nlayers, layers, qvals)
+        assert_almost_equal(kn, [[0.025 + 0j, 7.9266940191 + 0j], [0.125 + 0j, 7.927640133 + 0j],
+                                 [0.25 + 0j, 7.93059601 + 0j]])
 
 
-def test_knext_and_rj():
-    kn = np.array([[0.025 + 0j, 7.9266940191 + 0j], [0.125 + 0j, 7.927640133 + 0j],
-                   [0.25 + 0j, 7.93059601 + 0j]])
-    k = np.array([0.025 + 0j, 0.125 + 0j, 0.25 + 0j])
-    idx = 1
-    k_next, rj = reflect.knext_and_rj(kn, idx, k)
-    assert_almost_equal(k_next, np.array([7.9266940191 + 0j,  7.927640133 + 0j, 7.93059601 + 0j]))
-    assert_almost_equal(rj, np.array([-1.211500325 + 0j, -2.610174734 + 0j, -6.8181020565 + 0j]))
+    def test_knext_and_rj():
+        kn = np.array([[0.025 + 0j, 7.9266940191 + 0j], [0.125 + 0j, 7.927640133 + 0j],
+                       [0.25 + 0j, 7.93059601 + 0j]])
+        k = np.array([0.025 + 0j, 0.125 + 0j, 0.25 + 0j])
+        idx = 1
+        k_next, rj = reflect.knext_and_rj(kn, idx, k)
+        assert_almost_equal(k_next, np.array([7.9266940191 + 0j,  7.927640133 + 0j, 7.93059601 + 0j]))
+        assert_almost_equal(rj, np.array([-1.211500325 + 0j, -2.610174734 + 0j, -6.8181020565 + 0j]))

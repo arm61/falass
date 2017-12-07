@@ -44,6 +44,15 @@ class TestJob(unittest.TestCase):
         b.set_lgts()
         assert_equal(b.new_file, False)
 
+    def test_set_lgts_missing_one(self):
+        self.path = os.path.dirname(os.path.abspath(__file__))
+        a = readwrite.Files(os.path.join(self.path, 'test.pdb'), lgtfile=os.path.join(self.path, 'test2.lgt'))
+        a.read_pdb()
+        a.read_lgt()
+        b = job.Job(a, 1., 5.)
+        b.set_lgts()
+        assert_equal(b.new_file, True)
+
     def test_set_times(self):
         self.path = os.path.dirname(os.path.abspath(__file__))
         a = readwrite.Files(os.path.join(self.path, 'test.pdb'), lgtfile=os.path.join(self.path, 'test.lgt'))
@@ -54,14 +63,14 @@ class TestJob(unittest.TestCase):
         assert_equal(len(b.times), 3)
         assert_equal(b.times, [0., 10000., 20000.])
 
-def test_check_array_true():
-    array = [0, 1, 2, 3, 4]
-    check = 1
-    bool_ret = job.check_array(array, check)
-    assert_equal(bool_ret, True)
+    def test_check_array_true(self):
+        array = [0, 1, 2, 3, 4]
+        check = 1
+        bool_ret = job.check_array(array, check)
+        assert_equal(bool_ret, True)
 
-def test_check_array_false():
-    array = [0, 1, 2, 3, 4]
-    check = 6
-    bool_ret = job.check_array(array, check)
-    assert_equal(bool_ret, False)
+    def test_check_array_false(self):
+        array = [0, 1, 2, 3, 4]
+        check = 6
+        bool_ret = job.check_array(array, check)
+        assert_equal(bool_ret, False)
