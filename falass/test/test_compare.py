@@ -127,7 +127,7 @@ class TestCompare(unittest.TestCase):
         ddata = [ddata1, ddata2, ddata3]        k = compare.Compare(ddata, a.averagereflect, 1, 0)
         with self.assertRaises(ValueError) as context:
             k.fit()
-        self.assertTrue('No q vectors have been defined -- either read a .dat file or get q vectors.' in str(context.exception))
+        self.assertTrue('No experimental data has been set for comparison, please read in a a .dat file.' in str(context.exception))
 
 
 def test_scale_and_background():
