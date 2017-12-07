@@ -66,7 +66,7 @@ class Compare:
                     y.append(np.log(self.exp_data[i].i))
                     dy.append(self.exp_data[i].di / (self.exp_data[i].i * np.log(10)))
                     y2.append(self.sim_data[i].i)
-                popt, pcov = curve_fit(scale_and_background, y2, y, bounds=((1e-6, 0), (10, 1e-3)), sigma=dy)
+                popt, pcov = curve_fit(scale_and_background, y2, y, bounds=((1e-20, 0), (10, 1)), sigma=dy)
                 self.scale = popt[0]
                 self.background = popt[1]
             else:
