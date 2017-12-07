@@ -27,6 +27,16 @@ class TestReflect(unittest.TestCase):
         assert_almost_equal(a.exp_data[2].q, 0.50)
         assert_almost_equal(a.exp_data[2].dq, 0.50 * 0.05)
 
+    def test_calc_reflect_noq(self):
+        layer1 = dataformat.SLDPro(1., 0., 0.)
+        layer2 = dataformat.SLDPro(1., 5., 0.)
+        sld = [[layer1, layer2]]
+        ddata = []
+        a = reflect.Reflect(sld, ddata)
+        with self.assertRaises(ValueError) as context:
+            a.calc_ref()
+        self.assertTrue('No q vectors have been defined -- either read a .dat file or get q vectors.' in str(context.exception))
+
     def test_average_reflect(self):
         data11 = dataformat.QData(0.05, 0.1, 0., 0.05 * 0.05)
         data12 = dataformat.QData(0.25, 0.05, 0., 0.05 * 0.25)
@@ -53,6 +63,16 @@ class TestReflect(unittest.TestCase):
         assert_almost_equal(a.averagereflect[0].i, 0.12)
         assert_almost_equal(a.averagereflect[1].i, 0.05)
         assert_almost_equal(a.averagereflect[2].i, 0.01)
+
+    def test_average_reflect_noq(self):
+        layer1 = dataformat.SLDPro(1., 0., 0.)
+        layer2 = dataformat.SLDPro(1., 5., 0.)
+        sld = [[layer1, layer2]]
+        ddata = []
+        a = reflect.Reflect(sld, ddata)
+        with self.assertRaises(ValueError) as context:
+            a.average_ref()
+        self.assertTrue('No q vectors have been defined -- either read a .dat file or get q vectors.' in str(context.exception))
 
 
 def test_make_kn():
