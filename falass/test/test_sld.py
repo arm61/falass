@@ -22,6 +22,7 @@ class TestSLD(unittest.TestCase):
         assert_equal(c.assigned_job.times, [0, 10000., 20000.])
         assert_equal(c.assigned_job.layer_thickness, 1.)
         assert_equal(c.assigned_job.cut_off_size, 5.)
+        return
 
     def test_set_sld_profile(self):
         c = None
@@ -36,6 +37,7 @@ class TestSLD(unittest.TestCase):
         assert_almost_equal(a.sld_profile[1].thick, 5.)
         assert_almost_equal(a.sld_profile[1].real, 0.)
         assert_almost_equal(a.sld_profile[1].imag, 0.)
+        return
 
     def test_set_av_sld_profile(self):
         c = None
@@ -59,6 +61,7 @@ class TestSLD(unittest.TestCase):
         assert_almost_equal(a.av_sld_profile_err[1].thick, 5.)
         assert_almost_equal(a.av_sld_profile_err[1].real, 0.)
         assert_almost_equal(a.av_sld_profile_err[1].imag, 0.)
+        return
 
     def test_get_sld_profile(self):
         self.path = os.path.dirname(os.path.abspath(__file__))
@@ -111,6 +114,7 @@ class TestSLD(unittest.TestCase):
         assert_almost_equal(c.sld_profile[2][3].thick, 1.)
         assert_almost_equal(c.sld_profile[2][3].real, 2e-5 / 3.)
         assert_almost_equal(c.sld_profile[2][3].imag, 1e-5 / 3.)
+        return
 
     def test_average_sld_profile(self):
         self.path = os.path.dirname(os.path.abspath(__file__))
@@ -134,6 +138,7 @@ class TestSLD(unittest.TestCase):
         assert_almost_equal(c.av_sld_profile[2].imag, ((1e-5) + (2e-5 / 2.) + (0 / 3.)) / 3.)
         assert_almost_equal(c.av_sld_profile[3].real, (3e-5 + (1e-5 / 2.) + (2e-5 / 3.)) / 3.)
         assert_almost_equal(c.av_sld_profile[3].imag, ((2e-5) + (0 / 2.) + (1e-5 / 3.)) / 3.)
+        return
 
 
 def test_get_scatlen():
@@ -144,13 +149,15 @@ def test_get_scatlen():
     real, imag = sld.get_scatlen('C3', array)
     assert_almost_equal(real, 3.0e-5)
     assert_almost_equal(imag, 2.0e-5)
+    return
 
 def test_get_scatlen_fail():
     atom1 = dataformat.ScatLens('C1', 1.0, 0.0)
     atom2 = dataformat.ScatLens('C2', 2.0, 1.0)
     atom3 = dataformat.ScatLens('C3', 3.0, 2.0)
     array = [atom1, atom2, atom3]
-    with self.assertRaises(ValueError) as context:
-        real, imag = sld.get_scatlen('C4', array)
-    self.assertTrue("Attempt to get the scattering length of the atom type {} failed. This should never happen. "
-                     "Please contact the developers".format('C4'))
+    with unittest.TestCase.assertRaises(ValueError) as context:
+        sld.get_scatlen('C4', array)
+    unittest.TestCase.assertTrue("Attempt to get the scattering length of the atom type {} failed. This should never "
+                                 "happen. Please contact the developers".format('C4') in str(context.exception))
+    return
