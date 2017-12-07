@@ -130,6 +130,23 @@ class TestCompare(unittest.TestCase):
             k.fit()
         self.assertTrue('No experimental data has been set for comparison, please read in a a .dat file.' in str(context.exception))
 
+    def test_return_fitted(self):
+        data1 = dataformat.QData(0.05, 3., 0.3, 0.05 * 0.05)
+        data2 = dataformat.QData(0.25, 2., 0.2, 0.05 * 0.25)
+        data3 = dataformat.QData(0.50, 1., 0.1, 0.05 * 0.50)
+        data = [data1, data2, data3]
+        sdata1 = dataformat.QData(0.05, 1., 0.1, 0.05 * 0.05)
+        sdata2 = dataformat.QData(0.25, 2., 0.2, 0.05 * 0.25)
+        sdata3 = dataformat.QData(0.50, 3., 0.3, 0.05 * 0.50)
+        sdata = [sdata1, sdata2, sdata3]
+        a = compare.Compare(data, sdata, 2., 0.)
+        a.return_fitted()
+        assert_almost_equal(a.sim_data_fitted[0].i, 2.)
+        assert_almost_equal(a.sim_data_fitted[1].i, 4.)
+        assert_almost_equal(a.sim_data_fitted[2].i, 6.)
+        assert_almost_equal(a.sim_data_fitted[0].di, 0.2)
+        assert_almost_equal(a.sim_data_fitted[1].di, 0.4)
+        assert_almost_equal(a.sim_data_fitted[2].di, 0.6)
 
     def test_scale_and_background(self):
         a = np.array([1., 2., 3.])

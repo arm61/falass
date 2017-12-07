@@ -95,7 +95,7 @@ class Job():
             i = 0
             while os.path.isfile(lgtfile_name):
                 i+=1
-                lgtfile_name = path + str(i) + '.lgt'
+                lgtfile_name = path + '_' + str(i) + '.lgt'
 
             lgtsf = open(lgtfile_name, 'w')
             for i in range(0, len(self.files.scat_lens)):

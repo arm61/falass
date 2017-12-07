@@ -44,15 +44,6 @@ class TestJob(unittest.TestCase):
         b.set_lgts()
         assert_equal(b.new_file, False)
 
-    '''def test_set_lgts_missing_one(self):
-        self.path = os.path.dirname(os.path.abspath(__file__))
-        a = readwrite.Files(os.path.join(self.path, 'test.pdb'), lgtfile=os.path.join(self.path, 'test2.lgt'))
-        a.read_pdb()
-        a.read_lgt()
-        b = job.Job(a, 1., 5.)
-        b.set_lgts()
-        assert_equal(b.new_file, True)'''
-
     def test_set_times(self):
         self.path = os.path.dirname(os.path.abspath(__file__))
         a = readwrite.Files(os.path.join(self.path, 'test.pdb'), lgtfile=os.path.join(self.path, 'test.lgt'))
