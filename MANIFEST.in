@@ -1,6 +1,7 @@
 include falass/test/test.pdb
 include falass/test/test2.pdb
 include falass/test/test.lgt
+include falass/test/test2.lgt
 include falass/test/test2.dat
 include falass/test/test3.dat
 include falass/test/test4.dat
