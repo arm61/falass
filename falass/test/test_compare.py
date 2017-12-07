@@ -98,7 +98,7 @@ class TestCompare(unittest.TestCase):
             k.fit()
         self.assertTrue('No q vectors have been defined -- either read a .dat file or get q vectors.' in str(context.exception))
 
-    def test_fit_noq(self):
+    def test_fit_noi(self):
         data11 = dataformat.QData(0.05, 0.1, 0., 0.05 * 0.05)
         data12 = dataformat.QData(0.25, 0.05, 0., 0.05 * 0.25)
         data13 = dataformat.QData(0.50, 0.01, 0., 0.05 * 0.50)
