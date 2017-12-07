@@ -2,9 +2,9 @@ from distutils.core import setup
 from setuptools import find_packages
 
 # versioning
-MAJOR = 0
+MAJOR = 1
 MINOR = 0 
-MAINT = 2
+MAINT = 0
 ISRELEASED = True 
 VERSION = '%d.%d.%d' % (MAJOR, MINOR, MAINT)
 
