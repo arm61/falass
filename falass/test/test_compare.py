@@ -98,6 +98,37 @@ class TestCompare(unittest.TestCase):
             k.fit()
         self.assertTrue('No q vectors have been defined -- either read a .dat file or get q vectors.' in str(context.exception))
 
+    def test_fit_noq(self):
+        data11 = dataformat.QData(0.05, 0.1, 0., 0.05 * 0.05)
+        data12 = dataformat.QData(0.25, 0.05, 0., 0.05 * 0.25)
+        data13 = dataformat.QData(0.50, 0.01, 0., 0.05 * 0.50)
+        data1 = [data11, data12, data13]
+        data21 = dataformat.QData(0.05, 0.12, 0., 0.05 * 0.05)
+        data22 = dataformat.QData(0.25, 0.03, 0., 0.05 * 0.25)
+        data23 = dataformat.QData(0.50, 0.015, 0., 0.05 * 0.50)
+        data2 = [data21, data22, data23]
+        data31 = dataformat.QData(0.05, 0.14, 0., 0.05 * 0.05)
+        data32 = dataformat.QData(0.25, 0.07, 0., 0.05 * 0.25)
+        data33 = dataformat.QData(0.50, 0.005, 0., 0.05 * 0.50)
+        data3 = [data31, data32, data33]
+        layer1 = dataformat.SLDPro(1., 0., 0.)
+        layer2 = dataformat.SLDPro(1., 5., 0.)
+        sld = [[layer1, layer2]]
+        ddata1 = dataformat.QData(0.05, 0., 0., 0.05 * 0.05)
+        ddata2 = dataformat.QData(0.25, 0., 0., 0.05 * 0.25)
+        ddata3 = dataformat.QData(0.50, 0., 0., 0.05 * 0.50)
+        ddata = [ddata1, ddata2, ddata3]
+        a = reflect.Reflect(sld, ddata)
+        a.reflect = [data1, data2, data3]
+        a.average_ref()
+        ddata1 = dataformat.QData(0.05, None, 0., 0.05 * 0.05)
+        ddata2 = dataformat.QData(0.25, 0., 0., 0.05 * 0.25)
+        ddata3 = dataformat.QData(0.50, 0., 0., 0.05 * 0.50)
+        ddata = [ddata1, ddata2, ddata3]        k = compare.Compare(ddata, a.averagereflect, 1, 0)
+        with self.assertRaises(ValueError) as context:
+            k.fit()
+        self.assertTrue('No q vectors have been defined -- either read a .dat file or get q vectors.' in str(context.exception))
+
 
 def test_scale_and_background():
     a = np.array([1., 2., 3.])
