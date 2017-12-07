@@ -12,7 +12,7 @@ If you have any question or idea for development please get in touch: arm61@bath
 Todo
 ----
 
-- Documentaion for tests
+- Test documentation 
 - Greater functionalisation 
-- More tests
+- Greater test coverage
 - Subsequent analysis of the MD trajectory
