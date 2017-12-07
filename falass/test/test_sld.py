@@ -4,6 +4,17 @@ import os
 import unittest
 
 
+
+def test_get_scatlen():
+    atom1 = dataformat.ScatLens('C1', 1.0, 0.0)
+    atom2 = dataformat.ScatLens('C2', 2.0, 1.0)
+    atom3 = dataformat.ScatLens('C3', 3.0, 2.0)
+    array = [atom1, atom2, atom3]
+    real, imag = sld.get_scatlen('C3', array)
+    assert_almost_equal(real, 3.0e-5)
+    assert_almost_equal(imag, 2.0e-5)
+    return
+
 class TestSLD(unittest.TestCase):
     def test_sld(self):
         self.path = os.path.dirname(os.path.abspath(__file__))
@@ -140,16 +151,6 @@ class TestSLD(unittest.TestCase):
         assert_almost_equal(c.av_sld_profile[3].imag, ((2e-5) + (0 / 2.) + (1e-5 / 3.)) / 3.)
         return
 
-
-def test_get_scatlen():
-    atom1 = dataformat.ScatLens('C1', 1.0, 0.0)
-    atom2 = dataformat.ScatLens('C2', 2.0, 1.0)
-    atom3 = dataformat.ScatLens('C3', 3.0, 2.0)
-    array = [atom1, atom2, atom3]
-    real, imag = sld.get_scatlen('C3', array)
-    assert_almost_equal(real, 3.0e-5)
-    assert_almost_equal(imag, 2.0e-5)
-    return
 
 
 '''def test_get_scatlen_fail(unittest.TestCase):

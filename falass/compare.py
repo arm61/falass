@@ -74,7 +74,7 @@ class Compare:
         else:
             raise ValueError('No q vectors have been defined -- either read a .dat file or get q vectors.')
 
-    def plot_compare(self, rq4=True, fitted=True):
+    def plot_compare(self, rq4=True, fitted=True): #pragma: no cover
         """Plot a comparison.
 
         Plotting the comparision between the calculated and experimental reflectometry.

@@ -106,7 +106,7 @@ class SLD:
             self.av_sld_profile_err[j].real = np.sqrt(1. / (len(self.assigned_job.times) - 1)) * self.av_sld_profile_err[j].real
             self.av_sld_profile_err[j].imag = np.sqrt(1. / (len(self.assigned_job.times) - 1)) * self.av_sld_profile_err[j].imag
 
-    def plot_sld_profile(self, real=True, imag=False):
+    def plot_sld_profile(self, real=True, imag=False): #pragma: no cover
         """Plot SLD.
 
         Plots the average sld profile using matplotlib.

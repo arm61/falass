@@ -94,7 +94,7 @@ def test_make_kn():
                              [0.25 + 0j, 7.93059601 + 0j]])
 
 
-def text_knext_and_rj():
+def test_knext_and_rj():
     kn = np.array([[0.025 + 0j, 7.9266940191 + 0j], [0.125 + 0j, 7.927640133 + 0j],
                    [0.25 + 0j, 7.93059601 + 0j]])
     k = np.array([0.025 + 0j, 0.125 + 0j, 0.25 + 0j])
