@@ -23,6 +23,43 @@ class TestSLD(unittest.TestCase):
         assert_equal(c.assigned_job.layer_thickness, 1.)
         assert_equal(c.assigned_job.cut_off_size, 5.)
 
+    def test_set_sld_profile(self):
+        c = None
+        a = dataformat.SLDPro(5., 5., 0.)
+        b = dataformat.SLDPro(5., 0., 0.)
+        slda = [a, b]
+        a = sld.SLD(c)
+        a.set_sld_profile(slda)
+        assert_almost_equal(a.sld_profile[0].thick, 5.)
+        assert_almost_equal(a.sld_profile[0].real, 5.)
+        assert_almost_equal(a.sld_profile[0].imag, 0.)
+        assert_almost_equal(a.sld_profile[1].thick, 5.)
+        assert_almost_equal(a.sld_profile[1].real, 0.)
+        assert_almost_equal(a.sld_profile[1].imag, 0.)
+
+    def test_set_av_sld_profile(self):
+        c = None
+        a = dataformat.SLDPro(5., 5., 0.)
+        b = dataformat.SLDPro(5., 0., 0.)
+        slda = [a, b]
+        a = dataformat.SLDPro(5., 2., 0.)
+        b = dataformat.SLDPro(5., 0., 0.)
+        slda_err = [a, b]
+        a = sld.SLD(c)
+        a.set_av_sld_profile(slda, slda_err)
+        assert_almost_equal(a.av_sld_profile[0].thick, 5.)
+        assert_almost_equal(a.av_sld_profile[0].real, 5.)
+        assert_almost_equal(a.av_sld_profile[0].imag, 0.)
+        assert_almost_equal(a.av_sld_profile[1].thick, 5.)
+        assert_almost_equal(a.av_sld_profile[1].real, 0.)
+        assert_almost_equal(a.av_sld_profile[1].imag, 0.)
+        assert_almost_equal(a.av_sld_profile_err[0].thick, 5.)
+        assert_almost_equal(a.av_sld_profile_err[0].real, 2.)
+        assert_almost_equal(a.av_sld_profile_err[0].imag, 0.)
+        assert_almost_equal(a.av_sld_profile_err[1].thick, 5.)
+        assert_almost_equal(a.av_sld_profile_err[1].real, 0.)
+        assert_almost_equal(a.av_sld_profile_err[1].imag, 0.)
+
     def test_get_sld_profile(self):
         self.path = os.path.dirname(os.path.abspath(__file__))
         a = readwrite.Files(os.path.join(self.path, 'test.pdb'), lgtfile=os.path.join(self.path, 'test.lgt'),
@@ -107,3 +144,13 @@ def test_get_scatlen():
     real, imag = sld.get_scatlen('C3', array)
     assert_almost_equal(real, 3.0e-5)
     assert_almost_equal(imag, 2.0e-5)
+
+def test_get_scatlen_fail():
+    atom1 = dataformat.ScatLens('C1', 1.0, 0.0)
+    atom2 = dataformat.ScatLens('C2', 2.0, 1.0)
+    atom3 = dataformat.ScatLens('C3', 3.0, 2.0)
+    array = [atom1, atom2, atom3]
+    with self.assertRaises(ValueError) as context:
+        real, imag = sld.get_scatlen('C4', array)
+    self.assertTrue("Attempt to get the scattering length of the atom type {} failed. This should never happen. "
+                     "Please contact the developers".format('C4'))

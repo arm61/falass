@@ -191,44 +191,126 @@ def reflectivity(exp_data, sld_profile):
     nlayers = len(sld_profile) - 2
     npnts = qvals.size
 
+    kn = make_kn(npnts, nlayers, layers, qvals)
+
+    k = kn[:,0]
+
+    mrtot = [[1, 0], [0, 1]]
+
+    for idx in range(1, nlayers + 2):
+        k, mrtot = layer_loop(kn, k, idx, layers, mrtot)
+
+    ref = (mrtot[0][1] * np.conj(mrtot[0][1])) / (mrtot[0][0] * np.conj(mrtot[0][0]))
+    return np.real(np.reshape(ref, exp_data.shape))
+
+
+def layer_loop(kn, k, idx, layers, mrtot):
+    """Calculation that is conducted for each layer.
+
+    The is the calculation carried out for each layer in the Abeles optical matrix method calculation.
+
+    Parameters
+    ----------
+    kn: array_like
+        The wavevector at the start of the current layer.
+    k: array_like
+        The wavevector at the start of the semi-infinite top layer.
+    idx: int
+        The layer number.
+    layers: array_like
+        An n by 4 array consisting of information about the layer; thickness, real SLD, imag SLD, and roughness (not
+        used in falass), where n is the number of layers.
+    mrtot: array_like
+        A 2 by 2 array of float comprising the resultant matrix for the layered structure.
+
+    Returns
+    -------
+    float
+        The wavevector at the start of the next layer.
+    array_like
+        The updated resultant matrix.
+    """
+    k_next, rj = knext_and_rj(kn, idx, k)
+
+    # work out characteristic matrix of layer
+    mi00 = np.exp(k * 1j * np.fabs(layers[idx - 1, 0])) if idx - 1 else 1
+    mi11 = np.exp(k * -1j * np.fabs(layers[idx - 1, 0])) if idx - 1 else 1
+
+    mi10 = rj * mi00
+    mi01 = rj * mi11
+
+    # matrix multiply mrtot by characteristic matrix
+    p0 = mrtot[0][0] * mi00 + mrtot[1][0] * mi01
+    p1 = mrtot[0][0] * mi10 + mrtot[1][0] * mi11
+    mrtot[0][0] = p0
+    mrtot[1][0] = p1
+
+    p0 = mrtot[0][1] * mi00 + mrtot[1][1] * mi01
+    p1 = mrtot[0][1] * mi10 + mrtot[1][1] * mi11
+
+    mrtot[0][1] = p0
+    mrtot[1][1] = p1
+
+    k = k_next
+
+    return k, mrtot
+
+
+def make_kn(npnts, nlayers, layers, qvals):
+    """Generate the starting kn and sld arrays.
+
+    This will generate the appropriate array for the Abele optical matrix method
+    calculation.
+
+    Parameters
+    ----------
+    npnts: int
+        number of q-vectors to be calculated over.
+    nlayers: int
+        number of layers in system minus two.
+    layers: array_like
+        An n by 4 array consisting of information about the layer; thickness, real SLD, imag SLD, and roughness (not
+        used in falass), where n is the number of layers.
+    qvals: array_like
+        q-vectors for calculation.
+
+    Returns
+    -------
+    array_like
+        The kn array for the Abeles optical matrix calculation.
+    """
     kn = np.zeros((npnts, nlayers + 2), np.complex128)
 
     sld = np.zeros(nlayers + 2, np.complex128)
-    sld[:] += ((layers[:, 1].real - layers[0, 1]) + 1j * (layers[:, 2] - layers[0, 2]))
+    sld[:] += ((layers[:, 1] - layers[0, 1]) + 1j * (layers[:, 2] - layers[0, 2]))
 
     kn[:] = np.sqrt(qvals[:, np.newaxis] ** 2. / 4. - 4 * np.pi * sld)
+    return kn
 
-    mrtot00 = 1
-    mrtot11 = 1
-    mrtot10 = 0
-    mrtot01 = 0
-    k = kn[:, 0]
 
-    for idx in range(1, nlayers + 2):
-        k_next = kn[:, idx]
-        rj = (k - k_next) / (k + k_next)
-        rj *= np.exp(k * k_next)
+def knext_and_rj(kn, idx, k):
+    """Calculate the k in the next layer and the nature of rj.
 
-        # work out characteristic matrix of layer
-        mi00 = np.exp(k * 1j * np.fabs(layers[idx - 1, 0])) if idx - 1 else 1
-        mi11 = np.exp(k * -1j * np.fabs(layers[idx - 1, 0])) if idx - 1 else 1
+    This will determine the wavevector value in the next layer and therefore the value of
+    rj which describes the propensity for the wavevector to reflect or refract at a given interface.
 
-        mi10 = rj * mi00
-        mi01 = rj * mi11
+    Parameters
+    ----------
+    kn: array_like
+        The wavevector array for a given layer.
+    idx: int
+        The particular layer.
+    k: array_like
+        The wavevector for the semi-infinite top layer.
 
-        # matrix multiply mrtot by characteristic matrix
-        p0 = mrtot00 * mi00 + mrtot10 * mi01
-        p1 = mrtot00 * mi10 + mrtot10 * mi11
-        mrtot00 = p0
-        mrtot10 = p1
-
-        p0 = mrtot01 * mi00 + mrtot11 * mi01
-        p1 = mrtot01 * mi10 + mrtot11 * mi11
-
-        mrtot01 = p0
-        mrtot11 = p1
-
-        k = k_next
-
-    ref = (mrtot01 * np.conj(mrtot01)) / (mrtot00 * np.conj(mrtot00))
-    return np.real(np.reshape(ref, exp_data.shape))
+    Returns
+    -------
+    array_like
+        The wavector array in the next layer.
+    array_like
+        The rj array for the interface.
+    """
+    k_next = kn[:, idx]
+    rj = (k - k_next) / (k + k_next)
+    rj *= np.exp(k * k_next)
+    return k_next, rj

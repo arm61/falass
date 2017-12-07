@@ -2,6 +2,11 @@ from numpy.testing import assert_equal, assert_almost_equal
 from falass import readwrite, dataformat
 import os
 import unittest
+import sys
+if sys.version_info >= (3, 0):
+    from io import StringIO
+else:
+    from StringIO import StringIO
 
 
 class TestFiles(unittest.TestCase):
@@ -178,6 +183,12 @@ class TestFiles(unittest.TestCase):
     def test_read_dat_not_defined(self):
         pdb = readwrite.Files('test.pdb')
         assert_equal(pdb.expdata, [])
+        captured_output = StringIO()
+        sys.stdout = captured_output
+        pdb.read_dat()
+        sys.stdout = sys.__stdout__
+        assert_equal(captured_output.getvalue(), 'No DAT file has been given, therefore no comparison will be conducted, please use the get_qs '
+                  'function. Alternatively the DAT file can be added using the setFile function.\n')
         return
 
     def test_get_qs(self):

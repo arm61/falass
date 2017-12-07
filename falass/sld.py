@@ -20,6 +20,13 @@ class SLD:
         self.av_sld_profile = []
         self.av_sld_profile_err = []
 
+    def set_sld_profile(self, sld):
+        self.sld_profile = sld
+
+    def set_av_sld_profile(self, av_sld, av_sld_err):
+        self.av_sld_profile = av_sld
+        self.av_sld_profile_err = av_sld_err
+
     def get_sld_profile(self):
         """Calculate SLD profile.
 
