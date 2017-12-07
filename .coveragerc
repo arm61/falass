@@ -2,8 +2,9 @@
 [run]
 branch = True
 omit = 
-    _testutils.py
-    test/*
+    falass/_testutils.py
+    falass/test/*
+
 [report]
 # Regexes for lines to exclude from consideration
 exclude_lines =
