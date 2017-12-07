@@ -36,7 +36,7 @@ class SLD:
         """
         prog = 0
         self.sld_profile = []
-        print("[ 0 % ]")
+        print("Calculating SLD profile\n[ 0 % ]")
         for i in range(0, len(self.assigned_job.files.atoms)):
             build_sld = []
             if job.check_array(self.assigned_job.times, self.assigned_job.files.times[i]):
@@ -83,7 +83,7 @@ class SLD:
         prog = 0
         self.av_sld_profile_err = []
         self.av_sld_profile = []
-        print("[ 0 % ]")
+        print("Getting average SLD profile\n[ 0 % ]")
         z_cut = self.assigned_job.files.cell[0][2] - self.assigned_job.cut_off_size
         number_of_bins = int(z_cut / self.assigned_job.layer_thickness)
         k = 0

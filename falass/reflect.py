@@ -32,7 +32,7 @@ class Reflect:
             self.reflect = []
             prog = 0
             k = 0
-            print("[ 0 % ]")
+            print("Calculating reflectometry\n[ 0 % ]")
             for i in range(0, len(self.sld_profile)):
                 k += 1
                 prog_new = np.floor(k / (len(self.sld_profile)) * 100)

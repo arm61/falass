@@ -59,9 +59,15 @@ class Job():
         one is written from scratch.
         """
         if self.files.lgtfile:
+            lines = len(self.files.atoms)
+            print("Setting atoms lengths \n")
+            percentage = 0
+            readwrite.print_update(percentage)
             path, extension = os.path.splitext(self.files.lgtfile)
             lgtfile_name = path + extension
             for i in range(0, len(self.files.atoms)):
+                percentage_new = np.floor(i / lines * 100)
+                percentage = readwrite.check_update(percentage, percentage_new)
                 for j in range(0, len(self.files.atoms[i])):
                     duplicate = readwrite.check_duplicates(self.files.scat_lens, self.files.atoms[i][j].atom)
                     if not duplicate:
@@ -73,6 +79,7 @@ class Job():
                                               'this atom type: '.format(self.files.atoms[i][j].atom))
                         self.files.scat_lens.append(dataformat.ScatLens(self.files.atoms[i][j].atom, float(real_scat_len),
                                                                   float(imag_scat_len)))
+            readwrite.print_update(100)
         else:
             self.new_file = True
             print('There was no lgt file defined, falass will help you define one and save it for future use.')
