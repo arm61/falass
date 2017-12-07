@@ -124,7 +124,8 @@ class TestCompare(unittest.TestCase):
         ddata1 = dataformat.QData(0.05, None, 0., 0.05 * 0.05)
         ddata2 = dataformat.QData(0.25, 0., 0., 0.05 * 0.25)
         ddata3 = dataformat.QData(0.50, 0., 0., 0.05 * 0.50)
-        ddata = [ddata1, ddata2, ddata3]        k = compare.Compare(ddata, a.averagereflect, 1, 0)
+        ddata = [ddata1, ddata2, ddata3]
+        k = compare.Compare(ddata, a.averagereflect, 1, 0)
         with self.assertRaises(ValueError) as context:
             k.fit()
         self.assertTrue('No experimental data has been set for comparison, please read in a a .dat file.' in str(context.exception))
