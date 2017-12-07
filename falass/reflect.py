@@ -66,7 +66,7 @@ class Reflect:
         else:
             raise ValueError('No q vectors have been defined -- either read a .dat file or get q vectors.')
 
-    def plot_ref(self, rq4=True):
+    def plot_ref(self, rq4=True): #pragma: no cover
         """Plot reflectometry profile.
 
         The plotting of the calculated reflectometry data without comparison to experimental data.
