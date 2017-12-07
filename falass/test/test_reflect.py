@@ -1,4 +1,4 @@
-from numpy.testing import assert_almost_equal
+from numpy.testing import assert_almost_equal, assert_equal
 from falass import dataformat, reflect
 import unittest
 import numpy as np
@@ -26,6 +26,19 @@ class TestReflect(unittest.TestCase):
         assert_almost_equal(a.exp_data[1].dq, 0.25 * 0.05)
         assert_almost_equal(a.exp_data[2].q, 0.50)
         assert_almost_equal(a.exp_data[2].dq, 0.50 * 0.05)
+
+    def test_calc_ref_basic(self):
+        layer1 = dataformat.SLDPro(1., 0., 0.)
+        layer2 = dataformat.SLDPro(1., 5., 0.)
+        sld = [[layer1, layer2]]
+        data1 = dataformat.QData(0.05, 0., 0., 0.05 * 0.05)
+        data2 = dataformat.QData(0.25, 0., 0., 0.05 * 0.25)
+        data3 = dataformat.QData(0.50, 0., 0., 0.05 * 0.50)
+        data = [data1, data2, data3]
+        a = reflect.Reflect(sld, data)
+        a.calc_ref()
+        assert_equal(len(a.reflect), 1)
+        assert_equal(len(a.reflect[0]), 3)
 
     def test_calc_reflect_noq(self):
         layer1 = dataformat.SLDPro(1., 0., 0.)
