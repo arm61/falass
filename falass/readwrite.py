@@ -147,6 +147,7 @@ class Files:
         where the first character is a '#'. If there is no .dat file the get_qs() function should be used to generate
         q vectors to allow for the calculation of the reflectometry profile.
         """
+        self.expdata=[]
         if self.datfile:
             lines = line_count(self.datfile)
             print("Reading DAT file \n")
