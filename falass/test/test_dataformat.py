@@ -29,3 +29,11 @@ class TestSLDPro(unittest.TestCase):
         assert_equal(a.thick, 1.)
         assert_equal(a.real, 2.)
         assert_equal(a.imag, 3.)
+
+class TestAtom3Position(unittest.TestCase):
+    def test_atom3positions(self):
+        a = dataformat.Atom3Positions('C1', 2., 3., 4.)
+        assert_equal(a.atom, 'C1')
+        assert_equal(a.x, 2.)
+        assert_equal(a.y, 3.)
+        assert_equal(a.z, 4.)

@@ -44,3 +44,14 @@ class SLDPro:
         self.thick = thick
         self.real = real
         self.imag = imag
+
+class Atom3Positions:
+    """3-Dimension positions.
+
+    A class to hold the 3D atom positions, constiting of a str atom type and each of the three dimensions a float.
+    """
+    def __init__(self, atom, x, y, z):
+        self.atom = atom
+        self.x = x
+        self.y = y
+        self.z = z
