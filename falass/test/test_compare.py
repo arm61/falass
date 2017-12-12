@@ -125,6 +125,6 @@ class TestCompare(unittest.TestCase):
         scale = 2.
         background = 1.
         b = compare.scale_and_background(a, scale, background)
-        assert_almost_equal(b[0], 1.098612289)
-        assert_almost_equal(b[1], 1.609437912)
-        assert_almost_equal(b[2], 1.945910149)
+        assert_almost_equal(b[0], 3)
+        assert_almost_equal(b[1], 5)
+        assert_almost_equal(b[2], 7)
