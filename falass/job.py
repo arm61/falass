@@ -60,7 +60,7 @@ class Job():
         """
         if self.files.lgtfile:
             lines = len(self.files.atoms)
-            print("Setting atoms lengths \n")
+            print("Setting atoms lengths")
             percentage = 0
             readwrite.print_update(percentage)
             path, extension = os.path.splitext(self.files.lgtfile)

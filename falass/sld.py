@@ -124,6 +124,7 @@ class SLD:
         buildx = 0
         plt.rc('text', usetex=True)
         plt.rc('font', family='serif')
+        plt.figure(figsize=(15,10))
         for i in range(0, len(self.av_sld_profile)):
             if real:
                 y.append(self.av_sld_profile[i].real)
