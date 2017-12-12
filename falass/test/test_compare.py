@@ -41,34 +41,6 @@ class TestCompare(unittest.TestCase):
         assert_almost_equal(a.scale, 1.)
         assert_almost_equal(a.background, 0.)
 
-    def test_change_scale(self):
-        data1 = dataformat.QData(0.05, 3., 0.3, 0.05 * 0.05)
-        data2 = dataformat.QData(0.25, 2., 0.2, 0.05 * 0.25)
-        data3 = dataformat.QData(0.50, 1., 0.1, 0.05 * 0.50)
-        data = [data1, data2, data3]
-        sdata1 = dataformat.QData(0.05, 1., 0.1, 0.05 * 0.05)
-        sdata2 = dataformat.QData(0.25, 2., 0.2, 0.05 * 0.25)
-        sdata3 = dataformat.QData(0.50, 3., 0.3, 0.05 * 0.50)
-        sdata = [sdata1, sdata2, sdata3]
-        a = compare.Compare(data, sdata, 1., 0.)
-        assert_almost_equal(a.scale, 1.)
-        a.change_scale(2.)
-        assert_almost_equal(a.scale, 2.)
-
-    def test_change_background(self):
-        data1 = dataformat.QData(0.05, 3., 0.3, 0.05 * 0.05)
-        data2 = dataformat.QData(0.25, 2., 0.2, 0.05 * 0.25)
-        data3 = dataformat.QData(0.50, 1., 0.1, 0.05 * 0.50)
-        data = [data1, data2, data3]
-        sdata1 = dataformat.QData(0.05, 1., 0.1, 0.05 * 0.05)
-        sdata2 = dataformat.QData(0.25, 2., 0.2, 0.05 * 0.25)
-        sdata3 = dataformat.QData(0.50, 3., 0.3, 0.05 * 0.50)
-        sdata = [sdata1, sdata2, sdata3]
-        a = compare.Compare(data, sdata, 1., 0.)
-        assert_almost_equal(a.background, 0.)
-        a.change_background(2.)
-        assert_almost_equal(a.background, 2.)
-
     def test_fit_noq(self):
         data11 = dataformat.QData(0.05, 0.1, 0., 0.05 * 0.05)
         data12 = dataformat.QData(0.25, 0.05, 0., 0.05 * 0.25)
