@@ -33,8 +33,10 @@ class Files:
     flip: bool, optional
         False if the system should be read as is, true is the simulation cell should be rotated through the
         xy-plane -- note that falass treats the first side that the neutron or X-ray interacts with as that at z=0.
+    xray: bool, optional
+        True if the scattering length of the particles should be scaled by the classical radius of an electron.
     """
-    def __init__(self, pdbfile, lgtfile=None, datfile=None, resolution=5., ierror=5., flip=False):
+    def __init__(self, pdbfile, lgtfile=None, datfile=None, resolution=5., ierror=5., flip=False, xray=False):
         self.pdbfile = pdbfile
         self.cell = []
         self.atoms = []
@@ -47,6 +49,7 @@ class Files:
         self.ierror = ierror
         self.resolution = resolution
         self.flip = flip
+        self.xray = xray
         return
 
     def set_file(self, pdbfile=None, lgtfile=None, datfile=None):
@@ -64,7 +67,7 @@ class Files:
             Currently the .lgt file style that is supported is a 3 column space separated txt file where the columns are
             atom_type, real_scattering_length, and imaginary_scattering_length respectively.
         datfile: str, optional
-            Path and name of the .dat file (from which the analysis q vectors are drawn and also for subsequent
+            Path and name of the .dat file (from which the /home/arm61/progs/refnxanalysis q vectors are drawn and also for subsequent
             comparison between theory and experiment). If a datfile is not defined falass will allow the user to
             define a range of q vectors to calculate the reflectometry over.
             Currently the .dat file style that is supported is a 2, 3, and 4 column space separated txt files where the
@@ -133,7 +136,10 @@ class Files:
                 line_list = line.split()
                 duplicate = check_duplicates(self.scat_lens, line_list[0])
                 if not duplicate:
-                    self.scat_lens.append(dataformat.ScatLens(line_list[0], float(line_list[1]), float(line_list[2])))
+                    i = 1
+                    if self.xray:
+                        i *= 2.817940
+                    self.scat_lens.append(dataformat.ScatLens(line_list[0], float(line_list[1])*i, float(line_list[2])*i))
             print_update(100)
             file.close()
         else:

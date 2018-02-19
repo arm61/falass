@@ -1,5 +1,6 @@
 import numpy as np
 from falass import dataformat, readwrite
+from scipy.optimize import leastsq
 
 class Analysis:
     """Trajectory analysis
@@ -18,6 +19,9 @@ class Analysis:
         self.number_of_timesteps = 0
         self.times = []
         self.flip = files.flip
+        self.number_of_molecules = 0
+        self.chain_tilt_angles = []
+        self.tail_thickness = []
 
     def read_full_pdb(self):
         """Parse 3 coordinate pdb.
@@ -30,13 +34,20 @@ class Analysis:
         percentage = 0
         readwrite.print_update(percentage)
         atoms_each_timestep = []
+        atoms_each_molecule = []
         for i, line in enumerate(file):
             percentage_new = np.floor(i / lines * 100)
             percentage = readwrite.check_update(percentage, percentage_new)
             if line[0:6] == "ATOM  ":
-                atoms_each_timestep.append(get_atom_position(self.cell[self.number_of_timesteps - 1][2], line,
+                atoms_each_molecule.append(get_atom_position(self.cell[self.number_of_timesteps - 1][2], line,
                                                              self.flip))
+                if int(line[22:26]) == self.number_of_molecules + 1:
+                    if self.number_of_molecules != 0:
+                        atoms_each_timestep.append(atoms_each_molecule)
+                        atoms_each_molecule = []
+                    self.number_of_molecules += 1
             if "TITLE  " in line:
+                self.number_of_molecules = 0
                 if self.number_of_timesteps == 0:
                     self.number_of_timesteps, new_time = readwrite.iterate_time(self.number_of_timesteps, line)
                     self.times.append(new_time)
@@ -52,7 +63,42 @@ class Analysis:
         file.close()
         return
 
+    def get_number_density(self, labels):
+        for i in range(0, len(self.atoms)):
+            for j in range(0, len(self.atoms[i])):
+                for k in range(0, len(labels)):
+                    if self.atoms[i][j].atom == labels[k]:
+                        print(self.atoms[i][j].atom)
 
+    def get_chain_tilt(self, labels):
+        self.chain_tilt_angles = []
+        self.tail_thickness = []
+        for i in range(0, len(self.atoms)):
+            for j in range(0, len(self.atoms[i])):
+                for l in range(0, len(labels)):
+                    tail_atoms_x = []
+                    tail_atoms_y = []
+                    tail_atoms_z = []
+                    for k in range(0, len(self.atoms[i][j])):
+                        if self.atoms[i][j][k].atom in labels[l]:
+                            tail_atoms_x.append(np.float(self.atoms[i][j][k].x))
+                            tail_atoms_y.append(np.float(self.atoms[i][j][k].y))
+                            tail_atoms_z.append(np.float(self.atoms[i][j][k].z))
+                    if len(tail_atoms_z) != 0:
+                        diffx = np.abs(tail_atoms_x[1] - tail_atoms_x[0])
+                        diffy = np.abs(tail_atoms_y[1] - tail_atoms_y[0])
+                        diffz = np.abs(tail_atoms_z[1] - tail_atoms_z[0])
+                        if diffx > self.cell[i][0]/2:
+                            diffx = np.abs(diffx - self.cell[i][0])
+                        if diffy > self.cell[i][1]/2:
+                            diffy = np.abs(diffy - self.cell[i][1])
+                        if diffz > self.cell[i][2]/2:
+                            diffz = np.abs(diffz - self.cell[i][2])
+                        xy = np.sqrt(np.square(diffx) +
+                                     np.square(diffy))
+                        theta = np.arctan(xy/diffz)
+                        self.tail_thickness.append(diffz)
+                        self.chain_tilt_angles.append(np.rad2deg(theta))
 
 
 def get_atom_position(cell, line, flip):

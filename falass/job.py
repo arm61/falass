@@ -85,7 +85,7 @@ class Job():
             print('There was no lgt file defined, falass will help you define one and save it for future use.')
             for i in range(0, len(self.files.atoms)):
                 for j in range(0, len(self.files.atoms[i])):
-                    duplicate = check_duplicates(self.files.scat_lens, self.files.atoms[i][j].atom)
+                    duplicate = readwrite.check_duplicates(self.files.scat_lens, self.files.atoms[i][j].atom)
                     if not duplicate:
                         real_scat_len = input('The following atom type has no scattering length given '
                                               'in the lgt file {} \nPlease define a real scattering length for '
