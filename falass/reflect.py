@@ -102,7 +102,7 @@ class Reflect:
             plt.show()
         else:
             raise ValueError('No q vectors have been defined -- either read a .dat file or get q vectors.')
-
+        return plt
 
 def convolution(exp_data, sld_profile):
     """Convolution/smearing

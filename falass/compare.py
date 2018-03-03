@@ -135,6 +135,7 @@ class Compare:
         plt.xlabel('$q$ (\AA)')
         plt.yscale('log')
         plt.show()
+        return plt
 
     def return_fitted(self):
         """Return fitted.

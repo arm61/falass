@@ -140,6 +140,7 @@ class SLD:
         plt.xlim([0, np.amax(x)])
         plt.ylim([np.amin(np.asarray(y)*1e6), np.amax(np.asarray(y)*1e6)+1])
         plt.show()
+        return plt
 
 
 def get_scatlen(atom, scat_lens):

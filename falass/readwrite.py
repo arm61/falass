@@ -1,5 +1,6 @@
 import numpy as np
 from falass import dataformat
+import matplotlib.pyplot as plt
 
 
 class Files:
@@ -36,7 +37,7 @@ class Files:
     xray: bool, optional
         True if the scattering length of the particles should be scaled by the classical radius of an electron.
     """
-    def __init__(self, pdbfile, lgtfile=None, datfile=None, resolution=5., ierror=5., flip=False, xray=False):
+    def __init__(self, pdbfile=None, lgtfile=None, datfile=None, resolution=5., ierror=5., flip=False, xray=False):
         self.pdbfile = pdbfile
         self.cell = []
         self.atoms = []
@@ -202,6 +203,43 @@ class Files:
         for i in range(0, len(q_values)):
             self.expdata.append(dataformat.QData(q_values[i], None, None, q_values[i] * (self.resolution / 100)))
         return
+
+    def plot_dat(self, rq4=True):
+        """Plot the experimental data file that has been read in.
+
+        Parameters
+        ----------
+        rq4: bool, optional
+            Should the plot be created with a y-axis of Rq^4
+        """
+        if self.datfile:
+            x = []
+            y = []
+            dy = []
+            plt.rc('text', usetex=True)
+            plt.rc('font', family='serif')
+            if rq4:
+                for i in range(0, len(self.expdata)):
+                    x.append(self.expdata[i].q)
+                    y.append(np.log10(self.expdata[i].i * self.expdata[i].q ** 4))
+                    dy.append((self.expdata[i].di * self.expdata[i].q ** 4) /
+                              (self.expdata[i].i * np.log(10)))
+                    plt.ylabel('log($Rq^4$) (\AA$^4$)')
+            else:
+                for i in range(0, len(self.expdata)):
+                    x.append(self.expdata[i].q)
+                    y.append(np.log10(self.expdata[i].i))
+                    dy.append(self.expdata[i].di / (self.expdata[i].i * np.log(10)))
+                    plt.ylabel('log($R$)')
+            x = np.asarray(x)
+            y = np.asarray(y)
+            dy = np.asarray(dy)
+            plt.errorbar(x, y, yerr=dy, marker='o', ls='')
+            plt.xlabel('$q$ (\AA)')
+            plt.show()
+        else:
+            raise ValueError("No data file is defined.")
+        return plt
 
 
 def check_duplicates(array, check):
