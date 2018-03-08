@@ -80,7 +80,7 @@ class Reflect:
             x = []
             y = []
             dy = []
-            plt.rc('text', usetex=True)
+            plt.rc('text')
             plt.rc('font', family='serif')
             if rq4:
                 for i in range(0, len(self.exp_data)):

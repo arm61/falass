@@ -122,7 +122,7 @@ class SLD:
         y = []
         dy = []
         buildx = 0
-        plt.rc('text', usetex=True)
+        plt.rc('text')
         plt.rc('font', family='serif')
         for i in range(0, len(self.av_sld_profile)):
             if real:

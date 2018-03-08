@@ -92,7 +92,7 @@ class Compare:
         x2 = []
         y2 = []
         dy2 = []
-        plt.rc('text', usetex=True)
+        plt.rc('text')
         plt.rc('font', family='serif')
         if fitted:
             if len(self.sim_data_fitted) > 0:
