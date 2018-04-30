@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>falass package &mdash; falass 0.0.2 documentation</title>
+  <title>falass package &mdash; falass 1.0.1 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="falass 0.0.2 documentation" href="index.html"/>
+    <link rel="top" title="falass 1.0.1 documentation" href="index.html"/>
         <link rel="up" title="falass" href="modules.html"/>
         <link rel="next" title="falass.test package" href="falass.test.html"/>
         <link rel="prev" title="falass" href="modules.html"/> 
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                0.0.2
+                1.0.1
               </div>
             
           
@@ -212,10 +212,10 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>exp_data</strong> (<em>array_like falass.dataformat.QData</em>) &#8211; The experimental reflectometry data read from the datfile.</li>
-<li><strong>sim_data</strong> (<em>array_like falass.dataformat.QData</em>) &#8211; The calculated reflectometry data from the simulation.</li>
-<li><strong>scale</strong> (<em>float</em>) &#8211; The amount by which the calculated reflectometry should be scaled.</li>
-<li><strong>background</strong> (<em>float</em>) &#8211; The height of the uniform background to be added to the calculated reflectometry.</li>
+<li><strong>exp_data</strong> (<em>array_like falass.dataformat.QData</em>) – The experimental reflectometry data read from the datfile.</li>
+<li><strong>sim_data</strong> (<em>array_like falass.dataformat.QData</em>) – The calculated reflectometry data from the simulation.</li>
+<li><strong>scale</strong> (<em>float</em>) – The amount by which the calculated reflectometry should be scaled.</li>
+<li><strong>background</strong> (<em>float</em>) – The height of the uniform background to be added to the calculated reflectometry.</li>
 </ul>
 </td>
 </tr>
@@ -230,7 +230,7 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>background</strong> (<em>float</em>) &#8211; The height of the uniform background to be added to the calculated reflectometry.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>background</strong> (<em>float</em>) – The height of the uniform background to be added to the calculated reflectometry.</td>
 </tr>
 </tbody>
 </table>
@@ -245,7 +245,7 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>scale</strong> (<em>float</em>) &#8211; The amount by which the calculated reflectometry should be scaled.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>scale</strong> (<em>float</em>) – The amount by which the calculated reflectometry should be scaled.</td>
 </tr>
 </tbody>
 </table>
@@ -269,8 +269,8 @@ Currently only a logarithmically transformed fitted can be conducted.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>rq4</strong> (<em>bool</em>) &#8211; Should the data be plotted in rq4 space.</li>
-<li><strong>fitted</strong> (<em>bool</em>) &#8211; Should the fitted reflectometry data be used.</li>
+<li><strong>rq4</strong> (<em>bool</em>) – Should the data be plotted in rq4 space.</li>
+<li><strong>fitted</strong> (<em>bool</em>) – Should the fitted reflectometry data be used.</li>
 </ul>
 </td>
 </tr>
@@ -297,9 +297,9 @@ Currently only a logarithmically transformed fitted can be conducted.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>sim_data</strong> (<em>array_like float</em>) &#8211; The data to be scaled and have a background added.</li>
-<li><strong>scale</strong> (<em>float</em>) &#8211; The amount by which the data should be scaled.</li>
-<li><strong>background</strong> (<em>float</em>) &#8211; The size of the uniform background to be added.</li>
+<li><strong>sim_data</strong> (<em>array_like float</em>) – The data to be scaled and have a background added.</li>
+<li><strong>scale</strong> (<em>float</em>) – The amount by which the data should be scaled.</li>
+<li><strong>background</strong> (<em>float</em>) – The size of the uniform background to be added.</li>
 </ul>
 </td>
 </tr>
@@ -316,6 +316,14 @@ Currently only a logarithmically transformed fitted can be conducted.</p>
 </div>
 <div class="section" id="module-falass.dataformat">
 <span id="falass-dataformat-module"></span><h2>falass.dataformat module<a class="headerlink" href="#module-falass.dataformat" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="falass.dataformat.Atom3Positions">
+<em class="property">class </em><code class="descclassname">falass.dataformat.</code><code class="descname">Atom3Positions</code><span class="sig-paren">(</span><em>atom</em>, <em>x</em>, <em>y</em>, <em>z</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/falass/dataformat.html#Atom3Positions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#falass.dataformat.Atom3Positions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>3-Dimension positions.</p>
+<p>A class to hold the 3D atom positions, constiting of a str atom type and each of the three dimensions a float.</p>
+</dd></dl>
+
 <dl class="class">
 <dt id="falass.dataformat.AtomPositions">
 <em class="property">class </em><code class="descclassname">falass.dataformat.</code><code class="descname">AtomPositions</code><span class="sig-paren">(</span><em>atom</em>, <em>position</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/falass/dataformat.html#AtomPositions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#falass.dataformat.AtomPositions" title="Permalink to this definition">¶</a></dt>
@@ -360,16 +368,16 @@ floats associated with the real and imaginary scattering lengths of that atom ty
 <em class="property">class </em><code class="descclassname">falass.job.</code><code class="descname">Job</code><span class="sig-paren">(</span><em>files</em>, <em>layer_thickness</em>, <em>cut_off_size</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/falass/job.html#Job"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#falass.job.Job" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <p>The catch all.</p>
-<p>This class is used for setting up the falass job &#8211; and is generally a catch all for inputs that do not fit into
+<p>This class is used for setting up the falass job – and is generally a catch all for inputs that do not fit into
 other parts.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>files</strong> (<em>falass.readwrite.Files</em>) &#8211; A Files class item.</li>
-<li><strong>layer_thickness</strong> (<em>float</em>) &#8211; The thickness of the layers that the simulation cell should be sliced into.</li>
-<li><strong>cut_off_size</strong> (<em>float</em>) &#8211; The size of the simulation cell that should be ignored from the bottom &#8211; this is to allow for the use
+<li><strong>files</strong> (<em>falass.readwrite.Files</em>) – A Files class item.</li>
+<li><strong>layer_thickness</strong> (<em>float</em>) – The thickness of the layers that the simulation cell should be sliced into.</li>
+<li><strong>cut_off_size</strong> (<em>float</em>) – The size of the simulation cell that should be ignored from the bottom – this is to allow for the use
 of a vacuum gap at the bottom of the cell.</li>
 </ul>
 </td>
@@ -397,9 +405,9 @@ one is written from scratch.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>files</strong> (<em>falass.readwrite.Files</em>) &#8211; A Files class item.</li>
-<li><strong>layer_thickness</strong> (<em>float</em>) &#8211; The thickness of the layers that the simulation cell should be sliced into.</li>
-<li><strong>cut_off_size</strong> (<em>float</em>) &#8211; The size of the simulation cell that should be ignored from the bottom &#8211; this is to allow for the use
+<li><strong>files</strong> (<em>falass.readwrite.Files</em>) – A Files class item.</li>
+<li><strong>layer_thickness</strong> (<em>float</em>) – The thickness of the layers that the simulation cell should be sliced into.</li>
+<li><strong>cut_off_size</strong> (<em>float</em>) – The size of the simulation cell that should be ignored from the bottom – this is to allow for the use
 of a vacuum gap at the bottom of the cell.</li>
 </ul>
 </td>
@@ -417,7 +425,7 @@ of a vacuum gap at the bottom of the cell.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>times</strong> (<em>array_like float</em>) &#8211; The timesteps that should be analysed, in the unit of time that present in the pdbfile.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>times</strong> (<em>array_like float</em>) – The timesteps that should be analysed, in the unit of time that present in the pdbfile.</td>
 </tr>
 </tbody>
 </table>
@@ -435,8 +443,8 @@ of a vacuum gap at the bottom of the cell.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>array</strong> (<em>array-type</em>) &#8211; The array to check.</li>
-<li><strong>check</strong> (<em>str</em>) &#8211; The item to try and find.</li>
+<li><strong>array</strong> (<em>array-type</em>) – The array to check.</li>
+<li><strong>check</strong> (<em>str</em>) – The item to try and find.</li>
 </ul>
 </td>
 </tr>
@@ -467,21 +475,21 @@ the simulation cell should be flipped in the xy-plane.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>pdbfile</strong> (<em>str</em>) &#8211; Path and name of the .pdb file to be analysed.</li>
-<li><strong>lgtfile</strong> (<em>str, optional</em>) &#8211; Path and name of the .lgt file (which contains the scattering lengths of each of the atom types in the
+<li><strong>pdbfile</strong> (<em>str</em>) – Path and name of the .pdb file to be analysed.</li>
+<li><strong>lgtfile</strong> (<em>str, optional</em>) – Path and name of the .lgt file (which contains the scattering lengths of each of the atom types in the
 pdbfile). If a lgtfile is not defined falass will help in the creation of one.
 Currently the .lgt file style that is supported is a 3 column space separated txt file where the columns are
 atom_type, real_scattering_length, and imaginary_scattering_length respectively.</li>
-<li><strong>datfile</strong> (<em>str, optional</em>) &#8211; Path and name of the .dat file (from which the analysis q vectors are drawn and also for subsequent
+<li><strong>datfile</strong> (<em>str, optional</em>) – Path and name of the .dat file (from which the analysis q vectors are drawn and also for subsequent
 comparison between theory and experiment). If a datfile is not defined falass will allow the user to
 define a range of q vectors to calculate the reflectometry over.
 Currently the .dat file style that is supported is a 2, 3, and 4 column space separated txt files where the
 columns are q, i, di, and dq respectively.</li>
-<li><strong>resolution</strong> (<em>float, optional</em>) &#8211; Percentage of the q vector for the width of the resolution Gaussian function to be used in the data
+<li><strong>resolution</strong> (<em>float, optional</em>) – Percentage of the q vector for the width of the resolution Gaussian function to be used in the data
 smearing, if a 4 column datfile is given this is ignored.</li>
-<li><strong>ierror</strong> (<em>float, optional</em>) &#8211; Percentage error of the intensity to be assumed, if a &gt;2 column datfile is used this is ignored.</li>
-<li><strong>flip</strong> (<em>bool, optional</em>) &#8211; False if the system should be read as is, true is the simulation cell should be rotated through the
-xy-plane &#8211; note that falass treats the first side that the neutron or X-ray interacts with as that at z=0.</li>
+<li><strong>ierror</strong> (<em>float, optional</em>) – Percentage error of the intensity to be assumed, if a &gt;2 column datfile is used this is ignored.</li>
+<li><strong>flip</strong> (<em>bool, optional</em>) – False if the system should be read as is, true is the simulation cell should be rotated through the
+xy-plane – note that falass treats the first side that the neutron or X-ray interacts with as that at z=0.</li>
 </ul>
 </td>
 </tr>
@@ -498,9 +506,9 @@ calculation of the reflectometry over.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>start</strong> (<em>float, optional</em>) &#8211; The first q-vector for which the reflectometry should be calculated.</li>
-<li><strong>end</strong> (<em>float, optional</em>) &#8211; The last q-vector for which the reflectometry should be calculated.</li>
-<li><strong>number</strong> (<em>int, optional</em>) &#8211; The number of q-vectors.</li>
+<li><strong>start</strong> (<em>float, optional</em>) – The first q-vector for which the reflectometry should be calculated.</li>
+<li><strong>end</strong> (<em>float, optional</em>) – The last q-vector for which the reflectometry should be calculated.</li>
+<li><strong>number</strong> (<em>int, optional</em>) – The number of q-vectors.</li>
 </ul>
 </td>
 </tr>
@@ -513,7 +521,7 @@ calculation of the reflectometry over.</p>
 <code class="descname">read_dat</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/falass/readwrite.html#Files.read_dat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#falass.readwrite.Files.read_dat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parses .dat.</p>
 <p>Parses the .dat file, supporting 2, 3, and 4 column files consisting of q, i, di, and dq with comments in lines
-where the first character is a &#8216;#&#8217;. If there is no .dat file the get_qs() function should be used to generate
+where the first character is a ‘#’. If there is no .dat file the get_qs() function should be used to generate
 q vectors to allow for the calculation of the reflectometry profile.</p>
 </dd></dl>
 
@@ -531,8 +539,8 @@ to disk if atom types do not feature in the given lgtfile or one is written from
 <dt id="falass.readwrite.Files.read_pdb">
 <code class="descname">read_pdb</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/falass/readwrite.html#Files.read_pdb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#falass.readwrite.Files.read_pdb" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse .pdb.</p>
-<p>Reads the .pdb file into memory. Currently the atoms must have the title &#8216;ATOM&#8217;, the timestep time needs to
-be the last text in the &#8216;TITLE&#8217; line, and the cell dimensions are taken from the &#8216;CRYST1&#8217; line, and assumed to
+<p>Reads the .pdb file into memory. Currently the atoms must have the title ‘ATOM’, the timestep time needs to
+be the last text in the ‘TITLE’ line, and the cell dimensions are taken from the ‘CRYST1’ line, and assumed to
 be orthorhomic. Non-orthorhomic cells are not necessarily supported.</p>
 </dd></dl>
 
@@ -546,12 +554,12 @@ be orthorhomic. Non-orthorhomic cells are not necessarily supported.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>pdbfile</strong> (<em>str</em>) &#8211; Path and name of the .pdb file to be analysed.</li>
-<li><strong>lgtfile</strong> (<em>str, optional</em>) &#8211; Path and name of the .lgt file (which contains the scattering lengths of each of the atom types in the
+<li><strong>pdbfile</strong> (<em>str</em>) – Path and name of the .pdb file to be analysed.</li>
+<li><strong>lgtfile</strong> (<em>str, optional</em>) – Path and name of the .lgt file (which contains the scattering lengths of each of the atom types in the
 pdbfile). If a lgtfile is not defined falass will help in the creation of one.
 Currently the .lgt file style that is supported is a 3 column space separated txt file where the columns are
 atom_type, real_scattering_length, and imaginary_scattering_length respectively.</li>
-<li><strong>datfile</strong> (<em>str, optional</em>) &#8211; Path and name of the .dat file (from which the analysis q vectors are drawn and also for subsequent
+<li><strong>datfile</strong> (<em>str, optional</em>) – Path and name of the .dat file (from which the analysis q vectors are drawn and also for subsequent
 comparison between theory and experiment). If a datfile is not defined falass will allow the user to
 define a range of q vectors to calculate the reflectometry over.
 Currently the .dat file style that is supported is a 2, 3, and 4 column space separated txt files where the
@@ -575,8 +583,8 @@ columns are q, i, di, and dq respectively.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>array</strong> (<em>array-type ScatLens</em>) &#8211; The array to check.</li>
-<li><strong>check</strong> (<em>str</em>) &#8211; The atom type to try and find.</li>
+<li><strong>array</strong> (<em>array-type ScatLens</em>) – The array to check.</li>
+<li><strong>check</strong> (<em>str</em>) – The atom type to try and find.</li>
 </ul>
 </td>
 </tr>
@@ -599,7 +607,7 @@ columns are q, i, di, and dq respectively.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>string</strong> (<em>int</em>) &#8211; Percentage of way through reading.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>string</strong> (<em>int</em>) – Percentage of way through reading.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">New percentage of way through reading.</td>
 </tr>
@@ -619,8 +627,8 @@ columns are q, i, di, and dq respectively.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>cell</strong> (<em>float</em>) &#8211; z-cell dimension.</li>
-<li><strong>zpos</strong> (<em>float</em>) &#8211; z-position for an atom.</li>
+<li><strong>cell</strong> (<em>float</em>) – z-cell dimension.</li>
+<li><strong>zpos</strong> (<em>float</em>) – z-position for an atom.</li>
 </ul>
 </td>
 </tr>
@@ -644,9 +652,9 @@ columns are q, i, di, and dq respectively.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>cell</strong> (<em>float</em>) &#8211; z-cell dimension.</li>
-<li><strong>line</strong> (<em>str</em>) &#8211; Line from pdb file.</li>
-<li><strong>flip</strong> (<em>bool</em>) &#8211; Should the cell be flipped in the z-dimension.</li>
+<li><strong>cell</strong> (<em>float</em>) – z-cell dimension.</li>
+<li><strong>line</strong> (<em>str</em>) – Line from pdb file.</li>
+<li><strong>flip</strong> (<em>bool</em>) – Should the cell be flipped in the z-dimension.</li>
 </ul>
 </td>
 </tr>
@@ -669,7 +677,7 @@ columns are q, i, di, and dq respectively.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>line</strong> (<em>str</em>) &#8211; Line from pdb file.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>line</strong> (<em>str</em>) – Line from pdb file.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the a, b, c cell vectors of the particular timestep</td>
 </tr>
@@ -689,14 +697,14 @@ columns are q, i, di, and dq respectively.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>number_of_timesteps</strong> (<em>int</em>) &#8211; Number of timesteps found so far.</li>
-<li><strong>line</strong> (<em>str</em>) &#8211; &#8216;TITLE&#8217; line from the pdb file which has timestep information.</li>
+<li><strong>number_of_timesteps</strong> (<em>int</em>) – Number of timesteps found so far.</li>
+<li><strong>line</strong> (<em>str</em>) – ‘TITLE’ line from the pdb file which has timestep information.</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
-<li><em>int</em> &#8211; Number of timesteps iterated by 1.</li>
-<li><em>float</em> &#8211; Time of newest timestep.</li>
+<li><em>int</em> – Number of timesteps iterated by 1.</li>
+<li><em>float</em> – Time of newest timestep.</li>
 </ul>
 </p>
 </td>
@@ -714,7 +722,7 @@ columns are q, i, di, and dq respectively.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<em>str</em>) &#8211; Name of the file that the number of lines is desired for.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<em>str</em>) – Name of the file that the number of lines is desired for.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Number of lines in the file</td>
 </tr>
@@ -733,7 +741,7 @@ columns are q, i, di, and dq respectively.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>string</strong> (<em>int</em>) &#8211; Percentage read-in complete.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>string</strong> (<em>int</em>) – Percentage read-in complete.</td>
 </tr>
 </tbody>
 </table>
@@ -753,8 +761,8 @@ columns are q, i, di, and dq respectively.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>sld_profile</strong> (<em>array_like falass.dataformat.SLDPro</em>) &#8211; An array describing the scattering length density of the simulation cell under study.</li>
-<li><strong>exp_data</strong> (<em>array_like falass.dataformat.QData</em>) &#8211; An array giving the experimental data from the datfile.</li>
+<li><strong>sld_profile</strong> (<em>array_like falass.dataformat.SLDPro</em>) – An array describing the scattering length density of the simulation cell under study.</li>
+<li><strong>exp_data</strong> (<em>array_like falass.dataformat.QData</em>) – An array giving the experimental data from the datfile.</li>
 </ul>
 </td>
 </tr>
@@ -784,7 +792,7 @@ under study.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rq4</strong> (<em>bool</em>) &#8211; Should the data be transformed to rq4 space.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rq4</strong> (<em>bool</em>) – Should the data be transformed to rq4 space.</td>
 </tr>
 </tbody>
 </table>
@@ -802,13 +810,100 @@ under study.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>exp_data</strong> (<em>falass.dataformat.QData</em>) &#8211; The experimental data from the datfile.</li>
-<li><strong>sld_profile</strong> (<em>falass.dataformat.SLDPro</em>) &#8211; The SLD profile calculated from the simulation trajectory.</li>
-<li><strong>lt</strong> (<em>float</em>) &#8211; The thickness of the layers.</li>
+<li><strong>exp_data</strong> (<em>falass.dataformat.QData</em>) – The experimental data from the datfile.</li>
+<li><strong>sld_profile</strong> (<em>falass.dataformat.SLDPro</em>) – The SLD profile calculated from the simulation trajectory.</li>
+<li><strong>lt</strong> (<em>float</em>) – The thickness of the layers.</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The smeared reflectometry profile.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">array_like</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="falass.reflect.knext_and_rj">
+<code class="descclassname">falass.reflect.</code><code class="descname">knext_and_rj</code><span class="sig-paren">(</span><em>kn</em>, <em>idx</em>, <em>k</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/falass/reflect.html#knext_and_rj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#falass.reflect.knext_and_rj" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the k in the next layer and the nature of rj.</p>
+<p>This will determine the wavevector value in the next layer and therefore the value of
+rj which describes the propensity for the wavevector to reflect or refract at a given interface.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>kn</strong> (<em>array_like</em>) – The wavevector array for a given layer.</li>
+<li><strong>idx</strong> (<em>int</em>) – The particular layer.</li>
+<li><strong>k</strong> (<em>array_like</em>) – The wavevector for the semi-infinite top layer.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><em>array_like</em> – The wavector array in the next layer.</li>
+<li><em>array_like</em> – The rj array for the interface.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="falass.reflect.layer_loop">
+<code class="descclassname">falass.reflect.</code><code class="descname">layer_loop</code><span class="sig-paren">(</span><em>kn</em>, <em>k</em>, <em>idx</em>, <em>layers</em>, <em>mrtot</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/falass/reflect.html#layer_loop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#falass.reflect.layer_loop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculation that is conducted for each layer.</p>
+<p>The is the calculation carried out for each layer in the Abeles optical matrix method calculation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>kn</strong> (<em>array_like</em>) – The wavevector at the start of the current layer.</li>
+<li><strong>k</strong> (<em>array_like</em>) – The wavevector at the start of the semi-infinite top layer.</li>
+<li><strong>idx</strong> (<em>int</em>) – The layer number.</li>
+<li><strong>layers</strong> (<em>array_like</em>) – An n by 4 array consisting of information about the layer; thickness, real SLD, imag SLD, and roughness (not
+used in falass), where n is the number of layers.</li>
+<li><strong>mrtot</strong> (<em>array_like</em>) – A 2 by 2 array of float comprising the resultant matrix for the layered structure.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><em>float</em> – The wavevector at the start of the next layer.</li>
+<li><em>array_like</em> – The updated resultant matrix.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="falass.reflect.make_kn">
+<code class="descclassname">falass.reflect.</code><code class="descname">make_kn</code><span class="sig-paren">(</span><em>npnts</em>, <em>nlayers</em>, <em>layers</em>, <em>qvals</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/falass/reflect.html#make_kn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#falass.reflect.make_kn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate the starting kn and sld arrays.</p>
+<p>This will generate the appropriate array for the Abele optical matrix method
+calculation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>npnts</strong> (<em>int</em>) – number of q-vectors to be calculated over.</li>
+<li><strong>nlayers</strong> (<em>int</em>) – number of layers in system minus two.</li>
+<li><strong>layers</strong> (<em>array_like</em>) – An n by 4 array consisting of information about the layer; thickness, real SLD, imag SLD, and roughness (not
+used in falass), where n is the number of layers.</li>
+<li><strong>qvals</strong> (<em>array_like</em>) – q-vectors for calculation.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The kn array for the Abeles optical matrix calculation.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">array_like</p>
@@ -828,9 +923,9 @@ under study.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>exp_data</strong> (<em>falass.dataformat.QData</em>) &#8211; The experimental data from the datfile.</li>
-<li><strong>sld_profile</strong> (<em>falass.dataformat.SLDPro</em>) &#8211; The SLD profile calculated from the simulation trajectory.</li>
-<li><strong>lt</strong> (<em>float</em>) &#8211; The thickness of the layers.</li>
+<li><strong>exp_data</strong> (<em>falass.dataformat.QData</em>) – The experimental data from the datfile.</li>
+<li><strong>sld_profile</strong> (<em>falass.dataformat.SLDPro</em>) – The SLD profile calculated from the simulation trajectory.</li>
+<li><strong>lt</strong> (<em>float</em>) – The thickness of the layers.</li>
 </ul>
 </td>
 </tr>
@@ -858,7 +953,7 @@ falass.job.Job. Further it will then allow the calculation and plotting of the a
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>assigned_job</strong> (<em>falass.job.Job</em>) &#8211; The is the Job class for the particular falass run taking place. See the job.Job class for more information.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>assigned_job</strong> (<em>falass.job.Job</em>) – The is the Job class for the particular falass run taking place. See the job.Job class for more information.</td>
 </tr>
 </tbody>
 </table>
@@ -888,14 +983,24 @@ total scattering length is converted to a density by division by the volume of t
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>real</strong> (<em>bool</em>) &#8211; Should the real SLD profile be plotted (if both real and imaginary are true the real will be plotted).</li>
-<li><strong>imag</strong> (<em>bool</em>) &#8211; Should the imaginary SLD profile be plotted (if both real and imaginary are true the real will be plotted).</li>
+<li><strong>real</strong> (<em>bool</em>) – Should the real SLD profile be plotted (if both real and imaginary are true the real will be plotted).</li>
+<li><strong>imag</strong> (<em>bool</em>) – Should the imaginary SLD profile be plotted (if both real and imaginary are true the real will be plotted).</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
+
+<dl class="method">
+<dt id="falass.sld.SLD.set_av_sld_profile">
+<code class="descname">set_av_sld_profile</code><span class="sig-paren">(</span><em>av_sld</em>, <em>av_sld_err</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/falass/sld.html#SLD.set_av_sld_profile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#falass.sld.SLD.set_av_sld_profile" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="falass.sld.SLD.set_sld_profile">
+<code class="descname">set_sld_profile</code><span class="sig-paren">(</span><em>sld</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/falass/sld.html#SLD.set_sld_profile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#falass.sld.SLD.set_sld_profile" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -909,8 +1014,8 @@ total scattering length is converted to a density by division by the volume of t
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>atom</strong> (<em>str</em>) &#8211; The name of the atom type that the scattering length is needed for.</li>
-<li><strong>scat_lens</strong> (<em>array_like falass.dataformat.ScatLens</em>) &#8211; The array of the scattering lengths that is defined in the falass.readwrite.Files class.</li>
+<li><strong>atom</strong> (<em>str</em>) – The name of the atom type that the scattering length is needed for.</li>
+<li><strong>scat_lens</strong> (<em>array_like falass.dataformat.ScatLens</em>) – The array of the scattering lengths that is defined in the falass.readwrite.Files class.</li>
 </ul>
 </td>
 </tr>
@@ -974,7 +1079,7 @@ total scattering length is converted to a density by division by the volume of t
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.0.2',
+            VERSION:'1.0.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

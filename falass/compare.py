@@ -68,7 +68,7 @@ class Compare:
         x2 = []
         y2 = []
         dy2 = []
-        plt.rc('text', usetex=True)
+        plt.rc('text')
         plt.rc('font', family='serif')
         plt.figure(figsize=(15,10))
         if fitted:
@@ -111,7 +111,7 @@ class Compare:
         plt.errorbar(x2, y2, yerr=dy2, linestyle='', marker='o')
         plt.xlabel('$q$ (\AA)')
         plt.yscale('log')
-        plt.show()
+        return plt
 
     def return_fitted(self):
         """Return fitted.

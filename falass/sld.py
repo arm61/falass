@@ -122,7 +122,7 @@ class SLD:
         y = []
         dy = []
         buildx = 0
-        plt.rc('text', usetex=True)
+        plt.rc('text')
         plt.rc('font', family='serif')
         plt.figure(figsize=(15,10))
         for i in range(0, len(self.av_sld_profile)):
@@ -140,7 +140,7 @@ class SLD:
         plt.xlabel('$z$ (\AA)')
         plt.xlim([0, np.amax(x)])
         plt.ylim([np.amin(np.asarray(y)*1e6), np.amax(np.asarray(y)*1e6)+1])
-        plt.show()
+        return plt
 
 
 def get_scatlen(atom, scat_lens):

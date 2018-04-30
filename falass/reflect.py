@@ -80,7 +80,7 @@ class Reflect:
             x = []
             y = []
             dy = []
-            plt.rc('text', usetex=True)
+            plt.rc('text')
             plt.rc('font', family='serif')
             plt.figure(figsize=(15,10))
             for i in range(0, len(self.exp_data)):
@@ -94,10 +94,9 @@ class Reflect:
             plt.errorbar(x, y, yerr=dy)
             plt.xlabel('$q$ (\AA)')
             plt.ylabel('log($Rq^4$) (\AA$^4$)')
-            plt.show()
         else:
             raise ValueError('No q vectors have been defined -- either read a .dat file or get q vectors.')
-
+        return plt
 
 def convolution(exp_data, sld_profile):
     """Convolution/smearing
