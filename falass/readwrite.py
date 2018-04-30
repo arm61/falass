@@ -90,7 +90,7 @@ class Files:
         be orthorhomic. Non-orthorhomic cells are not necessarily supported.
         """
         lines = line_count(self.pdbfile)
-        print("Reading PDB file \n")
+        print("Reading PDB file")
         file = open(self.pdbfile, 'r')
         percentage = 0
         print_update(percentage)
@@ -127,7 +127,7 @@ class Files:
         """
         if self.lgtfile:
             lines = line_count(self.lgtfile)
-            print("Reading LGT file \n")
+            print("Reading LGT file")
             percentage = 0
             print_update(percentage)
             file = open(self.lgtfile, 'r')
@@ -157,7 +157,7 @@ class Files:
         self.expdata=[]
         if self.datfile:
             lines = line_count(self.datfile)
-            print("Reading DAT file \n")
+            print("Reading DAT file")
             percentage = 0
             print_update(percentage)
             file = open(self.datfile, 'r')
@@ -385,6 +385,7 @@ def print_update(percentage):
         Percentage read-in complete.
     """
     print("[{} {} % ]".format('#' * int(percentage / 10), int(percentage / 10) * 10))
+
 
 def check_update(percentage, percentage_new):
     """Check if an update string should be printed.

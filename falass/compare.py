@@ -27,31 +27,7 @@ class Compare:
         self.background = background
         self.sim_data_fitted = []
 
-    def change_scale(self, scale):
-        """Edit scale.
-
-        Lets the scale factor be changed.
-
-        Parameters
-        ----------
-        scale: float
-            The amount by which the calculated reflectometry should be scaled.
-        """
-        self.scale = scale
-
-    def change_background(self, background):
-        """Edit background.
-
-        Lets the background factor be changed.
-
-        Parameters
-        ----------
-        background: float
-            The height of the uniform background to be added to the calculated reflectometry.
-        """
-        self.background = background
-
-    def fit(self):
+    def fit(self, bounds=((1e-100, 0), (np.inf, np.inf))):
         """Fit scale and background.
 
         Perform the fitting of the scale and background for the calculated data to the experimental data.
@@ -63,10 +39,10 @@ class Compare:
                 dy = []
                 y2 = []
                 for i in range(0, len(self.exp_data)):
-                    y.append(np.log(self.exp_data[i].i))
-                    dy.append(self.exp_data[i].di / (self.exp_data[i].i * np.log(10)))
-                    y2.append(self.sim_data[i].i)
-                popt, pcov = curve_fit(scale_and_background, y2, y, bounds=((1e-6, 0), (10, 1e-3)), sigma=dy)
+                    y.append(self.exp_data[i].i * np.power(self.exp_data[i].q, 4))
+                    dy.append(self.exp_data[i].di * np.power(self.exp_data[i].q, 4))
+                    y2.append(self.sim_data[i].i * np.power(self.exp_data[i].q, 4))
+                popt, pcov = curve_fit(scale_and_background, y2, y, bounds=bounds, sigma=dy)
                 self.scale = popt[0]
                 self.background = popt[1]
             else:
@@ -74,7 +50,7 @@ class Compare:
         else:
             raise ValueError('No q vectors have been defined -- either read a .dat file or get q vectors.')
 
-    def plot_compare(self, rq4=True, fitted=True): #pragma: no cover
+    def plot_compare(self, fitted=True, rq4=True): #pragma: no cover
         """Plot a comparison.
 
         Plotting the comparision between the calculated and experimental reflectometry.
@@ -94,6 +70,7 @@ class Compare:
         dy2 = []
         plt.rc('text')
         plt.rc('font', family='serif')
+        plt.figure(figsize=(15,10))
         if fitted:
             if len(self.sim_data_fitted) > 0:
                 k = self.sim_data_fitted
@@ -120,10 +97,10 @@ class Compare:
                 da = k[i].di
                 dy.append(da)
                 x2.append(self.exp_data[i].q)
-                y2.append(np.log10(self.exp_data[i].i))
+                y2.append(self.exp_data[i].i)
                 da = self.exp_data[i].di
                 dy2.append(da)
-                plt.ylabel('log$_{10}$($R$)')
+                plt.ylabel('$Rq^4$')
         x = np.asarray(x)
         y = np.asarray(y)
         dy = np.asarray(dy)
@@ -167,5 +144,5 @@ def scale_and_background(sim_data, scale, background):
     array_like float
         The scaled and background added reflectometry in log space.
     """
-    sim_data = np.log(sim_data * scale + background)
+    sim_data = (sim_data * scale + background)
     return sim_data
