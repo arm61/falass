@@ -99,7 +99,6 @@ class Reflect:
             plt.errorbar(x, y, yerr=dy)
             plt.xlabel('$q$ (\AA)')
             plt.ylabel('log($Rq^4$) (\AA$^4$)')
-            plt.show()
         else:
             raise ValueError('No q vectors have been defined -- either read a .dat file or get q vectors.')
         return plt

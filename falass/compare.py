@@ -134,7 +134,6 @@ class Compare:
         plt.errorbar(x2, y2, yerr=dy2, linestyle='', marker='o')
         plt.xlabel('$q$ (\AA)')
         plt.yscale('log')
-        plt.show()
         return plt
 
     def return_fitted(self):
