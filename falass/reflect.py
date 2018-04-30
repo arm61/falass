@@ -82,17 +82,12 @@ class Reflect:
             dy = []
             plt.rc('text')
             plt.rc('font', family='serif')
-            if rq4:
-                for i in range(0, len(self.exp_data)):
-                    x.append(self.averagereflect[i].q)
-                    y.append(np.log10(self.averagereflect[i].i * self.averagereflect[i].q ** 4))
-                    dy.append((self.averagereflect[i].di * self.averagereflect[i].q ** 4) /
-                              (self.averagereflect[i].i * np.log(10)))
-            else:
-                for i in range(0, len(self.exp_data)):
-                    x.append(self.averagereflect[i].q)
-                    y.append(np.log10(self.averagereflect[i].i))
-                    dy.append(self.averagereflect[i].di / (self.averagereflect[i].i * np.log(10)))
+            plt.figure(figsize=(15,10))
+            for i in range(0, len(self.exp_data)):
+                x.append(self.averagereflect[i].q)
+                y.append(np.log10(self.averagereflect[i].i * self.averagereflect[i].q ** 4))
+                dy.append((self.averagereflect[i].di * self.averagereflect[i].q ** 4) /
+                          (self.averagereflect[i].i * np.log(10)))
             x = np.asarray(x)
             y = np.asarray(y)
             dy = np.asarray(dy)
