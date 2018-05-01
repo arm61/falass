@@ -54,13 +54,13 @@ class Analysis:
             percentage_new = np.floor(i / lines * 100)
             percentage = readwrite.check_update(percentage, percentage_new)
             if line[0:6] == "ATOM  ":
-                atoms_each_molecule.append(get_atom_position(self.cell[self.number_of_timesteps - 1][2], line,
-                                                             self.flip))
                 if int(line[22:26]) == self.number_of_molecules + 1:
                     if self.number_of_molecules != 0:
                         atoms_each_timestep.append(atoms_each_molecule)
                         atoms_each_molecule = []
                     self.number_of_molecules += 1
+                atoms_each_molecule.append(get_atom_position(self.cell[self.number_of_timesteps - 1][2], line,
+                                                             self.flip))
             if "TITLE  " in line:
                 self.number_of_molecules = 0
                 if self.number_of_timesteps == 0:
@@ -211,7 +211,7 @@ def get_atom_position(cell, line, flip):
     Returns
     -------
     falass.dataformat.AtomPositions
-        Object with atom type and z-position from the given line.
+        Object with atom type and x, y, z-position from the given line.
     """
     if flip:
         new_zpos = readwrite.flip_zpos(cell, float(line[46:54]))
