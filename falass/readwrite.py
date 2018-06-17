@@ -91,7 +91,7 @@ class Files:
         be orthorhomic. Non-orthorhomic cells are not necessarily supported.
         """
         print("Reading PDB file")
-        u = mda.Universe(self.pdbfile)
+        self.u = u = mda.Universe(self.pdbfile)
 
         self.cell = []
         self.atoms = []
