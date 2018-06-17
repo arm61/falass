@@ -1,6 +1,7 @@
 import numpy as np
 from falass import dataformat
 import matplotlib.pyplot as plt
+import MDAnalysis as mda
 
 
 class Files:
@@ -89,32 +90,30 @@ class Files:
         be the last text in the 'TITLE' line, and the cell dimensions are taken from the 'CRYST1' line, and assumed to
         be orthorhomic. Non-orthorhomic cells are not necessarily supported.
         """
-        lines = line_count(self.pdbfile)
         print("Reading PDB file")
-        file = open(self.pdbfile, 'r')
-        percentage = 0
-        print_update(percentage)
-        atoms_each_timestep = []
-        for i, line in enumerate(file):
-            percentage_new = np.floor(i / lines * 100)
-            percentage = check_update(percentage, percentage_new)
-            if line[0:6] == "ATOM  ":
-                atoms_each_timestep.append(get_atom_position(self.cell[self.number_of_timesteps - 1][2], line,
-                                                                self.flip))
-            if "TITLE  " in line:
-                if self.number_of_timesteps == 0:
+        u = mda.Universe(self.pdbfile)
+
+        self.cell = []
+        self.atoms = []
+
+        for ts in u.trajectory:
+            self.cell.append(u.dimensions[:3].copy())
+            # grab z positions
+            pos = u.atoms.positions[:, 2]
+            # flip?
+            if self.flip:
+                pos = flip_zpos(u.dimensions[2], pos)
+            self.atoms.append(
+                [dataformat.AtomPositions(at.name, p) for at, p in zip(u.atoms, pos)]
+            )
+
+        lines = line_count(self.pdbfile)
+        with open(self.pdbfile, 'r') as f:
+            for i, line in enumerate(f):
+                if "TITLE  " in line:
                     self.number_of_timesteps, new_time = iterate_time(self.number_of_timesteps, line)
                     self.times.append(new_time)
-                else:
-                    self.atoms.append(atoms_each_timestep)
-                    atoms_each_timestep = []
-                    self.number_of_timesteps, new_time = iterate_time(self.number_of_timesteps, line)
-                    self.times.append(new_time)
-            if "CRYST1  " in line:
-                self.cell.append(get_cell_parameters(line))
-        self.atoms.append(atoms_each_timestep)
-        print_update(100)
-        file.close()
+
         return
 
     def read_lgt(self):
@@ -305,50 +304,6 @@ def flip_zpos(cell, zpos):
         z-position after the flipping
     """
     return np.sqrt(np.square(cell - zpos))
-
-
-def get_atom_position(cell, line, flip):
-    """Get the atom position and type
-
-    Reads the text line from the pdb and assigns it to an falass.dataformat.AtomPosition type object.
-
-    Parameters
-    ----------
-    cell: float
-        z-cell dimension.
-    line: str
-        Line from pdb file.
-    flip: bool
-        Should the cell be flipped in the z-dimension.
-
-    Returns
-    -------
-    falass.dataformat.AtomPositions
-        Object with atom type and z-position from the given line.
-    """
-    if flip:
-        new_zpos = flip_zpos(cell, float(line[46:54]))
-        return dataformat.AtomPositions(line[12:16].strip(), new_zpos)
-    else:
-        return dataformat.AtomPositions(line[12:16].strip(), float(line[46:54]))
-
-
-def get_cell_parameters(line):
-    """Identify cell parameters from line.
-
-    Read the cell parameters from an appropriate line
-
-    Parameters
-    ----------
-    line: str
-        Line from pdb file.
-
-    Returns
-    -------
-    array_like float
-        the a, b, c cell vectors of the particular timestep
-    """
-    return [float(line[6:15]), float(line[15:24]), float(line[24:33])]
 
 
 def iterate_time(number_of_timesteps, line):
