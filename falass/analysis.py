@@ -176,20 +176,20 @@ class Analysis:
             re = b / a
             self.wph[i] = np.sum(re)
 
-    def plot_number_density(self, size):
+    def plot_number_density(self, size, colors=['green', 'red', 'blue']):
         fig, ax1 = plt.subplots(figsize=(size[0], size[1]))
-        ax1.plot(self.z, np.asarray(self.head_bin) * 10000, color = 'green')
-        ax1.plot(self.z, np.asarray(self.tail_bin) * 10000, color = 'red')
+        ax1.plot(self.z, np.asarray(self.head_bin) * 10000, color = colors[0])
+        ax1.plot(self.z, np.asarray(self.tail_bin) * 10000, color = colors[1])
         for i in range(0, len(self.all_water_bin)):
-            ax1.plot(self.z, np.asarray(self.all_head_bin[i]) * 10000, color = 'green', alpha = 0.0075)
-            ax1.plot(self.z, np.asarray(self.all_tail_bin[i]) * 10000, color = 'red', alpha=0.0075)
+            ax1.plot(self.z, np.asarray(self.all_head_bin[i]) * 10000, color = colors[0], alpha = 0.0075)
+            ax1.plot(self.z, np.asarray(self.all_tail_bin[i]) * 10000, color = colors[1], alpha=0.0075)
         a = [np.max(self.all_tail_bin), np.max(self.all_head_bin)]
         ax1.set_ylim([0., np.max(a) * 10000])
         ax2 = ax1.twinx()
         ax2.set_ylim([0., np.max(self.all_water_bin) * 1000])
-        ax2.plot(self.z, np.asarray(self.water_bin) * 1000, color = 'blue')
+        ax2.plot(self.z, np.asarray(self.water_bin) * 1000, color = colors[2])
         for i in range(0, len(self.all_water_bin)):
-            ax2.plot(self.z, np.asarray(self.all_water_bin[i]) * 1000, color = 'blue', alpha = 0.0075)
+            ax2.plot(self.z, np.asarray(self.all_water_bin[i]) * 1000, color = colors[2], alpha = 0.0075)
 
         return fig, ax1, ax2
 
