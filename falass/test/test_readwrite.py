@@ -247,26 +247,6 @@ class TestFiles(unittest.TestCase):
         assert_almost_equal(a, 8.)
         return
 
-    def test_get_atom_position(self):
-        line = 'ATOM      1  C1  DSPCA   1      00.500  00.500  02.000  1.00  0.00           C'
-        a = readwrite.get_atom_position(10, line, False)
-        assert_equal(a.atom, 'C1')
-        assert_almost_equal(a.zpos, 2.)
-        return
-
-    def test_get_atom_position_flip(self):
-        line = 'ATOM      1  C1  DSPCA   1      00.500  00.500  02.000  1.00  0.00           C'
-        a = readwrite.get_atom_position(10, line, True)
-        assert_equal(a.atom, 'C1')
-        assert_almost_equal(a.zpos, 8.)
-        return
-
-    def test_get_cell_parameters(self):
-        line = 'CRYST1    1.000    1.000    4.000  90.00  90.00  90.00 P 1           1'
-        a = readwrite.get_cell_parameters(line)
-        assert_equal(a, [1.000, 1.000, 4.000])
-        return
-
     def test_iterate_time(self):
         a = 1
         line = 'a 10000'
