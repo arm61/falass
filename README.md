@@ -11,6 +11,8 @@ API-level documentation is available at: [http://falass.readthedocs.io/en/latest
 Either clone the repository and install with:
 
 ```
+pip install -r requirements.txt 
+
 python setup.py build
 
 python setup.py install 
